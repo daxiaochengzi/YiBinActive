@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenDingActive", "Active\BenDingActive.csproj", "{D589F1FF-34FD-4995-A557-EA61BF32D809}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenDingForm", "BenDingForm\BenDingForm.csproj", "{0592EFED-7DBF-4209-84AC-F7607A033FB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D589F1FF-34FD-4995-A557-EA61BF32D809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D589F1FF-34FD-4995-A557-EA61BF32D809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D589F1FF-34FD-4995-A557-EA61BF32D809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D589F1FF-34FD-4995-A557-EA61BF32D809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0592EFED-7DBF-4209-84AC-F7607A033FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0592EFED-7DBF-4209-84AC-F7607A033FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0592EFED-7DBF-4209-84AC-F7607A033FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0592EFED-7DBF-4209-84AC-F7607A033FB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {514D96CE-9809-4BD0-B3F2-39E50921E78C}
+	EndGlobalSection
+EndGlobal
