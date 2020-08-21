@@ -23,5 +23,6 @@ namespace BenDingActive.Help
         /// 消息
         /// </summary>
         public string Msg { get; set; }
+        public string TransactionCode { get; set; }
     }
 }

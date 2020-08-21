@@ -80,6 +80,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(baseParam),
+                
                     ResultData = Logs.ToJson(data)
 
                 });
@@ -271,7 +272,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = code
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb(code);
             return resultData;
@@ -355,7 +364,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "CXJB007"
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("CXJB007");
           
@@ -472,7 +489,15 @@ namespace BenDingActive.Service
             {
                 resultValue.Success = false;
                 resultValue.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(paramc),
+                    ResultData = resultValue.Data.ToString(),
+                    TransactionCode = "WorkerHospitalizationRegister"
 
+                });
             }
             return resultValue;
         }
@@ -530,7 +555,15 @@ namespace BenDingActive.Service
             {
                 resultValue.Success = false;
                 resultValue.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(paramc),
+                    ResultData = resultValue.Data.ToString(),
+                    TransactionCode = "ModifyWorkerHospitalization"
 
+                });
             }
             return resultValue;
         }
@@ -634,7 +667,15 @@ namespace BenDingActive.Service
             {
                 resultValue.Success = false;
                 resultValue.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(paramc),
+                    ResultData = resultValue.Data.ToString(),
+                    TransactionCode = "WorkerHospitalizationPreSettlement"
 
+                });
             }
             return resultValue;
         }
@@ -743,7 +784,15 @@ namespace BenDingActive.Service
             {
                 resultValue.Success = false;
                 resultValue.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(paramc),
+                    ResultData = resultValue.Data.ToString(),
+                    TransactionCode = "WorkerHospitalizationSettlement"
 
+                });
             }
             return resultValue;
         }
@@ -802,7 +851,15 @@ namespace BenDingActive.Service
             {
                 resultValue.Success = false;
                 resultValue.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(paramc),
+                    ResultData = resultValue.Data.ToString(),
+                    TransactionCode = "WorkerSettlementCancel"
 
+                });
             }
             return resultValue;
         }
@@ -920,7 +977,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = code
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb(code);
             return resultData;

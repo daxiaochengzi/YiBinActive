@@ -80,6 +80,12 @@ namespace BenDingForm
 
             var data = _residentd.GetUserInfo(paramEntity, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var formShow = new Form2();
+            formShow.Show();
+        }
     }
 
 

@@ -33,5 +33,26 @@ namespace BenDingActive.Help
 
             return resultData;
         }
+        /// <summary>
+        /// 获取数据库链接
+        /// </summary>
+        /// <returns></returns>
+        public static string GetConnStr()
+        {
+            string connStr = null;
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            if (is64Bit)
+            {
+
+                connStr = @"Data Source=C:\Program Files (x86)\Microsoft\本鼎医保插件\xmlData\logData.db; Initial Catalog=logData;Integrated Security=True;Max Pool Size=10";
+            }
+            else
+            {
+
+                connStr = @"Data Source=C:\Program Files\Microsoft\本鼎医保插件\xmlData\logData.db; Initial Catalog=logData;Integrated Security=True;Max Pool Size=10";
+            }
+
+            return connStr;
+        }
     }
 }

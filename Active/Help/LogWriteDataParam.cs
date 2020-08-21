@@ -16,5 +16,6 @@ namespace BenDingActive.Help
         /// </summary>
         public string ReturnJson { get; set; }
         public string OperatorId { get; set; }
+        public  string TransactionCode { get; set; }
     }
 }

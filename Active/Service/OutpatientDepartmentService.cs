@@ -54,11 +54,11 @@ namespace BenDingActive.Service
                         {
                         var userInfoDto=  UserInfoToDto(data);
                             resultData.Data = JsonConvert.SerializeObject(userInfoDto);
-                            Logs.LogWriteData(new LogWriteDataParam()
+                            Logs.LogWrite(new LogParam()
                             {
-                                JoinJson = JsonConvert.SerializeObject(param),
-                                ReturnJson = JsonConvert.SerializeObject(userInfoDto),
-                                OperatorId = baseParam.OperatorId
+                                Params = JsonConvert.SerializeObject(param),
+                                OperatorCode = baseParam.OperatorId,
+                                ResultData= JsonConvert.SerializeObject(userInfoDto),
 
                             });
                     }
@@ -70,19 +70,18 @@ namespace BenDingActive.Service
 
                     }
 
-               
-
             }
             catch (Exception e)
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
-                Logs.LogWrite(new LogParam()
+                Logs.LogErrorWrite(new LogParam()
                 {
                     Msg = e.Message+"error:"+ e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = Logs.ToJson(data)
+                    ResultData = Logs.ToJson(data),
+                    TransactionCode = "CXJB001"
 
                 });
 
@@ -143,13 +142,13 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
-                Logs.LogWrite(new LogParam()
+                Logs.LogErrorWrite(new LogParam()
                 {
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = Logs.ToJson(data)
-
+                    ResultData = Logs.ToJson(data),
+                    TransactionCode = "ReadCard"
                 });
 
             }
@@ -212,12 +211,13 @@ namespace BenDingActive.Service
             catch (Exception e)
             {
                 
-                Logs.LogWrite(new LogParam()
+                Logs.LogErrorWrite(new LogParam()
                 {
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = Logs.ToJson(data)
+                    ResultData = Logs.ToJson(data),
+                    TransactionCode = "CXJB001"
 
                 });
 
@@ -273,7 +273,16 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
-              
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "TPYP301"
+
+                });
+
             }
            
             return resultData;
@@ -315,7 +324,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "TPYP302"
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("TPYP302");
             return resultData;
@@ -359,6 +376,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "SYBX004"
+
+                });
 
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("SYBX004");
@@ -408,7 +434,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "SYBX005"
 
+                });
             }
         
             return resultData;
@@ -452,7 +486,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "SYBX006"
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("SYBX006");
             return resultData;
@@ -496,7 +538,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "SYBX007"
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("SYBX007");
             return resultData;
@@ -542,7 +592,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "TPYP214"
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("TPYP214");
             return resultData;
@@ -578,7 +636,15 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "TPYP215"
 
+                });
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("TPYP215");
             return resultData;
@@ -659,6 +725,7 @@ namespace BenDingActive.Service
                     Msg = e.Message,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
+                    TransactionCode = "ReadCard",
                     ResultData = Logs.ToJson(userData)
 
                 });
