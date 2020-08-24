@@ -213,18 +213,31 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "CXJB010"
                     });
                     resultData.Data = resultStr;
                     resultData.OtherInfo = userInfo.ResidentInsuranceBalance.ToString();
 
+                }
+                else
+                {
+                   XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "CXJB010"
 
+                });
             }
            
             return resultData;
@@ -261,11 +274,17 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = code
+
                     });
                     resultData.Data = resultStr;
 
 
+                }
+                else
+                {
+                     XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
@@ -358,6 +377,10 @@ namespace BenDingActive.Service
                     resultData.Data = resultStr;
 
 
+                }
+                else
+                {
+                    var resultStr = XmlHelp.DeSerializerModel(new PrescriptionUploadDto(), true);
                 }
             }
             catch (Exception e)
@@ -481,7 +504,8 @@ namespace BenDingActive.Service
                 {
                     JoinJson = JsonConvert.SerializeObject(resultData),
                     ReturnJson = resultStr,
-                    OperatorId = baseParam.OperatorId
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "WorkerHospitalizationRegister"
                 });
                 resultValue.Data = resultStr;
             }
@@ -547,7 +571,8 @@ namespace BenDingActive.Service
                 {
                     JoinJson = JsonConvert.SerializeObject(param),
                     ReturnJson = "职工住院登记修改成功",
-                    OperatorId = baseParam.OperatorId
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "ModifyWorkerHospitalization"
                 });
                 resultValue.Data = "职工住院登记修改成功";
             }
@@ -659,7 +684,8 @@ namespace BenDingActive.Service
                 {
                     JoinJson = JsonConvert.SerializeObject(param),
                     ReturnJson = JsonConvert.SerializeObject(resultData),
-                    OperatorId = baseParam.OperatorId
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "WorkerHospitalizationPreSettlement"
                 });
                 resultValue.Data = JsonConvert.SerializeObject(resultData);
             }
@@ -776,7 +802,8 @@ namespace BenDingActive.Service
                 {
                     JoinJson = JsonConvert.SerializeObject(param),
                     ReturnJson = JsonConvert.SerializeObject(resultData),
-                    OperatorId = baseParam.OperatorId
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "WorkerHospitalizationSettlement"
                 });
                 resultValue.Data = JsonConvert.SerializeObject(resultData);
             }
@@ -842,7 +869,8 @@ namespace BenDingActive.Service
                 {
                     JoinJson = JsonConvert.SerializeObject(param),
 
-                    OperatorId = baseParam.OperatorId
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "WorkerSettlementCancel"
                 });
                 resultValue.Data = "取消成功!!!";
                 resultValue.OtherInfo = CommonHelp.StrToTransCoding(yearSign);
@@ -919,18 +947,31 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "SYBX003"
                     });
                     resultData.Data = resultStr;
                     resultData.OtherInfo = userInfo.ResidentInsuranceBalance.ToString();
 
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data.ToString(),
+                    TransactionCode = "SYBX003"
 
+                });
             }
          
             return resultData;
@@ -966,11 +1007,16 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = code
                     });
                     resultData.Data = resultStr;
 
 
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)

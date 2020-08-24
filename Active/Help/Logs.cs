@@ -112,6 +112,8 @@ namespace BenDingActive.Help
                     Is_time_fish += "【Params】" + param.JoinJson;
                 if (!string.IsNullOrWhiteSpace(param.ReturnJson))
                     Is_time_fish += "【ResultData】" + param.ReturnJson;
+                if (!string.IsNullOrWhiteSpace(param.TransactionCode))
+                    Is_time_fish += "【TransactionCode】" + param.TransactionCode;
                 StreamWriter sw = File.AppendText(pathErrorInfo);
                 // //获得字节数组
                 string data = System.Text.Encoding.Default.GetBytes(Is_time_fish).ToString();
@@ -129,8 +131,7 @@ namespace BenDingActive.Help
             string sql = $@"INSERT INTO DataError (OperatorId, JoinJson, ReturnJson,TransactionCode,CreateTime)
                  VALUES ('{param.OperatorCode}', '{param.Msg}', '{param.ResultData}','{param.TransactionCode}','{ DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             SqLiteHelper.ExecuteNonQuery(CommonHelp.GetConnStr(), sql, CommandType.Text);
-            //string Is_msg = "";
-            //string Is_day = DateTime.Now.Date.ToString("yyyy-MM-dd").Substring(0, 10);
+           
             string path = null;
             var is64Bit = Environment.Is64BitOperatingSystem;
             if (is64Bit)
@@ -170,8 +171,8 @@ namespace BenDingActive.Help
                 {
                     Is_time_fish += "【ResultData】" + param.ResultData;
                 }
-
-
+                if (!string.IsNullOrWhiteSpace(param.TransactionCode))
+                    Is_time_fish += "【TransactionCode】" + param.TransactionCode;
 
                 StreamWriter sw = File.AppendText(pathErrorInfo);
                 // //获得字节数组

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using BenDingActive;
 using BenDingActive.Help;
 using BenDingActive.Model;
 using BenDingActive.Model.Params;
@@ -35,22 +36,24 @@ namespace BenDingForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //居民保险
-            //string baseParam = JsonConvert.SerializeObject(new HisBaseParam()
-            //{
-            //    YbOrgCode = "99999",
-            //    EmpID = "E075AC49FCE443778F897CF839F3B924",
-            //    OrgID = "51072600000000000000000513435964",
-            //    BID= "6721F4DA50B349AF9F5F387707C1647A",
-            //    BsCode = "23",
-            //    TransKey = "6721F4DA50B349AF9F5F387707C1647A"
-            //});
+            var macActiveX = new MacActiveX();
+             //居民保险
+             //string baseParam = JsonConvert.SerializeObject(new HisBaseParam()
+             //{
+             //    YbOrgCode = "99999",
+             //    EmpID = "E075AC49FCE443778F897CF839F3B924",
+             //    OrgID = "51072600000000000000000513435964",
+             //    BID= "6721F4DA50B349AF9F5F387707C1647A",
+             //    BsCode = "23",
+             //    TransKey = "6721F4DA50B349AF9F5F387707C1647A"
+             //});
+             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"cpq2677\",\"Pwd\":\"888888\"}";
             var paramEntity = new UserInfoParam();
             paramEntity.PI_CRBZ = "1";
             paramEntity.PI_SFBZ = "513701199002124815";
-          
-            //var data = _residentd.GetUserInfo(JsonConvert.SerializeObject(paramEntity), JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
-            //textBox1.Text = data;
+            // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
+            var data = macActiveX.OutpatientMethods(JsonConvert.SerializeObject(paramEntity), baseParam, "GetUserInfo");
+           textBox1.Text = data.ToString();
         }
 
         private void button3_Click(object sender, EventArgs e)

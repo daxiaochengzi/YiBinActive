@@ -54,12 +54,14 @@ namespace BenDingActive
         private string MedicalInsuranceExecute(string param, string baseParam, string methodName,string namespaces)
         {
             string resultData = null;
+            var baseParams = JsonConvert.DeserializeObject<HisBaseParam>(baseParam);
             try
             {
+                
                 //反射获取 命名空间 + 类名
                 string className = namespaces;
                 //传递参数
-                Object[] paras = new Object[] { param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam) };
+                Object[] paras = new Object[] { param, baseParams };
                 Type t = Type.GetType(className);
                 object obj = Activator.CreateInstance(t);
                 //直接调用
@@ -82,19 +84,27 @@ namespace BenDingActive
                 }
 
             }
-            catch (Exception e)
+            catch (System.Reflection.TargetInvocationException ex)
             {
-                resultData = JsonConvert.SerializeObject(new ApiJsonResultData
+                if (ex.InnerException != null)
                 {
-                    Success = false,
-                    Message = e.Message.ToString()
-                });
-                Logs.LogWrite(new LogParam()
-                {
-                    Params = param,
-                    ResultData = methodName,
-                    Msg = e.Message.ToString()
-                });
+                    Exception exTmp = ex.InnerException;
+
+                    resultData = JsonConvert.SerializeObject(new ApiJsonResultData
+                    {
+                        Success = false,
+                        Message = exTmp.Message
+                    });
+                    Logs.LogErrorWrite(new LogParam()
+                    {
+                        Params = param,
+                        ResultData = methodName,
+                        Msg = exTmp.Message.ToString(),
+                        TransactionCode = "[Exe]" + methodName,
+                        OperatorCode= baseParams.OperatorId
+                    });
+                }
+               
             }
             return resultData;
         }

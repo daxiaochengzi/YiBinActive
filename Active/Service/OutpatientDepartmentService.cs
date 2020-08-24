@@ -27,48 +27,51 @@ namespace BenDingActive.Service
         /// <param name="baseParam"></param>
         public ApiJsonResultData GetUserInfo(string param, HisBaseParam baseParam)
         {
-            var resultData = new ApiJsonResultData {Success = true};
-            var data=new ResidentUserInfoJsonDto();
+            var resultData = new ApiJsonResultData { Success = true };
+
+            var data = new ResidentUserInfoJsonDto();
             try
             {//
-                   var userInfoParam= new ResidentUserInfoParam()
-                   {
-                       AfferentSign = baseParam.AfferentSign,
-                       IdentityMark = baseParam.IdentityMark
-                   };
-                    Logs.LogWrite(new LogParam()
+                var userInfoParam = new ResidentUserInfoParam()
+                {
+                    AfferentSign = baseParam.AfferentSign,
+                    IdentityMark = baseParam.IdentityMark
+                };
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = JsonConvert.SerializeObject(userInfoParam),
+                    Msg = JsonConvert.SerializeObject(baseParam)
+
+                });
+                var xmlStr = XmlHelp.SaveXmlEntity(userInfoParam);
+                if (!xmlStr) throw new Exception("获取个人基础资料保存参数出错");
+
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                if (loginData != 1) throw new Exception("医保登陆失败!!!");
+                int result = MedicalInsuranceDll.CallService_cxjb("CXJB001");
+
+                if (result == 1)
+                {
+                    data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
+                    if (data.ReturnState == "1")
                     {
-                        Params = JsonConvert.SerializeObject(userInfoParam),
-                        Msg = JsonConvert.SerializeObject(baseParam)
+                        var userInfoDto = UserInfoToDto(data);
+                        resultData.Data = JsonConvert.SerializeObject(userInfoDto);
+                        Logs.LogWrite(new LogParam()
+                        {
+                            Params = JsonConvert.SerializeObject(param),
+                            OperatorCode = baseParam.OperatorId,
+                            ResultData = JsonConvert.SerializeObject(userInfoDto),
 
-                    });
-                    var xmlStr = XmlHelp.SaveXmlEntity(userInfoParam);
-                    if (!xmlStr) throw new Exception("获取个人基础资料保存参数出错");
-                    var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
-                    if (loginData != 1) throw new Exception("医保登陆失败!!!");
-                    int result = MedicalInsuranceDll.CallService_cxjb("CXJB001");
-                    if (result == 1)
+                        });
+                    }
+                    else
                     {
-                        data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(),true);
-                        if (data.ReturnState == "1")
-                        {
-                        var userInfoDto=  UserInfoToDto(data);
-                            resultData.Data = JsonConvert.SerializeObject(userInfoDto);
-                            Logs.LogWrite(new LogParam()
-                            {
-                                Params = JsonConvert.SerializeObject(param),
-                                OperatorCode = baseParam.OperatorId,
-                                ResultData= JsonConvert.SerializeObject(userInfoDto),
-
-                            });
+                        throw new Exception(data.Msg);
                     }
-                        else
-                        {
-                           throw  new Exception(data.Msg);
-                        }
 
 
-                    }
+                }
 
             }
             catch (Exception e)
@@ -77,13 +80,14 @@ namespace BenDingActive.Service
                 resultData.Message = e.Message;
                 Logs.LogErrorWrite(new LogParam()
                 {
-                    Msg = e.Message+"error:"+ e.StackTrace,
+                    Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
                     ResultData = Logs.ToJson(data),
                     TransactionCode = "CXJB001"
 
                 });
+
 
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("CXJB001");
@@ -109,7 +113,7 @@ namespace BenDingActive.Service
                     Params = param,
                     Msg = JsonConvert.SerializeObject(baseParam)
                 });
-                if  (!string.IsNullOrWhiteSpace(param)==false) throw  new  Exception("密码不能为空!!!");
+                if (!string.IsNullOrWhiteSpace(param) == false) throw new Exception("密码不能为空!!!");
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.ReadCardInfo_cxjb(port, param);
@@ -163,7 +167,7 @@ namespace BenDingActive.Service
         /// <returns></returns>
         public ResidentUserInfoJsonDto GetUserInfoEntity(string param, HisBaseParam baseParam)
         {
-            
+
             var data = new ResidentUserInfoJsonDto();
             try
             {//
@@ -188,7 +192,7 @@ namespace BenDingActive.Service
                     data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
                     if (data.ReturnState == "1")
                     {
-                       
+
                         Logs.LogWriteData(new LogWriteDataParam()
                         {
                             JoinJson = JsonConvert.SerializeObject(param),
@@ -210,7 +214,7 @@ namespace BenDingActive.Service
             }
             catch (Exception e)
             {
-                
+
                 Logs.LogErrorWrite(new LogParam()
                 {
                     Msg = e.Message + "error:" + e.StackTrace,
@@ -251,22 +255,27 @@ namespace BenDingActive.Service
                 int result = MedicalInsuranceDll.CallService_cxjb("TPYP301");
                 if (result == 1)
                 {
-                
+
                     var resultStr = XmlHelp.SerializerModelJson();
                     Logs.LogWriteData(new LogWriteDataParam()
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "TPYP301"
                     });
                     resultData.Data = resultStr;
                     MedicalInsuranceDll.DisConnectAppServer_cxjb("TPYP301");
                     //获取用余额
-                    var userInfo= GetUserInfoEntity("",baseParam);
-                    resultData.OtherInfo = userInfo.InsuranceType == "310" ? userInfo.WorkersInsuranceBalance.ToString(CultureInfo.InvariantCulture) 
+                    var userInfo = GetUserInfoEntity("", baseParam);
+                    resultData.OtherInfo = userInfo.InsuranceType == "310" ? userInfo.WorkersInsuranceBalance.ToString(CultureInfo.InvariantCulture)
                         : userInfo.ResidentInsuranceBalance.ToString(CultureInfo.InvariantCulture);
 
-                   
+
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
@@ -284,7 +293,7 @@ namespace BenDingActive.Service
                 });
 
             }
-           
+
             return resultData;
         }
         /// <summary>
@@ -306,18 +315,23 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb("TPYP302");
-                if (result != 1) throw new Exception("门诊费取消执行出错");
+
                 if (result == 1)
                 {
-                   var data= XmlHelp.DeSerializerModel(new IniDto(), true);
+                    var data = XmlHelp.DeSerializerModel(new IniDto(), true);
                     var resultStr = JsonConvert.SerializeObject(data);
                     Logs.LogWriteData(new LogWriteDataParam()
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "TPYP302"
                     });
                     resultData.Data = resultStr;
+                }
+                else
+                {
+                    var data = XmlHelp.DeSerializerModel(new IniDto(), true);
                 }
             }
             catch (Exception e)
@@ -358,7 +372,7 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb("SYBX004");
-                if (result != 1) throw new Exception("门诊计划生育预结算执行出错!!!");
+
                 if (result == 1)
                 {
                     var resultStr = XmlHelp.SerializerModelJson();
@@ -367,9 +381,14 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "SYBX004"
                     });
                     resultData.Data = resultStr;
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
@@ -389,7 +408,7 @@ namespace BenDingActive.Service
             }
             MedicalInsuranceDll.DisConnectAppServer_cxjb("SYBX004");
             return resultData;
-          
+
         }
         /// <summary>
         /// 门诊计划生育结算
@@ -398,7 +417,7 @@ namespace BenDingActive.Service
         /// <returns></returns>
         public ApiJsonResultData OutpatientPlanBirthSettlement(string param, HisBaseParam baseParam)
         {
-            var resultData = new ApiJsonResultData {Success = true};
+            var resultData = new ApiJsonResultData { Success = true };
             try
             {
                 Logs.LogWrite(new LogParam()
@@ -412,7 +431,7 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb("SYBX005");
-                if (result != 1) throw new Exception("门诊计划生育结算执行出错!!!");
+
                 if (result == 1)
                 {
                     var resultStr = XmlHelp.SerializerModelJson();
@@ -420,7 +439,8 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "SYBX005"
                     });
                     resultData.Data = resultStr;
                     MedicalInsuranceDll.DisConnectAppServer_cxjb("SYBX005");
@@ -428,6 +448,10 @@ namespace BenDingActive.Service
                     var userInfo = GetUserInfoEntity("", baseParam);
                     resultData.OtherInfo = userInfo.InsuranceType == "310" ? userInfo.WorkersInsuranceBalance.ToString(CultureInfo.InvariantCulture)
                         : userInfo.ResidentInsuranceBalance.ToString(CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
@@ -444,7 +468,7 @@ namespace BenDingActive.Service
 
                 });
             }
-        
+
             return resultData;
         }
         /// <summary>
@@ -469,7 +493,7 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb("SYBX006");
-                if (result != 1) throw new Exception("门诊计划生育结算取消执行出错!!!");
+                //if (result != 1) throw new Exception("门诊计划生育结算取消执行出错!!!");
                 if (result == 1)
                 {
                     var resultStr = XmlHelp.SerializerModelJson();
@@ -477,9 +501,14 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "SYBX006"
                     });
                     resultData.Data = resultStr;
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
@@ -520,7 +549,7 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb("SYBX007");
-                if (result != 1) throw new Exception("门诊计划生育结算查询执行出错!!!");
+                //if (result != 1) throw new Exception("门诊计划生育结算查询执行出错!!!");
                 if (result == 1)
                 {
                     var data = XmlHelp.DeSerializerModel(new WorkerBirthPreSettlementJsonDto(), true);
@@ -529,9 +558,14 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "SYBX007"
                     });
                     resultData.Data = resultStr;
+                }
+                else
+                {
+                    var data = XmlHelp.DeSerializerModel(new WorkerBirthPreSettlementJsonDto(), true);
                 }
             }
             catch (Exception e)
@@ -567,7 +601,7 @@ namespace BenDingActive.Service
             try
             {
                 var iniParam = JsonConvert.DeserializeObject<MonthlyHospitalizationParticipationParam>(param);
-                iniParam.StartTime = Convert.ToDateTime(iniParam.StartTime ).ToString("yyyyMMdd");
+                iniParam.StartTime = Convert.ToDateTime(iniParam.StartTime).ToString("yyyyMMdd");
                 iniParam.EndTime = Convert.ToDateTime(iniParam.EndTime).ToString("yyyyMMdd");
                 var xmlStr = XmlHelp.SaveXmlEntity(iniParam);
                 if (!xmlStr) throw new Exception("门诊月结汇总保存参数出错");
@@ -575,7 +609,7 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb("TPYP214");
-                if (result != 1) throw new Exception("门诊月结汇总执行出错!!!");
+                //if (result != 1) throw new Exception("门诊月结汇总执行出错!!!");
                 if (result == 1)
                 {
                     var resultStr = XmlHelp.SerializerModelJson();
@@ -583,9 +617,14 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "TPYP214"
                     });
                     resultData.Data = resultStr;
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
@@ -619,7 +658,7 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb("TPYP215");
-                if (result != 1) throw new Exception("取消门诊月结汇总执行出错!!!");
+                //if (result != 1) throw new Exception("取消门诊月结汇总执行出错!!!");
                 if (result == 1)
                 {
                     var resultStr = XmlHelp.SerializerModelJson();
@@ -627,9 +666,14 @@ namespace BenDingActive.Service
                     {
                         JoinJson = param,
                         ReturnJson = resultStr,
-                        OperatorId = baseParam.OperatorId
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = "TPYP215"
                     });
                     resultData.Data = resultStr;
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
                 }
             }
             catch (Exception e)
@@ -657,7 +701,7 @@ namespace BenDingActive.Service
 
         public ApiJsonResultData ReadCardInfo(string paramStr, HisBaseParam baseParam)
         {
-            var param=JsonConvert.DeserializeObject<ReadCardInfoParam>(paramStr);
+            var param = JsonConvert.DeserializeObject<ReadCardInfoParam>(paramStr);
             var resultData = new ApiJsonResultData { Success = true };
             //姓名
             var patientName = new byte[1024];
@@ -732,101 +776,101 @@ namespace BenDingActive.Service
             }
             return resultData;
 
-            }
+        }
         ///// <summary>
-            ///// 职工划卡
-            ///// </summary>
-            ///// <param name="param"></param>
-            ///// <param name="baseParam"></param>
-            ///// <returns></returns>
-            //public ApiJsonResultData WorkersSettlement(WorkersSettlementParam param, HisBaseParam baseParam)
-            //{
-            //    //流水号
-            //    var settlementNo = new byte[1024];
-            //    //自付金额
-            //    var selfPayment = new byte[1024];
-            //    //账户支付
-            //    var accountPayment = new byte[1024];
-            //    //返回状态
-            //    var resultState = new byte[1024];
-            //    //消息
-            //    var msg = new byte[1024];
-            //    var resultData = new ApiJsonResultData {Success = true};
+        ///// 职工划卡
+        ///// </summary>
+        ///// <param name="param"></param>
+        ///// <param name="baseParam"></param>
+        ///// <returns></returns>
+        //public ApiJsonResultData WorkersSettlement(WorkersSettlementParam param, HisBaseParam baseParam)
+        //{
+        //    //流水号
+        //    var settlementNo = new byte[1024];
+        //    //自付金额
+        //    var selfPayment = new byte[1024];
+        //    //账户支付
+        //    var accountPayment = new byte[1024];
+        //    //返回状态
+        //    var resultState = new byte[1024];
+        //    //消息
+        //    var msg = new byte[1024];
+        //    var resultData = new ApiJsonResultData {Success = true};
 
-            //    Logs.LogWriteData(new LogWriteDataParam()
-            //    {
-            //        JoinJson = JsonConvert.SerializeObject(param),
-            //        ReturnJson = JsonConvert.SerializeObject(baseParam),
-            //        OperatorId = baseParam.OperatorId
+        //    Logs.LogWriteData(new LogWriteDataParam()
+        //    {
+        //        JoinJson = JsonConvert.SerializeObject(param),
+        //        ReturnJson = JsonConvert.SerializeObject(baseParam),
+        //        OperatorId = baseParam.OperatorId
 
-            //    });
-            //    try
-            //    {
-            //        if (param == null)
-            //            throw new Exception("职工结算入参不能为空!!!");
-            //        if (string.IsNullOrWhiteSpace(baseParam.Account))
-            //            throw new Exception("医保账户不能为空!!!");
-            //        if (string.IsNullOrWhiteSpace(baseParam.Pwd))
-            //            throw new Exception("医保账户密码不能为空!!!");
-            //        if (string.IsNullOrWhiteSpace(param.CardPwd))
-            //            throw new Exception("卡密码不能为空!!!");
-            //        if (string.IsNullOrWhiteSpace(param.Operator))
-            //            throw new Exception("经办人不能为空!!!");
-            //        if (param.AllAmount<=0)
-            //            throw new Exception("划卡金额必须大于0!!!");
-            //        if (param.MedicalCategory <= 0)
-            //            throw new Exception("划卡类别!!!");
+        //    });
+        //    try
+        //    {
+        //        if (param == null)
+        //            throw new Exception("职工结算入参不能为空!!!");
+        //        if (string.IsNullOrWhiteSpace(baseParam.Account))
+        //            throw new Exception("医保账户不能为空!!!");
+        //        if (string.IsNullOrWhiteSpace(baseParam.Pwd))
+        //            throw new Exception("医保账户密码不能为空!!!");
+        //        if (string.IsNullOrWhiteSpace(param.CardPwd))
+        //            throw new Exception("卡密码不能为空!!!");
+        //        if (string.IsNullOrWhiteSpace(param.Operator))
+        //            throw new Exception("经办人不能为空!!!");
+        //        if (param.AllAmount<=0)
+        //            throw new Exception("划卡金额必须大于0!!!");
+        //        if (param.MedicalCategory <= 0)
+        //            throw new Exception("划卡类别!!!");
 
-            //        var loginData = WorkersMedicalInsurance.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
-            //        if (loginData != 1) throw new Exception("医保登陆失败!!!");
-            //        //var settlementData = WorkersMedicalInsurance.WorkersSettlement
-            //        //(1,
-            //        // param.CardPwd,
-            //        // param.AllAmount.ToString(),
-            //        // param.MedicalCategory.ToString(),
-            //        // param.Operator,
-            //        // settlementNo,
-            //        // accountPayment,
-            //        // selfPayment,
-            //        // resultState,
-            //        // msg
-            //        //);
-            //        //if (settlementData!=0) throw new Exception("职工划卡失败!!!");
-            //        //if (CommonHelp.StrToTransCoding(resultState) != "1") throw new Exception(CommonHelp.StrToTransCoding(msg));
-            //        //var data = new WorkersSettlementDto()
-            //        //{
-            //        //    SettlementNo = CommonHelp.StrToTransCoding(settlementNo),
-            //        //    AccountPayment = Convert.ToDecimal(CommonHelp.StrToTransCoding(accountPayment)),
-            //        //    SelfPayment = Convert.ToDecimal(CommonHelp.StrToTransCoding(selfPayment)),
-            //        //};
-            //        var accountPaymentData = param.AllAmount > 0 ? Convert.ToDecimal(0.1) : 0;
+        //        var loginData = WorkersMedicalInsurance.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+        //        if (loginData != 1) throw new Exception("医保登陆失败!!!");
+        //        //var settlementData = WorkersMedicalInsurance.WorkersSettlement
+        //        //(1,
+        //        // param.CardPwd,
+        //        // param.AllAmount.ToString(),
+        //        // param.MedicalCategory.ToString(),
+        //        // param.Operator,
+        //        // settlementNo,
+        //        // accountPayment,
+        //        // selfPayment,
+        //        // resultState,
+        //        // msg
+        //        //);
+        //        //if (settlementData!=0) throw new Exception("职工划卡失败!!!");
+        //        //if (CommonHelp.StrToTransCoding(resultState) != "1") throw new Exception(CommonHelp.StrToTransCoding(msg));
+        //        //var data = new WorkersSettlementDto()
+        //        //{
+        //        //    SettlementNo = CommonHelp.StrToTransCoding(settlementNo),
+        //        //    AccountPayment = Convert.ToDecimal(CommonHelp.StrToTransCoding(accountPayment)),
+        //        //    SelfPayment = Convert.ToDecimal(CommonHelp.StrToTransCoding(selfPayment)),
+        //        //};
+        //        var accountPaymentData = param.AllAmount > 0 ? Convert.ToDecimal(0.1) : 0;
 
-            //        //resultData.Data = JsonConvert.SerializeObject(data);
-            //        ////数据日志存入
-            //        //param.CardPwd = "******";
-            //        //Logs.LogWriteData(new LogWriteDataParam()
-            //        //{
-            //        //    JoinJson = JsonConvert.SerializeObject(param),
-            //        //    ReturnJson = JsonConvert.SerializeObject(data),
-            //        //    OperatorId = baseParam.OperatorId
+        //        //resultData.Data = JsonConvert.SerializeObject(data);
+        //        ////数据日志存入
+        //        //param.CardPwd = "******";
+        //        //Logs.LogWriteData(new LogWriteDataParam()
+        //        //{
+        //        //    JoinJson = JsonConvert.SerializeObject(param),
+        //        //    ReturnJson = JsonConvert.SerializeObject(data),
+        //        //    OperatorId = baseParam.OperatorId
 
-            //        //});
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        resultData.Success = false;
-            //        resultData.Message = e.Message;
-            //        Logs.LogWrite(new LogParam()
-            //        {
-            //            Msg = e.Message,
-            //            OperatorCode = baseParam.OperatorId,
-            //            Params = Logs.ToJson(param),
-            //        });
+        //        //});
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        resultData.Success = false;
+        //        resultData.Message = e.Message;
+        //        Logs.LogWrite(new LogParam()
+        //        {
+        //            Msg = e.Message,
+        //            OperatorCode = baseParam.OperatorId,
+        //            Params = Logs.ToJson(param),
+        //        });
 
-            //    }
+        //    }
 
-            //    return resultData;
-            //}
+        //    return resultData;
+        //}
         private ResidentUserInfoDto UserInfoToDto(ResidentUserInfoJsonDto param)
         {
             var resultData = new ResidentUserInfoDto()
