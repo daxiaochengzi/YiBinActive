@@ -234,7 +234,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "CXJB010"
 
                 });
@@ -374,7 +374,7 @@ namespace BenDingActive.Service
                         ReturnJson = JsonConvert.SerializeObject(baseParam),
                         OperatorId = baseParam.OperatorId
                     });
-                    resultData.Data = resultStr;
+                    resultData.Data = resultStr.ProjectBatch;
 
 
                 }
