@@ -32,6 +32,7 @@ namespace BenDingActive.Service
             var data = new ResidentUserInfoJsonDto();
             try
             {//
+
                 var userInfoParam = new ResidentUserInfoParam()
                 {
                     AfferentSign = baseParam.AfferentSign,
@@ -287,7 +288,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "TPYP301"
 
                 });
@@ -343,7 +344,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "TPYP302"
 
                 });
@@ -400,7 +401,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "SYBX004"
 
                 });
@@ -463,7 +464,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "SYBX005"
 
                 });
@@ -520,7 +521,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "SYBX006"
 
                 });
@@ -577,7 +578,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "SYBX007"
 
                 });
@@ -636,7 +637,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "TPYP214"
 
                 });
@@ -685,7 +686,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(param),
-                    ResultData = resultData.Data.ToString(),
+                    ResultData = resultData.Data,
                     TransactionCode = "TPYP215"
 
                 });
