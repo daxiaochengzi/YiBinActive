@@ -27,24 +27,24 @@ namespace BenDingActive.Help
         {
             var result = t;
             string pathXml = null;
-            string copyPathXml = null;
+          //  string copyPathXml = null;
             var valid = new ValidXmlDto();
             var is64Bit = Environment.Is64BitOperatingSystem;
             if (is64Bit)
             {
                 pathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\" + "ResponseParams.xml";
-                copyPathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\";
+               // copyPathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\";
             }
             else
             {
                 pathXml = @"C:\Program Files\Microsoft\本鼎医保插件\" + "ResponseParams.xml";
-                copyPathXml = @"C:\Program Files\Microsoft\本鼎医保插件\";
+               // copyPathXml = @"C:\Program Files\Microsoft\本鼎医保插件\";
             }
 
-            string copyPathXmlNew = copyPathXml + "xmlData\\" +
-                                    DateTime.Now.Date.ToString("yyyy-MM-dd").Substring(0, 10) + "\\" +
-                                    DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml";
-            File.Copy(pathXml, copyPathXmlNew);
+            //string copyPathXmlNew = copyPathXml + "xmlData\\" +
+            //                        DateTime.Now.Date.ToString("yyyy-MM-dd").Substring(0, 10) + "\\" +
+            //                        DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml";
+            //File.Copy(pathXml, copyPathXmlNew);
 
             // pathXml = System.AppDomain.CurrentDomain.BaseDirectory + "ResponseParams.xml";
 
@@ -108,12 +108,12 @@ namespace BenDingActive.Help
             if (is64Bit)
             {
                 pathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\" + "ResponseParams.xml";
-               
+                //copyPathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\";
             }
             else
             {
                 pathXml = @"C:\Program Files\Microsoft\本鼎医保插件\" + "ResponseParams.xml";
-              
+                //copyPathXml = @"C:\Program Files\Microsoft\本鼎医保插件\";
             }
 
             //string copyPathXmlNew = copyPathXml + "xmlData\\" +
@@ -194,18 +194,18 @@ namespace BenDingActive.Help
             if (is64Bit)
             {
                 pathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\" + "ResponseParams.xml";
-                copyPathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\";
+                //copyPathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\";
             }
             else
             {
                 pathXml = @"C:\Program Files\Microsoft\本鼎医保插件\" + "ResponseParams.xml";
-                copyPathXml = @"C:\Program Files\Microsoft\本鼎医保插件\";
+                //copyPathXml = @"C:\Program Files\Microsoft\本鼎医保插件\";
             }
 
-            string copyPathXmlNew = copyPathXml + "xmlData\\" +
-                                    DateTime.Now.Date.ToString("yyyy-MM-dd").Substring(0, 10) + "\\" +
-                                    DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml";
-            File.Copy(pathXml, copyPathXmlNew);
+            //string copyPathXmlNew = copyPathXml + "xmlData\\" +
+            //                        DateTime.Now.Date.ToString("yyyy-MM-dd").Substring(0, 10) + "\\" +
+            //                        DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml";
+            //File.Copy(pathXml, copyPathXmlNew);
             XmlDocument doc = new XmlDocument();
             doc.Load(pathXml);
             if (!System.IO.File.Exists(pathXml))

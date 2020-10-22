@@ -86,7 +86,7 @@ namespace BenDingActive.Service
                 });
 
             }
-             MedicalInsuranceDll.DisConnectAppServer_cxjb("CXJB001");
+             //MedicalInsuranceDll.DisConnectAppServer_cxjb("CXJB001");
             return data;
 
         }
@@ -180,6 +180,16 @@ namespace BenDingActive.Service
         {
             var resultData = MedicalInsuranceOperation(param, baseParam,
                 "CXJB009", "居民住院预结算");
+            return resultData;
+        }
+        /// <summary>
+        /// 职工取消刷卡
+        /// </summary>
+        /// <param name="param"></param>
+        public ApiJsonResultData WorkerCancelSettlementCard(string param, HisBaseParam baseParam)
+        {
+            var resultData = MedicalInsuranceOperation(param, baseParam,
+                "CXJB027", "账户划卡回退");
             return resultData;
         }
         /// <summary>
@@ -518,7 +528,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(paramc),
-                    ResultData = resultValue.Data.ToString(),
+                    ResultData = resultValue.Data,
                     TransactionCode = "WorkerHospitalizationRegister"
 
                 });
@@ -585,7 +595,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(paramc),
-                    ResultData = resultValue.Data.ToString(),
+                    ResultData = resultValue.Data,
                     TransactionCode = "ModifyWorkerHospitalization"
 
                 });
@@ -698,7 +708,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(paramc),
-                    ResultData = resultValue.Data.ToString(),
+                    ResultData = resultValue.Data,
                     TransactionCode = "WorkerHospitalizationPreSettlement"
 
                 });
@@ -816,12 +826,100 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(paramc),
-                    ResultData = resultValue.Data.ToString(),
+                    ResultData = resultValue.Data,
                     TransactionCode = "WorkerHospitalizationSettlement"
 
                 });
             }
             return resultValue;
+        }
+        /// <summary>
+        /// 职工划卡
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+        public ApiJsonResultData WorkerCardSettlement(string param, HisBaseParam baseParam)
+        {
+            var msg = new byte[1024];
+            //返回状态
+            var resultState = new byte[1024];
+            var resultValue = new ApiJsonResultData {Success = true};
+            try
+            {
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = param,
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+                var iniFile = new IniFile("");
+                //端口号
+                int port = Convert.ToInt16(iniFile.GetIni());
+
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                ReadCardInfo("", baseParam);
+                var paramIni = JsonConvert.DeserializeObject<WorkerHospitalSettlementCardDto>(param);
+
+                //流水号
+                var serialNumber = new byte[1024];
+              
+                //账户支付
+                var accountPayment = new byte[1024];
+                //现金支付
+                var cashPayment = new byte[1024];
+                ////返回状态
+                //var resultState = new byte[1024];
+                //消息
+                //var msg = new byte[1024];
+                MedicalInsuranceDll.WorkerHospitalSettlement
+                (   port,
+                    paramIni.CardPwd,
+                    paramIni.TotalAmount,
+                    paramIni.UseCardType,
+                    paramIni.OperatorName,
+                    serialNumber,
+                    accountPayment,
+                    cashPayment,
+                    resultState,
+                    msg
+                   );
+               
+                if (CommonHelp.StrToTransCoding(resultState) != "1") throw new Exception(CommonHelp.StrToTransCoding(msg));
+                var resultData = new WorkerHospitalSettlementCardBackDto()
+                {
+                    SerialNumber = CommonHelp.StrToTransCoding(serialNumber),
+                    AccountPayment = Convert.ToDecimal(CommonHelp.StrToTransCoding(accountPayment)),
+                    CashPayment = Convert.ToDecimal(CommonHelp.StrToTransCoding(cashPayment)),
+                };
+                var infoEntity = GetUserInfoEntity(baseParam);
+                resultData.AccountBalance = infoEntity.WorkersInsuranceBalance;
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = JsonConvert.SerializeObject(param),
+                    ReturnJson = JsonConvert.SerializeObject(resultData),
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "WorkerHospitalSettlementCard"
+                });
+                resultValue.Data = JsonConvert.SerializeObject(resultData);
+            }
+            catch (Exception e)
+            {
+               
+                resultValue.Success = false;
+                resultValue.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultValue.Data,
+                    TransactionCode = "WorkerHospitalSettlementCard"
+
+                });
+            }
+            return resultValue;
+            
+
         }
 
         /// <summary>
@@ -884,7 +982,7 @@ namespace BenDingActive.Service
                     Msg = e.Message + "error:" + e.StackTrace,
                     OperatorCode = baseParam.OperatorId,
                     Params = Logs.ToJson(paramc),
-                    ResultData = resultValue.Data.ToString(),
+                    ResultData = resultValue.Data,
                     TransactionCode = "WorkerSettlementCancel"
 
                 });
@@ -1037,5 +1135,191 @@ namespace BenDingActive.Service
             return resultData;
         }
         #endregion
+        #region 电子医保支付
+
+        public ApiJsonResultData NationEcTrans(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+
+            param= "<?xml version='1.0' encoding='utf-16'?>";
+            param += @"<ROW>
+                <BKC142>0.03</BKC142>
+                <HKLB>1</HKLB>
+                <NUMS>1</NUMS>
+                <DATAROW>
+                    <ROW>
+                        <BKE019>0</BKE019>
+                        <AAZ231>5563098105443035015</AAZ231>
+                        <BKE026>44FD8DC8D354BB088BD7</BKE026>
+                        <BKE027>维生素C片</BKE027>
+                        <AKC225>1</AKC225>
+                        <AKC226>0.0250</AKC226>
+                        <AKC264>0.03</AKC264>
+                    </ROW>
+                </DATAROW>
+            </ROW>";
+            string code = "DZPZ001";
+            var iniFile = new IniFile("");
+            //端口号
+            var nationEcTransUrl = iniFile.NationEcTransUrl();
+          
+            try
+            {
+                string url = "";
+                string tipsMsg = "电子社保卡支付";
+              
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = param,
+                    Msg = JsonConvert.SerializeObject(baseParam)
+
+                });
+                //返回状态
+                var resultState = new byte[1024];
+                //消息
+                var msg = new byte[1024];
+                var xmlStr = XmlHelp.SaveXmlStr(param);
+                if (!xmlStr) throw new Exception(tipsMsg + "保存参数出错!!!");
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                if (loginData != 1) throw new Exception(tipsMsg + "医保执行失败!!!");
+                int result = MedicalInsuranceDll.NationEcTrans_call(code, nationEcTransUrl, resultState, msg);
+                if (result == 1)
+                {
+                    var resultStr = XmlHelp.SerializerModelJson();
+                   //var userInfo=  GetUserInfoEntity(baseParam);
+                   // resultData.Data = resultStr;
+                   // resultData.OtherInfo = userInfo.InsuranceType == "310" ? userInfo.WorkersInsuranceBalance.ToString(CultureInfo.InvariantCulture)
+                   //     : userInfo.ResidentInsuranceBalance.ToString(CultureInfo.InvariantCulture);
+                    Logs.LogWriteData(new LogWriteDataParam()
+                    {
+                        JoinJson = param,
+                        ReturnJson = resultStr,
+                        OperatorId = baseParam.OperatorId,
+                        TransactionCode = code
+
+                    });
+                   
+
+                }
+                else
+                {
+                    XmlHelp.SerializerModelJson();
+                }
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = code
+
+                });
+            }
+        
+            return resultData;
+        }
+        public ApiJsonResultData ReadCardInfo(string paramStr, HisBaseParam baseParam)
+        {
+           /* var param = JsonConvert.DeserializeObject<ReadCardInfoParam>(paramStr)*/;
+            var resultData = new ApiJsonResultData { Success = true };
+            //工作单位
+            var unitName = new byte[1024];
+            //姓名
+            var patientName = new byte[1024];
+            //性别
+            var patientSex = new byte[1024];
+            var nation = new byte[1024];
+            //出生日期
+            var birthDay = new byte[1024];
+            //身份证号
+            var idCardNo = new byte[1024];
+            //联系地址
+            var birthPlace = new byte[1024];
+            //医保账户余额
+            var insuranceBalance = new byte[1024];
+            //职工卡号
+            var workersCardNo = new byte[1024];
+            //返回状态
+            var resultState = new byte[1024];
+            //消息
+            var msg = new byte[1024];
+
+
+            var userData = new GetResidentUserInfoDto();
+            try
+            {//需要登陆
+                    if (paramStr == "1")
+                    {
+                        var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                        if (loginData != 1) throw new Exception("医保登陆失败!!!");
+                    }
+                    var iniFile = new IniFile("");
+                    //端口号
+                    int port = Convert.ToInt16(iniFile.GetIni());
+                    var readCardData = MedicalInsuranceDll.WorkerReadCardInfo(
+                        port,
+                        "",
+                        unitName,
+                        workersCardNo,
+                        idCardNo,
+                        patientName,
+                        patientSex,
+                        nation,
+                        birthPlace,
+                        birthDay,
+                        insuranceBalance,
+                        resultState,
+                        msg
+                        );
+              
+                    if (CommonHelp.StrToTransCoding(resultState) != "1") throw new Exception(CommonHelp.StrToTransCoding(msg));
+
+                    userData = new GetResidentUserInfoDto()
+                    {
+                        PO_XM = CommonHelp.StrToTransCoding(patientName),
+                        PO_XB = CommonHelp.StrToTransCoding(patientSex),
+                        PO_LXDZ = CommonHelp.StrToTransCoding(birthPlace),
+                        PO_ZGZHYE = CommonHelp.StrToTransCoding(insuranceBalance),
+                        PO_SFZH= CommonHelp.StrToTransCoding(idCardNo)
+
+                    };
+                    resultData.Data = JsonConvert.SerializeObject(userData);
+                    //userData = XmlHelp.DeSerializerModel(new Model.Dto.GetResidentUserInfoDto(), true);
+                    //数据日志存入
+                  
+                    Logs.LogWriteData(new LogWriteDataParam()
+                    {
+                        JoinJson ="",
+                        ReturnJson = JsonConvert.SerializeObject(userData),
+                        OperatorId = baseParam.OperatorId
+                    });
+
+                
+
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogWrite(new LogParam()
+                {
+                    Msg = e.Message,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = "",
+                    TransactionCode = "ReadCard",
+                    ResultData = Logs.ToJson(userData)
+
+                });
+            }
+            return resultData;
+
+        }
+        #endregion
+
     }
 }

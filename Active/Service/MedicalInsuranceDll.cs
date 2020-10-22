@@ -197,15 +197,41 @@ namespace BenDingActive.Service
           byte[] PO_GWYBZ, byte[] po_qtzf, byte[] PO_ZHZF, byte[] PO_XJZF,
           byte[] PO_QFJE, byte[] PO_JSRQ, byte[] po_bz, byte[] PO_FHZ,
           byte[] PO_MSG);
-       
+
         /// <summary>
-        /// 读取社保卡
+        /// 职工读取社保卡
         /// </summary>
         /// <param name="aReaderPort"></param>
         /// <param name="aCardPasswd"></param>
+        /// <param name="po_dwmc">单位名称</param>
+        /// <param name="po_Cardid">IC卡卡号</param>
+        /// <param name="po_Sfzhm">公民身份证号码</param>
+        /// <param name="po_Name">姓名</param>
+        /// <param name="po_Sex">性别</param>
+        /// <param name="po_Folk">民族</param>
+        /// <param name="po_BirthPlace">出生地</param>
+        /// <param name="po_BirthDate">出生日期</param>
+        /// <param name="po_Acntbalance">个人帐户余额</param>
+        /// <param name="po_fhz"></param>
+        /// <param name="po_msg"></param>
         /// <returns></returns>
-        [DllImport("yyjk.dll", EntryPoint = "ReadCardInfo_cxjb", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern int ReadCardInfo_cxjb(string aReaderPort, string aCardPasswd);
+        [DllImport("yyjk.dll", EntryPoint = "ReadCardInfo", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int WorkerReadCardInfo(
+            int aReaderPort,
+            string aCardPasswd,
+            byte[] po_dwmc,
+            byte[] po_Cardid,
+            byte[] po_Sfzhm,
+            byte[] po_Name,
+            byte[] po_Sex,
+            byte[] po_Folk,
+            byte[] po_BirthPlace,
+            byte[] po_BirthDate,
+            byte[] po_Acntbalance,
+            byte[] po_fhz,
+            byte[] po_msg
+
+        );
         /// <summary>
         /// 19.IC卡：IC卡划卡操作
         /// </summary>
@@ -213,19 +239,26 @@ namespace BenDingActive.Service
         /// <param name="pi_CardPasswd">卡密码</param>
         /// <param name="pi_fyze">消费费用总额</param>
         /// <param name="pi_hklb">划卡类别@1门诊划卡2住院划卡</param>
-        /// <param name="Pi_yybh">医院编号</param>
+        /// <param name="pi_yybh">医院编号</param>
         /// <param name="pi_jbr">经办人</param>
-        /// <param name="Po_hklsh">帐户支付金额</param>
-        /// <param name="po_zhzfje">自费支付金额</param>
+        /// <param name="po_hklsh">划卡流水号</param>
+        /// <param name="po_zhzfje">帐户支付金额</param>
+        /// <param name="po_zfzfje">自费支付金额</param>
         /// <param name="po_fhz"></param>
         /// <param name="po_msg"></param>
         /// <returns></returns>
         [DllImport("yyjk.dll", EntryPoint = "hkgl", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int WorkerHospitalSettlement(
-            int pi_ReaderPort, string pi_CardPasswd, string pi_fyze,
-            string pi_hklb, string pi_yybh, string pi_jbr,
-          byte[] po_hklsh, byte[] po_zhzfje, byte[] po_zfzfje,
-          byte[] po_fhz, byte[] po_msg
+            int pi_ReaderPort,
+            string pi_CardPasswd,
+            string pi_fyze,
+            string pi_hklb, 
+            string pi_jbr,
+            byte[] po_hklsh, 
+            byte[] po_zhzfje,
+            byte[] po_zfzfje,
+            byte[] po_fhz, 
+            byte[] po_msg
             );
         /// <summary>
         /// 已医疗机构结算信息查询
@@ -258,6 +291,24 @@ namespace BenDingActive.Service
         [DllImport("YBRSHisInterface.dll", EntryPoint = "ConnectAppServer", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int ReadCardInfo(int aReaderPort, string aCardPasswd);
         #endregion
+
+        #region 电子医保支付
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="pi_jydm">交易码</param>
+       /// <param name="pi_url">地址</param>
+       /// <param name="po_fhz"></param>
+       /// <param name="po_msg"></param>
+       /// <returns></returns>
+        [DllImport("yyjk.dll", EntryPoint = "NationEcTrans_call", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int NationEcTrans_call(
+            string pi_jydm,
+            string pi_url,
+            byte[] po_fhz, byte[] po_msg
+            );
+        #endregion
+
 
     }
 }

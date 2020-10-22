@@ -48,9 +48,22 @@ namespace BenDingActive.Help
         public string GetIni()
         {
             var is64Bit = Environment.Is64BitOperatingSystem;
-            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\BenDing.ini" : @"C:\Program Files\Microsoft\BenDingActiveSetup\BenDing.ini";
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\BenDing.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\BenDing.ini";
             IniFile myFile = new IniFile(path);
             var port = myFile.IniReadValue("BenDingSet", "Port");
+            //myFile.IniWriteValue("BenDingSet", "Port","'222'");
+            return port;
+        }
+        /// <summary>
+        /// 获取电子医保凭证地址
+        /// </summary>
+        /// <returns></returns>
+        public string NationEcTransUrl()
+        {
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\BenDing.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\BenDing.ini";
+            IniFile myFile = new IniFile(path);
+            var port = myFile.IniReadValue("NationEcTrans", "Url");
             return port;
         }
     }

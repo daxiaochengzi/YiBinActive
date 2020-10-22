@@ -117,28 +117,28 @@ namespace BenDingActive.Service
                 if (!string.IsNullOrWhiteSpace(param) == false) throw new Exception("密码不能为空!!!");
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
-                int result = MedicalInsuranceDll.ReadCardInfo_cxjb(port, param);
-                if (result == 1)
-                {
-                    data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
-                    if (data.ReturnState == "1")
-                    {
-                        var userInfoDto = UserInfoToDto(data);
-                        resultData.Data = JsonConvert.SerializeObject(userInfoDto);
-                        Logs.LogWriteData(new LogWriteDataParam()
-                        {
-                            JoinJson = JsonConvert.SerializeObject(param),
-                            ReturnJson = JsonConvert.SerializeObject(userInfoDto),
-                            OperatorId = baseParam.OperatorId
-                        });
-                    }
-                    else
-                    {
-                        throw new Exception(data.Msg);
-                    }
+                //int result = MedicalInsuranceDll.ReadCardInfo_cxjb(port, param);
+                //if (result == 1)
+                //{
+                //    data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
+                //    if (data.ReturnState == "1")
+                //    {
+                //        var userInfoDto = UserInfoToDto(data);
+                //        resultData.Data = JsonConvert.SerializeObject(userInfoDto);
+                //        Logs.LogWriteData(new LogWriteDataParam()
+                //        {
+                //            JoinJson = JsonConvert.SerializeObject(param),
+                //            ReturnJson = JsonConvert.SerializeObject(userInfoDto),
+                //            OperatorId = baseParam.OperatorId
+                //        });
+                //    }
+                //    else
+                //    {
+                //        throw new Exception(data.Msg);
+                //    }
 
 
-                }
+                //}
 
 
 
@@ -704,44 +704,75 @@ namespace BenDingActive.Service
         {
             var param = JsonConvert.DeserializeObject<ReadCardInfoParam>(paramStr);
             var resultData = new ApiJsonResultData { Success = true };
+            //工作单位
+            var unitName = new byte[1024];
             //姓名
             var patientName = new byte[1024];
             //性别
             var patientSex = new byte[1024];
+            var nation = new byte[1024];
+            
             //出生日期
-            var birthday = new byte[1024];
+            var birthDay = new byte[1024];
 
             //身份证号
             var idCardNo = new byte[1024];
             //联系地址
-            var contactAddress = new byte[1024];
-            //职工医保账户余额
-            var workersInsuranceBalance = new byte[1024];
+            var birthPlace = new byte[1024];
+            //医保账户余额
+            var insuranceBalance = new byte[1024];
             //职工卡号
             var workersCardNo = new byte[1024];
             //返回状态
             var resultState = new byte[1024];
             //消息
             var msg = new byte[1024];
+           
+            
             var userData = new GetResidentUserInfoDto();
             try
             {
-                if (param == null)
-                    throw new Exception("职工结算入参不能为空!!!");
-                if (string.IsNullOrWhiteSpace(baseParam.Account))
-                    throw new Exception("医保账户不能为空!!!");
-                if (string.IsNullOrWhiteSpace(baseParam.Pwd))
-                    throw new Exception("医保账户密码不能为空!!!");
-                if (string.IsNullOrWhiteSpace(param.CardPwd))
-                    throw new Exception("卡密码不能为空!!!");
+                
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 //居民职工
                 if (param.InsuranceType == 0)
                 {
-                    var readCardData = MedicalInsuranceDll.ReadCardInfo_cxjb("1", param.CardPwd);
-                    if (readCardData != 1) throw new Exception("读卡失败!!!");
-                    userData = XmlHelp.DeSerializerModel(new Model.Dto.GetResidentUserInfoDto(), true);
+                    var iniFile = new IniFile("");
+                    //端口号
+                    int port = Convert.ToInt16(iniFile.GetIni());
+                    var readCardData = MedicalInsuranceDll.WorkerReadCardInfo(
+                        port,
+                        param.CardPwd,
+                        unitName,
+                        workersCardNo,
+                        idCardNo,
+                        patientName,
+                        patientSex,
+                        nation,
+                        birthPlace,
+                        birthDay,
+                        insuranceBalance,
+                        resultState,
+                        msg
+                        );
+                    Logs.LogWrite(new LogParam()
+                    {
+                        Params = CommonHelp.StrToTransCoding(resultState) + "m",
+                        Msg = CommonHelp.StrToTransCoding(msg) + "m"
+
+                    });
+                    if (CommonHelp.StrToTransCoding(resultState) != "1") throw new Exception(CommonHelp.StrToTransCoding(msg));
+
+                    userData = new GetResidentUserInfoDto()
+                    {
+                        PO_XM= CommonHelp.StrToTransCoding(patientName),
+                        PO_XB = CommonHelp.StrToTransCoding(patientSex),
+                        PO_LXDZ = CommonHelp.StrToTransCoding(birthPlace),
+                        PO_ZGZHYE = CommonHelp.StrToTransCoding(insuranceBalance),
+                    };
+                    resultData.Data = JsonConvert.SerializeObject(userData);
+                    //userData = XmlHelp.DeSerializerModel(new Model.Dto.GetResidentUserInfoDto(), true);
                     //数据日志存入
                     param.CardPwd = "******";
                     Logs.LogWriteData(new LogWriteDataParam()
@@ -750,14 +781,7 @@ namespace BenDingActive.Service
                         ReturnJson = JsonConvert.SerializeObject(userData),
                         OperatorId = baseParam.OperatorId
                     });
-                    if (userData.ReturnState == "1")
-                    {
-                        resultData.Data = JsonConvert.SerializeObject(userData);
-                    }
-                    else
-                    {
-                        throw new Exception(userData.Msg);
-                    }
+                    
                 }
 
             }
