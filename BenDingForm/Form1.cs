@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -36,13 +37,12 @@ namespace BenDingForm
         public Form1()
         {
             InitializeComponent();
-            String[] arr = new String[] { "明泰", "德卡", "德生","大华"};
+            String[] arr = new String[] { "明泰", "德卡", "德生"};
             for (int i = 0; i < arr.Length; i++)
             {
                 comboBox1.Items.Add(arr[i]); // 手动添加值
             }
-            comboBox1.SelectedIndex = 0;
-            comboBox1.SelectedItem = "明泰";
+         
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -147,7 +147,7 @@ namespace BenDingForm
            
             var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             var paramEntity = new ReadCardInfoParam();
-            paramEntity.CardPwd = "890811";
+            //paramEntity.CardPwd = "890811";
             paramEntity.InsuranceType = 0;
 
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
@@ -172,7 +172,77 @@ namespace BenDingForm
             //端口号
             int port = Convert.ToInt16(iniFile.GetIni());
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            var path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件" : @"C:\Program Files\Microsoft\本鼎医保插件";
+            var iniFile = new IniFile("");
+            string cardTypeName = "";
+            //   { "明泰", "德卡", "德生","大华"};
+            var indexData = comboBox1.SelectedIndex;
+            switch (indexData)
+            {
+                case 0:
+                    cardTypeName = "hd";
+                  break;
+                case 1:
+                    CopyDirectory( path+"\\dk", path);
+                    cardTypeName = "'HNSICRW.dll'";
+                    break;
+                case 2:
+                    CopyDirectory(path + "\\ds", path);
+                    cardTypeName = "'LSCard.dll'";
+                    break;
+                
+
+            }
+           iniFile.SetCardType(cardTypeName);
+        }
+
+        public void CopyDirectory(string scrPath, string savePath)
+        {
+            if (Directory.Exists(scrPath))//检查路径(目录)是否存在
+            {
+                if (!Directory.Exists(savePath))
+                    Directory.CreateDirectory(savePath);
+                string subSavePath = savePath;
+                string[] aFiles = Directory.GetFiles(scrPath);
+                string[] aDirectory = Directory.GetDirectories(scrPath);
+                for (int i = 0; i < aFiles.Length; i++)
+                {
+                    FileInfo fi = new FileInfo(aFiles[i]);
+                    long fileSize = fi.Length;//文件大小
+                    if (System.IO.File.Exists(subSavePath + "\\" + fi.Name))
+                    {
+                        File.Delete(subSavePath + "\\" + fi.Name);
+                    }
+                    File.Copy(aFiles[i], subSavePath + "\\" + fi.Name);
+                }
+                if (aDirectory.Length != 0)
+                {
+                    for (int i = 0; i < aDirectory.Length; i++)
+                    {
+                        string aName = aDirectory[i].Substring(aDirectory[i].LastIndexOf('\\'));
+                        CopyDirectory(aDirectory[i], subSavePath + aName);
+                    }
+                }
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb("ybx12865", "aaaaaa");
+            if (loginData != 1) throw new Exception("医保登陆失败!!!");
+            Logs.LogWrite(new LogParam()
+            {
+                Params = "0",
+                Msg = "登陆成功"
+
+            });
+        }
     }
-
-
 }
+
+
+

@@ -49,73 +49,79 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
+            this.button1.Location = new System.Drawing.Point(414, 41);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(104, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "获取基本资料";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 154);
+            this.textBox1.Location = new System.Drawing.Point(12, 93);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(697, 76);
+            this.textBox1.Size = new System.Drawing.Size(548, 76);
             this.textBox1.TabIndex = 1;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(122, 12);
+            this.button2.Location = new System.Drawing.Point(524, 38);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
             this.button2.Text = "入院登记";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(203, 12);
+            this.button3.Location = new System.Drawing.Point(442, 67);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(118, 23);
             this.button3.TabIndex = 3;
             this.button3.Text = "修改入院登记资料";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(12, 61);
+            this.button4.Location = new System.Drawing.Point(12, 41);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 4;
             this.button4.Text = "处方上传";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(93, 61);
+            this.button5.Location = new System.Drawing.Point(93, 41);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 5;
             this.button5.Text = "处方明细删除";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(174, 61);
+            this.button6.Location = new System.Drawing.Point(174, 41);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 6;
             this.button6.Text = "button6";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(327, 12);
+            this.button7.Location = new System.Drawing.Point(336, 12);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 7;
@@ -125,37 +131,40 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(255, 61);
+            this.button8.Location = new System.Drawing.Point(255, 41);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 8;
             this.button8.Text = "button8";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(408, 12);
+            this.button9.Location = new System.Drawing.Point(336, 41);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(75, 23);
             this.button9.TabIndex = 9;
             this.button9.Text = "电子医保测试";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(336, 61);
+            this.button10.Location = new System.Drawing.Point(200, 64);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 23);
             this.button10.TabIndex = 10;
             this.button10.Text = "刷卡测试";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Visible = false;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(417, 61);
+            this.button11.Location = new System.Drawing.Point(255, 12);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(75, 23);
             this.button11.TabIndex = 11;
@@ -165,7 +174,7 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(498, 61);
+            this.button12.Location = new System.Drawing.Point(174, 12);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(75, 23);
             this.button12.TabIndex = 12;
@@ -175,7 +184,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(93, 111);
+            this.textBox2.Location = new System.Drawing.Point(68, 14);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 13;
@@ -184,7 +193,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 114);
+            this.label1.Location = new System.Drawing.Point(0, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 14;
@@ -192,7 +201,7 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(498, 12);
+            this.button13.Location = new System.Drawing.Point(417, 11);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(75, 23);
             this.button13.TabIndex = 15;
@@ -203,16 +212,17 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(588, 15);
+            this.comboBox1.Location = new System.Drawing.Point(507, 14);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 16;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(733, 291);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.label1);
@@ -231,7 +241,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "社保卡类型设置";
             this.ResumeLayout(false);
             this.PerformLayout();
 

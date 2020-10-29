@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using BenDingActive.Help;
@@ -702,6 +705,22 @@ namespace BenDingActive.Service
 
         public ApiJsonResultData ReadCardInfo(string paramStr, HisBaseParam baseParam)
         {
+
+            //string filename = CommonHelp.GetPathStr() + "\\YiBinActiveClient.exe";
+            //string s = "{\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"OperatorId\":\"76EDB472F6E544FD8DC8D354BB088BD7\",\"InsuranceType\":null,\"IdentityMark\":\"500233199005223447\",\"AfferentSign\":\"1\"}";
+
+            //Process myprocess = new Process();
+            //ProcessStartInfo startInfo = new ProcessStartInfo(filename, s);
+            //myprocess.StartInfo = startInfo;
+            //myprocess.StartInfo.CreateNoWindow = true;//不显示程序窗口
+            //myprocess.StartInfo.UseShellExecute = false;
+            //myprocess.StartInfo.RedirectStandardOutput = true;
+            //myprocess.StartInfo.RedirectStandardError = true;
+
+            //myprocess.Start();
+            //myprocess.WaitForExit();
+            //string output = myprocess.StandardOutput.ReadToEnd();
+
             var param = JsonConvert.DeserializeObject<ReadCardInfoParam>(paramStr);
             var resultData = new ApiJsonResultData { Success = true };
             //工作单位
@@ -711,10 +730,8 @@ namespace BenDingActive.Service
             //性别
             var patientSex = new byte[1024];
             var nation = new byte[1024];
-            
             //出生日期
             var birthDay = new byte[1024];
-
             //身份证号
             var idCardNo = new byte[1024];
             //联系地址
@@ -727,12 +744,9 @@ namespace BenDingActive.Service
             var resultState = new byte[1024];
             //消息
             var msg = new byte[1024];
-           
-            
             var userData = new GetResidentUserInfoDto();
             try
             {
-                
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 //居民职工
@@ -756,17 +770,12 @@ namespace BenDingActive.Service
                         resultState,
                         msg
                         );
-                    Logs.LogWrite(new LogParam()
-                    {
-                        Params = CommonHelp.StrToTransCoding(resultState) + "m",
-                        Msg = CommonHelp.StrToTransCoding(msg) + "m"
-
-                    });
+            
                     if (CommonHelp.StrToTransCoding(resultState) != "1") throw new Exception(CommonHelp.StrToTransCoding(msg));
 
                     userData = new GetResidentUserInfoDto()
                     {
-                        PO_XM= CommonHelp.StrToTransCoding(patientName),
+                        PO_XM = CommonHelp.StrToTransCoding(patientName),
                         PO_XB = CommonHelp.StrToTransCoding(patientSex),
                         PO_LXDZ = CommonHelp.StrToTransCoding(birthPlace),
                         PO_ZGZHYE = CommonHelp.StrToTransCoding(insuranceBalance),
@@ -781,7 +790,7 @@ namespace BenDingActive.Service
                         ReturnJson = JsonConvert.SerializeObject(userData),
                         OperatorId = baseParam.OperatorId
                     });
-                    
+
                 }
 
             }

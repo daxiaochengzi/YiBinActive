@@ -22,6 +22,7 @@ namespace BenDingActive
           /// <returns></returns>
         public string OutpatientMethods(string param, string baseParam, string methodName)
         {
+            System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());
             //反射获取 命名空间 + 类名
             string className = "BenDingActive.Service.OutpatientDepartmentService";
             var resultData=  MedicalInsuranceExecute(param, baseParam, methodName, className);
@@ -36,6 +37,7 @@ namespace BenDingActive
         /// <returns></returns>
         public string HospitalizationMethods(string param, string baseParam, string methodName)
         {
+            System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());
             //反射获取 命名空间 + 类名
             string className = "BenDingActive.Service.HospitalizationService";
             var resultData = MedicalInsuranceExecute(param, baseParam, methodName, className);

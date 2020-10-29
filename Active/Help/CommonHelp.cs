@@ -54,5 +54,26 @@ namespace BenDingActive.Help
 
             return connStr;
         }
+        /// <summary>
+        /// 获取路径
+        /// </summary>
+        /// <returns></returns>
+        public static string GetPathStr()
+        {
+            string connStr = null;
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            if (is64Bit)
+            {
+
+                connStr = @"C:\Program Files (x86)\Microsoft\本鼎医保插件";
+            }
+            else
+            {
+
+                connStr = @"C:\Program Files\Microsoft\本鼎医保插件";
+            }
+
+            return connStr;
+        }
     }
 }

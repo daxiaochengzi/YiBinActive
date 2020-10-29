@@ -188,7 +188,9 @@ namespace BenDingActive.Service
         /// <param name="param"></param>
         public ApiJsonResultData WorkerCancelSettlementCard(string param, HisBaseParam baseParam)
         {
-            var resultData = MedicalInsuranceOperation(param, baseParam,
+          
+             
+               var resultData = MedicalInsuranceOperation(param, baseParam,
                 "CXJB027", "账户划卡回退");
             return resultData;
         }
