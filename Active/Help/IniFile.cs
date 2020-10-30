@@ -63,6 +63,15 @@ namespace BenDingActive.Help
             myFile.IniWriteValue("DLL", "dll", cardType);
             return port;
         }
+        public string ReadCardType()
+        {
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\hnsi.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\hnsi.ini";
+            IniFile myFile = new IniFile(path);
+            var port = myFile.IniReadValue("DLL", "dll");
+          
+            return port;
+        }
         /// <summary>
         /// 获取电子医保凭证地址
         /// </summary>

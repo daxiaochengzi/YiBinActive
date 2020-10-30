@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace BenDingForm
 {
     public partial class Form1 : Form
     {
+        private int typeCard = 0;
          HospitalizationService hospitalService = new HospitalizationService();
            OutpatientDepartmentService _residentd = new OutpatientDepartmentService();
         //HisBaseParam _hisBase=new HisBaseParam()
@@ -37,12 +39,33 @@ namespace BenDingForm
         public Form1()
         {
             InitializeComponent();
-            String[] arr = new String[] { "明泰", "德卡", "德生"};
+
+            String[] arr = new String[] { "华大", "德卡", "德生", "明泰" };
             for (int i = 0; i < arr.Length; i++)
             {
                 comboBox1.Items.Add(arr[i]); // 手动添加值
             }
-         
+            //卡类型编码
+            var iniFile = new  IniFile("");
+            var cardTypeCode = iniFile.ReadCardType();
+            switch (cardTypeCode)
+            {
+                case "hd":
+                    comboBox1.SelectedIndex = 0;
+                    break;
+                case "HNSICRW.dll":
+                    comboBox1.SelectedIndex = 1;
+                    break;
+                case "LSCard.dll":
+                    comboBox1.SelectedIndex = 2;
+                    break;
+                case "YB_SSSReaderMT.dll":
+                    comboBox1.SelectedIndex = 3;
+                    break;
+
+            }
+          
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -179,13 +202,23 @@ namespace BenDingForm
             var path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件" : @"C:\Program Files\Microsoft\本鼎医保插件";
             var iniFile = new IniFile("");
             string cardTypeName = "";
-            //   { "明泰", "德卡", "德生","大华"};
+            //   { "明泰", "德卡", "德生","华大"};
             var indexData = comboBox1.SelectedIndex;
+            if (typeCard==0)
+            {
+                typeCard = 1;
+            }
+            else
+            {
+                KillProcess("iexplore");
+            }
+           
             switch (indexData)
             {
                 case 0:
+                    CopyDirectory(path + "\\hd", path);
                     cardTypeName = "hd";
-                  break;
+                    break;
                 case 1:
                     CopyDirectory( path+"\\dk", path);
                     cardTypeName = "'HNSICRW.dll'";
@@ -193,6 +226,10 @@ namespace BenDingForm
                 case 2:
                     CopyDirectory(path + "\\ds", path);
                     cardTypeName = "'LSCard.dll'";
+                    break;
+                case 3:
+                    CopyDirectory(path + "\\mt", path);
+                    cardTypeName = "'YB_SSSReaderMT.dll'";
                     break;
                 
 
@@ -240,6 +277,36 @@ namespace BenDingForm
                 Msg = "登陆成功"
 
             });
+        }
+        /// <summary>
+        /// 杀掉FoxitReader进程
+        /// </summary>
+        /// <param name="strProcessesByName"></param>
+        public static void KillProcess(string processName)
+        {
+            foreach (Process p in Process.GetProcesses())
+            {
+                if (p.ProcessName.Contains(processName))
+                {
+                    try
+                    {
+                        p.Kill();
+                        p.WaitForExit(); // possibly with a timeout
+                       
+                    }
+                    catch (Win32Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                      
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        MessageBox.Show(e.Message);
+                       
+                    }
+                }
+
+            }
         }
     }
 }
