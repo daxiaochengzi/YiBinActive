@@ -43,6 +43,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button13 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.CheckPwd = new System.Windows.Forms.CheckBox();
+            this.lbl_pwd = new System.Windows.Forms.Label();
+            this.txtPwd = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -61,7 +64,7 @@
             this.textBox1.Location = new System.Drawing.Point(12, 67);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(548, 76);
+            this.textBox1.Size = new System.Drawing.Size(594, 76);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "温馨提示:修改读卡器类型会关闭ie浏览器,请保存好工作内容!!!";
             // 
@@ -109,7 +112,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(50, 12);
+            this.button7.Location = new System.Drawing.Point(443, 41);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 7;
@@ -142,7 +145,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(136, 12);
+            this.button11.Location = new System.Drawing.Point(189, 12);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(75, 23);
             this.button11.TabIndex = 11;
@@ -182,7 +185,7 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(217, 12);
+            this.button13.Location = new System.Drawing.Point(270, 12);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(107, 23);
             this.button13.TabIndex = 15;
@@ -193,17 +196,49 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(330, 14);
+            this.comboBox1.Location = new System.Drawing.Point(381, 12);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 16;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // CheckPwd
+            // 
+            this.CheckPwd.AutoSize = true;
+            this.CheckPwd.Location = new System.Drawing.Point(521, 14);
+            this.CheckPwd.Name = "CheckPwd";
+            this.CheckPwd.Size = new System.Drawing.Size(96, 16);
+            this.CheckPwd.TabIndex = 18;
+            this.CheckPwd.Text = "加密密码键盘";
+            this.CheckPwd.UseVisualStyleBackColor = true;
+            this.CheckPwd.CheckedChanged += new System.EventHandler(this.CheckPwd_CheckedChanged);
+            // 
+            // lbl_pwd
+            // 
+            this.lbl_pwd.AutoSize = true;
+            this.lbl_pwd.Location = new System.Drawing.Point(36, 15);
+            this.lbl_pwd.Name = "lbl_pwd";
+            this.lbl_pwd.Size = new System.Drawing.Size(29, 12);
+            this.lbl_pwd.TabIndex = 19;
+            this.lbl_pwd.Text = "密码";
+            this.lbl_pwd.Visible = false;
+            // 
+            // txtPwd
+            // 
+            this.txtPwd.Location = new System.Drawing.Point(83, 12);
+            this.txtPwd.Name = "txtPwd";
+            this.txtPwd.Size = new System.Drawing.Size(100, 21);
+            this.txtPwd.TabIndex = 20;
+            this.txtPwd.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 180);
+            this.ClientSize = new System.Drawing.Size(632, 194);
+            this.Controls.Add(this.txtPwd);
+            this.Controls.Add(this.lbl_pwd);
+            this.Controls.Add(this.CheckPwd);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.label1);
@@ -244,6 +279,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.CheckBox CheckPwd;
+        private System.Windows.Forms.Label lbl_pwd;
+        private System.Windows.Forms.TextBox txtPwd;
     }
 }
 

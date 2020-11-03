@@ -64,7 +64,20 @@ namespace BenDingForm
                     break;
 
             }
-          
+
+            var codePwd = iniFile.ReadKeyPwd();
+            if (codePwd == "1")
+            {
+                CheckPwd.Checked = true;
+            }
+
+            else
+            {
+                lbl_pwd.Visible = true;
+                txtPwd.Visible = true;
+            }
+
+
 
         }
 
@@ -167,12 +180,20 @@ namespace BenDingForm
         private void button11_Click(object sender, EventArgs e)
         {
             var macActiveX = new MacActiveX();
-           
             var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             var paramEntity = new ReadCardInfoParam();
-            //paramEntity.CardPwd = "890811";
+            if (CheckPwd.Checked == false)
+            {
+                if (string.IsNullOrWhiteSpace(txtPwd.Text))
+                {
+                    MessageBox.Show("密码不能为空!!!");
+                }
+                else
+                {
+                    paramEntity.CardPwd = txtPwd.Text;
+                }
+            }
             paramEntity.InsuranceType = 0;
-
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
             var data = macActiveX.OutpatientMethods(JsonConvert.SerializeObject(paramEntity), baseParam, "ReadCardInfo");
             textBox1.Text = data;
@@ -307,6 +328,27 @@ namespace BenDingForm
                 }
 
             }
+        }
+
+        private void CheckPwd_CheckedChanged(object sender, EventArgs e)
+        {
+           
+          
+            var iniKeyPwd = new IniFile("");
+            if (this.CheckPwd.Checked)
+            {
+                iniKeyPwd.SetKeyPwd(1);
+                lbl_pwd.Visible = false;
+                txtPwd.Visible = false;
+            }
+            else
+            {
+                iniKeyPwd.SetKeyPwd(0);
+                lbl_pwd.Visible = true;
+                txtPwd.Visible = true;
+
+            }
+           
         }
     }
 }

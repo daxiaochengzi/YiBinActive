@@ -119,6 +119,16 @@ namespace BenDingActive
         { //生成数据文件夹
             XmlHelp.CheckFolders();
             return 100;
+        } /// <summary>
+        /// 设置密码键盘
+        /// </summary>
+        /// <returns></returns>
+        public string CheckPwd()
+        {  
+            var iniFile = new IniFile("");
+            var pwdCode = iniFile.ReadKeyPwd();
+            return pwdCode;
         }
+        
     }
 }

@@ -73,6 +73,31 @@ namespace BenDingActive.Help
             return port;
         }
         /// <summary>
+        /// 读取密码键盘状态
+        /// </summary>
+        /// <returns></returns>
+        public string ReadKeyPwd()
+        {
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\hnsi.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\hnsi.ini";
+            IniFile myFile = new IniFile(path);
+            var port = myFile.IniReadValue("KEYBORD", "PASS");
+            return port;
+        }
+        /// <summary>
+        /// 设置是否使用密码键盘
+        /// </summary>
+        /// <param name="isUse"></param>
+        /// <returns></returns>
+        public void SetKeyPwd(int isUse)
+        {
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\hnsi.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\hnsi.ini";
+            IniFile myFile = new IniFile(path);
+            myFile.IniWriteValue("KEYBORD", "PASS", isUse.ToString());
+
+        }
+        /// <summary>
         /// 获取电子医保凭证地址
         /// </summary>
         /// <returns></returns>
