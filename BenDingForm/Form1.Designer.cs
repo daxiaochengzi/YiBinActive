@@ -46,6 +46,7 @@
             this.CheckPwd = new System.Windows.Forms.CheckBox();
             this.lbl_pwd = new System.Windows.Forms.Label();
             this.txtPwd = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -231,11 +232,21 @@
             this.txtPwd.TabIndex = 20;
             this.txtPwd.Visible = false;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(484, 149);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 21;
+            this.button6.Text = "异地";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 194);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.txtPwd);
             this.Controls.Add(this.lbl_pwd);
             this.Controls.Add(this.CheckPwd);
@@ -282,6 +293,7 @@
         private System.Windows.Forms.CheckBox CheckPwd;
         private System.Windows.Forms.Label lbl_pwd;
         private System.Windows.Forms.TextBox txtPwd;
+        private System.Windows.Forms.Button button6;
     }
 }
 
