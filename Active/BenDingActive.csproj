@@ -124,6 +124,7 @@
     <Compile Include="Help\XmlHelp.cs" />
     <Compile Include="Service\HospitalizationService.cs" />
     <Compile Include="Service\WorKerService.cs" />
+    <Compile Include="Service\YdMedicalInsurance.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Params\Basiclevel\Param\" />

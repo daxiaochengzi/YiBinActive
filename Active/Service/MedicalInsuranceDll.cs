@@ -275,32 +275,39 @@ namespace BenDingActive.Service
       #endregion
         #region 异地 
         /// <summary>
-        /// 链接服务器
+        /// 异地链接服务器
         /// </summary>
         /// <param name="aLoginID"></param>
         /// <param name="aUserPwd"></param>
         /// <returns></returns>
         [DllImport("YBRSHisInterface.dll", EntryPoint = "ConnectAppServer", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern int ConnectAppServer(String aLoginID, String aUserPwd);
+        public static extern int YdConnectAppServer(string aLoginID, string aUserPwd);
         /// <summary>
-        /// 读卡
+        /// 异地读卡
         /// </summary>
         /// <param name="aReaderPort">端口号</param>
         /// <param name="aCardPasswd">密码</param>
         /// <returns></returns>
-        [DllImport("YBRSHisInterface.dll", EntryPoint = "ConnectAppServer", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public static extern int ReadCardInfo(int aReaderPort, string aCardPasswd);
-        #endregion
+        [DllImport("YBRSHisInterface.dll", EntryPoint = "ReadCardInfo", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int YdReadCardInfo(int aReaderPort, string aCardPasswd);
 
+        /// <summary>
+        /// 异地交易
+        /// </summary>
+        /// <param name="funcCode"></param>
+        /// <returns></returns>
+        [DllImport("YBRSHisInterface.dll", EntryPoint = "yyjk_call", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern int yyjk_call(string funcCode);
+        #endregion
         #region 电子医保支付
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="pi_jydm">交易码</param>
-       /// <param name="pi_url">地址</param>
-       /// <param name="po_fhz"></param>
-       /// <param name="po_msg"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pi_jydm">交易码</param>
+        /// <param name="pi_url">地址</param>
+        /// <param name="po_fhz"></param>
+        /// <param name="po_msg"></param>
+        /// <returns></returns>
         [DllImport("yyjk.dll", EntryPoint = "NationEcTrans_call", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int NationEcTrans_call(
             string pi_jydm,
