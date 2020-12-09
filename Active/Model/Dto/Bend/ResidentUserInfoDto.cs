@@ -152,5 +152,11 @@ namespace BenDingActive.Model.Dto.Bend
         /// 系统错误信息
         /// </summary>
         public string Msg { get; set; }
+        /// <summary>
+        /// 卡号
+        /// </summary>
+
+     
+        public string CardNo { get; set; }
     }
 }

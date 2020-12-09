@@ -46,11 +46,12 @@
             this.CheckPwd = new System.Windows.Forms.CheckBox();
             this.lbl_pwd = new System.Windows.Forms.Label();
             this.txtPwd = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(252, 41);
+            this.button1.Location = new System.Drawing.Point(352, 41);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(104, 23);
             this.button1.TabIndex = 0;
@@ -70,7 +71,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(362, 38);
+            this.button2.Location = new System.Drawing.Point(462, 38);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -92,7 +93,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(12, 41);
+            this.button4.Location = new System.Drawing.Point(2, 41);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 4;
@@ -102,7 +103,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(93, 41);
+            this.button5.Location = new System.Drawing.Point(83, 41);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 5;
@@ -112,7 +113,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(443, 41);
+            this.button7.Location = new System.Drawing.Point(543, 41);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 7;
@@ -123,13 +124,12 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(174, 41);
+            this.button9.Location = new System.Drawing.Point(164, 41);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(75, 23);
             this.button9.TabIndex = 9;
             this.button9.Text = "电子医保测试";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
@@ -231,11 +231,22 @@
             this.txtPwd.TabIndex = 20;
             this.txtPwd.Visible = false;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(245, 41);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(110, 23);
+            this.button6.TabIndex = 21;
+            this.button6.Text = "电子凭证身份识别";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 194);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.txtPwd);
             this.Controls.Add(this.lbl_pwd);
             this.Controls.Add(this.CheckPwd);
@@ -282,6 +293,7 @@
         private System.Windows.Forms.CheckBox CheckPwd;
         private System.Windows.Forms.Label lbl_pwd;
         private System.Windows.Forms.TextBox txtPwd;
+        private System.Windows.Forms.Button button6;
     }
 }
 

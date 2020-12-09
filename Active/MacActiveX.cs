@@ -43,7 +43,33 @@ namespace BenDingActive
             var resultData = MedicalInsuranceExecute(param, baseParam, methodName, className);
             return resultData;
         }
-       
+        /// <summary>
+        /// 异地医保方法集合
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
+        public string YdMedicalInsuranceMethods(string param, string baseParam, string methodName)
+        {
+            string resultData = "";
+            var ydService = new YdMedicalInsuranceService();
+            var baseParams = JsonConvert.DeserializeObject<HisBaseParam>(baseParam);
+            System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());
+            if (methodName == "YdReadCardInfo")
+            {
+                resultData = JsonConvert.SerializeObject(ydService.GetUserInfo(param, baseParams));
+            }
+            else
+            {
+                resultData = JsonConvert.SerializeObject(ydService.YdMedicalInsuranceOperation(param, baseParams, methodName));
+            }
+
+            //反射获取 命名空间 + 类名
+            //string className = "BenDingActive.Service.YdMedicalInsuranceService";
+            //var resultData = MedicalInsuranceExecute(param, baseParam, methodName, className);
+                return resultData;
+        }
 
         /// <summary>
         /// 医保执行

@@ -350,6 +350,14 @@ namespace BenDingForm
             }
            
         }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            var data = hospitalService.NationEcTransUser(null, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+            textBox1.Text = data.Data;
+            
+        }
     }
 }
 

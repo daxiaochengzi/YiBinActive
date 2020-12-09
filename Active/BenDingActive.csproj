@@ -91,6 +91,7 @@
     <Compile Include="Model\Dto\Bend\UserInfoDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardBackDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardDto.cs" />
+    <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
     <Compile Include="Model\Params\Service\WorkerBaseParam.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalizationPreSettlementDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalizationRegisterDto.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Help\XmlHelp.cs" />
     <Compile Include="Service\HospitalizationService.cs" />
     <Compile Include="Service\WorKerService.cs" />
+    <Compile Include="Service\YdMedicalInsuranceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Params\Basiclevel\Param\" />

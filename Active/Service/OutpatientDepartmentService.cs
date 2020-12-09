@@ -234,7 +234,6 @@ namespace BenDingActive.Service
             return data;
 
         }
-
         /// <summary>
         /// 普通门诊结算
         /// </summary>

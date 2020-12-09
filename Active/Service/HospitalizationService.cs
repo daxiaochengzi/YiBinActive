@@ -1143,22 +1143,21 @@ namespace BenDingActive.Service
         {
             var resultData = new ApiJsonResultData { Success = true };
 
-            param= "<?xml version='1.0' encoding='utf-16'?>";
-            param += @"<ROW>
-                <BKC142>0.03</BKC142>
-                <HKLB>1</HKLB>
-                <NUMS>1</NUMS>
-                <DATAROW>
-                    <ROW>
-                        <BKE019>0</BKE019>
-                        <AAZ231>5563098105443035015</AAZ231>
-                        <BKE026>44FD8DC8D354BB088BD7</BKE026>
-                        <BKE027>维生素C片</BKE027>
-                        <AKC225>1</AKC225>
-                        <AKC226>0.0250</AKC226>
-                        <AKC264>0.03</AKC264>
-                    </ROW>
-                </DATAROW>
+            param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
+            param += @"<BKC142>0.03</BKC142>
+              <HKLB>1</HKLB>
+              <NUMS>1</NUMS>
+              <DATAROW>
+                <ROW>
+                  <BKE019>0</BKE019>
+                  <AAZ231>86901162001518</AAZ231>
+                  <BKE026>5507949376579844504</BKE026>
+                  <BKE027>维生素C片</BKE027>
+                  <AKC225>0.0250</AKC225>
+                  <AKC226>1</AKC226>
+                  <AKC264>0.03</AKC264>
+                </ROW>
+              </DATAROW>
             </ROW>";
             string code = "DZPZ001";
             var iniFile = new IniFile("");
@@ -1185,6 +1184,12 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception(tipsMsg + "医保执行失败!!!");
                 int result = MedicalInsuranceDll.NationEcTrans_call(code, nationEcTransUrl, resultState, msg);
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = "123123",
+                    Msg ="77777"+ CommonHelp.StrToTransCoding(msg)
+
+                });
                 if (result == 1)
                 {
                     var resultStr = XmlHelp.SerializerModelJson();
@@ -1225,6 +1230,55 @@ namespace BenDingActive.Service
         
             return resultData;
         }
+
+        public ApiJsonResultData NationEcTransUser(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            //返回状态
+            var resultState = new byte[1024];
+            try
+            {
+                //消息
+                var msg = new byte[1024];
+                var iniFile = new IniFile("");
+                //端口号
+                var nationEcTransUrl = iniFile.NationEcTransUrl();
+                string url = "";
+                string tipsMsg = "电子社保卡支付";
+
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                if (loginData != 1) throw new Exception(tipsMsg + "医保执行失败!!!");
+                int result = MedicalInsuranceDll.NationEcTrans_call("DZPZ002", nationEcTransUrl, resultState, msg);
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = "123123",
+                    Msg = "77777" + CommonHelp.StrToTransCoding(msg)
+
+                });
+                if (result == 1)
+                {
+                    var data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
+                    resultData.Data = JsonConvert.SerializeObject(data);
+                }
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogWrite(new LogParam()
+                {
+                    Msg = e.Message,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = "",
+                    TransactionCode = "DZPZ002",
+                  
+
+                });
+            }
+
+            return resultData;
+        }
+
         public ApiJsonResultData ReadCardInfo(string cardPwd, HisBaseParam baseParam)
         {
             
