@@ -25,7 +25,8 @@ namespace BenDingForm
     {
         private int typeCard = 0;
          HospitalizationService hospitalService = new HospitalizationService();
-           OutpatientDepartmentService _residentd = new OutpatientDepartmentService();
+        OutpatientDepartmentService OutpatientService = new OutpatientDepartmentService();
+        OutpatientDepartmentService _residentd = new OutpatientDepartmentService();
         //HisBaseParam _hisBase=new HisBaseParam()
         //{
 
@@ -76,8 +77,6 @@ namespace BenDingForm
                 lbl_pwd.Visible = true;
                 txtPwd.Visible = true;
             }
-
-
 
         }
 
@@ -148,7 +147,25 @@ namespace BenDingForm
         private void button9_Click(object sender, EventArgs e)
         {
             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
-            var data = hospitalService.NationEcTrans(null, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+            string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+            // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
+           param += "<ROW>";
+            param += @"<BKC142>0.03</BKC142>
+              <HKLB>1</HKLB>
+              <NUMS>1</NUMS>
+              <DATAROW>
+                <ROW>
+                  <BKE019>0</BKE019>
+                  <AAZ231>86901162001518</AAZ231>
+                  <BKE026>5507949376579844504</BKE026>
+                  <BKE027>维生素C片</BKE027>
+                  <AKC225>0.0250</AKC225>
+                  <AKC226>1</AKC226>
+                  <AKC264>0.03</AKC264>
+                </ROW>
+              </DATAROW>
+            </ROW>";
+            var data = OutpatientService.NationEcTrans(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             textBox1.Text = data.Data;
         }
 
@@ -354,7 +371,7 @@ namespace BenDingForm
         private void button6_Click_1(object sender, EventArgs e)
         {
             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
-            var data = hospitalService.NationEcTransUser(null, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+            var data = OutpatientService.NationEcTransUser(null, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             textBox1.Text = data.Data;
             
         }

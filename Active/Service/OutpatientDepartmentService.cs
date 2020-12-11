@@ -936,6 +936,180 @@ namespace BenDingActive.Service
             };
             return resultData;
         }
+        public ApiJsonResultData NationEcTrans(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+
+            
+            string code = "DZPZ001";
+            var iniFile = new IniFile("");
+            //端口号
+            var nationEcTransUrl = iniFile.NationEcTransUrl();
+
+            try
+            {
+                string url = "";
+                string tipsMsg = "电子社保卡支付";
+
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = param,
+                    Msg = JsonConvert.SerializeObject(baseParam)
+
+                });
+                //返回状态
+                var resultState = new byte[1024];
+                //消息
+                var msg = new byte[1024];
+                var xmlStr = XmlHelp.SaveXmlStr(param);
+                if (!xmlStr) throw new Exception(tipsMsg + "保存参数出错!!!");
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                if (loginData != 1) throw new Exception(tipsMsg + "医保执行失败!!!");
+                int result = MedicalInsuranceDll.NationEcTrans_call(code, nationEcTransUrl, resultState, msg);
+                Logs.LogWrite(new LogParam()
+                {
+                    Params= "result:"+ result,
+                    Msg = "Msg" + CommonHelp.StrToTransCoding(msg)
+
+                });
+                var resultStr = XmlHelp.SerializerModelJson();
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = resultStr,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = code
+
+                });
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = code
+
+                });
+            }
+
+            return resultData;
+        }
+        public ApiJsonResultData NationEcTransResident(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+
+            
+            string code = "DZPZ003";
+            var iniFile = new IniFile("");
+            //端口号
+            var nationEcTransUrl = iniFile.NationEcTransUrl();
+
+            try
+            {
+                string url = "";
+                string tipsMsg = "电子社保卡支付";
+
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = param,
+                    Msg = JsonConvert.SerializeObject(baseParam)
+
+                });
+                //返回状态
+                var resultState = new byte[1024];
+                //消息
+                var msg = new byte[1024];
+                var xmlStr = XmlHelp.SaveXmlStr(param);
+                if (!xmlStr) throw new Exception(tipsMsg + "保存参数出错!!!");
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                if (loginData != 1) throw new Exception(tipsMsg + "医保执行失败!!!");
+                int result = MedicalInsuranceDll.NationEcTrans_call(code, nationEcTransUrl, resultState, msg);
+                Logs.LogWrite(new LogParam()
+                {
+                   
+                    Msg = "Msg" + CommonHelp.StrToTransCoding(msg)
+
+                });
+                var resultStr = XmlHelp.SerializerModelJson();
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = resultStr,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = code
+
+                });
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = code
+
+                });
+            }
+
+            return resultData;
+        }
+
+        public ApiJsonResultData NationEcTransUser(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            //返回状态
+            var resultState = new byte[1024];
+            try
+            {
+                //消息
+                var msg = new byte[1024];
+                var iniFile = new IniFile("");
+                //端口号
+                var nationEcTransUrl = iniFile.NationEcTransUrl();
+                string url = "";
+                string tipsMsg = "电子社保卡支付";
+
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                if (loginData != 1) throw new Exception(tipsMsg + "医保执行失败!!!");
+                int result = MedicalInsuranceDll.NationEcTrans_call("DZPZ002", nationEcTransUrl, resultState, msg);
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = "123123",
+                    Msg = "77777" + CommonHelp.StrToTransCoding(msg)
+
+                });
+                if (result == 1)
+                {
+                    var data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
+                    resultData.Data = JsonConvert.SerializeObject(data);
+                }
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogWrite(new LogParam()
+                {
+                    Msg = e.Message,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = "",
+                    TransactionCode = "DZPZ002",
+
+
+                });
+            }
+
+            return resultData;
+        }
 
     }
 }
