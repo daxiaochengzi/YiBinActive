@@ -1138,9 +1138,6 @@ namespace BenDingActive.Service
         }
         #endregion
         #region 电子医保支付
-
-        
-
         public ApiJsonResultData ReadCardInfo(string cardPwd, HisBaseParam baseParam)
         {
             

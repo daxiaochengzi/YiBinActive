@@ -311,7 +311,7 @@ namespace BenDingActive.Service
         /// <param name="po_fhz"></param>
         /// <param name="po_msg"></param>
         /// <returns></returns>
-        [DllImport("C:\\Program Files (x86)\\Microsoft\\本鼎医保插件\\yyjk.dll", EntryPoint = "NationEcTrans_call", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("yyjk.dll", EntryPoint = "NationEcTrans_call", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int NationEcTrans_call(
             string pi_jydm,
             string pi_url,

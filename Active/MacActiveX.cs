@@ -28,6 +28,20 @@ namespace BenDingActive
             var resultData=  MedicalInsuranceExecute(param, baseParam, methodName, className);
             return resultData;
         }
+        public string NationEcTrans(string param, string baseParam, string methodName)
+        {
+            System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());
+            string resultData = "";
+            var baseParams = JsonConvert.DeserializeObject<HisBaseParam>(baseParam);
+            var ddd =new OutpatientDepartmentService();
+            resultData =JsonConvert.SerializeObject(ddd.NationEcTransUser(param, baseParams));
+         
+            //反射获取 命名空间 + 类名
+           // string className = "BenDingActive.Service.OutpatientDepartmentService";
+            //var resultData = MedicalInsuranceExecute(param, baseParam, methodName, className);
+            return resultData;
+        }
+        
         /// <summary>
         /// 住院方法集合
         /// </summary>

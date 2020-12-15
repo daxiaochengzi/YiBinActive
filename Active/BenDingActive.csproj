@@ -112,6 +112,7 @@
     <Compile Include="Model\Params\UserInfoParam.cs" />
     <Compile Include="Model\ResidentIni.cs" />
     <Compile Include="Model\ResultData.cs" />
+    <Compile Include="Service\NationEcTrans64Dll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\OutpatientDepartmentService.cs" />
     <Compile Include="Service\ResidentMedicalInsuranceTest.cs" />

@@ -130,6 +130,7 @@
             this.button9.TabIndex = 9;
             this.button9.Text = "电子医保测试";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
@@ -161,6 +162,7 @@
             this.button12.TabIndex = 12;
             this.button12.Text = "取消划卡";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Visible = false;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // textBox2
@@ -170,6 +172,7 @@
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 13;
             this.textBox2.Text = "101080301174";
+            this.textBox2.Visible = false;
             // 
             // label1
             // 
@@ -179,6 +182,7 @@
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 14;
             this.label1.Text = "划卡流水号";
+            this.label1.Visible = false;
             // 
             // button13
             // 

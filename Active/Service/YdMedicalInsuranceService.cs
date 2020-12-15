@@ -95,8 +95,6 @@ namespace BenDingActive.Service
             try
             {//
 
-
-
                 var iniFile = new IniFile("");
                 //端口号
                 int port = Convert.ToInt16(iniFile.GetIni());

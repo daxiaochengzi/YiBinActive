@@ -315,7 +315,6 @@ namespace BenDingActive.Help
         public static bool SaveXmlStr(string strXmls)
         {
             string pathXml = null;
-         
             bool result = false;
             if (string.IsNullOrWhiteSpace(strXmls))
             {
@@ -366,6 +365,61 @@ namespace BenDingActive.Help
                 return result;
             }
         }
+
+        public static bool NationEcTransSaveXmlStr(string strXmls)
+        {
+            string pathXml = null;
+            bool result = false;
+            if (string.IsNullOrWhiteSpace(strXmls))
+            {
+                return result;
+            }
+            else
+            {
+                var is64Bit = Environment.Is64BitOperatingSystem;
+                if (is64Bit)
+                {
+                    pathXml = @"C:\Program Files (x86)\Microsoft\本鼎医保插件\电子凭证\" + "RequestParams.xml";
+                }
+                else
+                {
+                    pathXml = @"C:\Program Files\Microsoft\本鼎医保插件\电子凭证\" + "RequestParams.xml";
+                }
+                //pathXml = System.AppDomain.CurrentDomain.BaseDirectory + "RequestParams.xml";
+
+                //创建XmlDocument对象
+                XmlDocument xmlDocXml = new XmlDocument();
+                xmlDocXml.LoadXml(strXmls);
+
+                //创建XmlDocument对象
+                XmlDocument xmlDoc = new XmlDocument();
+                //XML的声明<?xml version="1.0" encoding="gb2312"?> 
+                XmlDeclaration xmlSM = xmlDoc.CreateXmlDeclaration("1.0", "GBK", null);
+                //追加xmldecl位置
+                xmlDoc.AppendChild(xmlSM);
+                //添加一个名为Row的根节点
+                XmlElement xml = xmlDoc.CreateElement("", "ROW", "");
+                string strXml = xmlDocXml.SelectSingleNode("ROW").InnerXml.ToString();
+                xml.InnerXml = strXml;
+                xmlDoc.AppendChild(xml);
+
+
+                if (File.Exists(pathXml))
+                {
+                    File.Delete(pathXml);
+                    xmlDoc.Save(pathXml);
+                    result = true;
+                }
+                else
+                {
+                    xmlDoc.Save(pathXml);
+                    result = true;
+                }
+                xmlDoc = null;
+                return result;
+            }
+        }
+
         public static string XmlSerialize<T>(T obj)
         {
             try

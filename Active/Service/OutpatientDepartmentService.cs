@@ -973,6 +973,7 @@ namespace BenDingActive.Service
 
                 });
                 var resultStr = XmlHelp.SerializerModelJson();
+                resultData.Data = resultStr;
                 Logs.LogWriteData(new LogWriteDataParam()
                 {
                     JoinJson = param,
@@ -1036,6 +1037,7 @@ namespace BenDingActive.Service
 
                 });
                 var resultStr = XmlHelp.SerializerModelJson();
+                resultData.Data = resultStr;
                 Logs.LogWriteData(new LogWriteDataParam()
                 {
                     JoinJson = param,
@@ -1087,11 +1089,16 @@ namespace BenDingActive.Service
                     Msg = "77777" + CommonHelp.StrToTransCoding(msg)
 
                 });
-                if (result == 1)
+                var data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
+                resultData.Data = JsonConvert.SerializeObject(data);
+                Logs.LogWriteData(new LogWriteDataParam()
                 {
-                    var data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
-                    resultData.Data = JsonConvert.SerializeObject(data);
-                }
+                    JoinJson = param,
+                    ReturnJson = resultData.Data,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "DZPZ002"
+
+                });
             }
             catch (Exception e)
             {
