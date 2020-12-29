@@ -158,6 +158,12 @@ namespace BenDingActive.Model.Dto.Bend
         [JsonProperty(PropertyName = "AAE013")]
         public string Remark { get; set; }
         /// <summary>
+        /// 项目大类别
+        /// </summary>
+        [XmlElementAttribute("AKA0633", IsNullable = false)]
+        [JsonProperty(PropertyName = "AKA0633")]
+        public string ProjectBigType { get; set; }
+        /// <summary>
         /// 新码标志
         /// </summary>
         [XmlElementAttribute("CKE897", IsNullable = false)]

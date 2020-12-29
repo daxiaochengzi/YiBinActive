@@ -94,7 +94,6 @@ namespace BenDingActive.Service
             var data = new YdUserInfoJsonDto();
             try
             {//
-
                 var iniFile = new IniFile("");
                 //端口号
                 int port = Convert.ToInt16(iniFile.GetIni());

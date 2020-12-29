@@ -55,6 +55,56 @@ namespace BenDingActive.Help
             return connStr;
         }
         /// <summary>
+        ///  字符串转换数值型
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static decimal ValueToDecimal(string param)
+        {
+            decimal resultData = 0;
+            if (!string.IsNullOrWhiteSpace(param))
+            {
+                resultData = Convert.ToDecimal(param);
+            }
+
+            return resultData;
+        }
+       
+        //入参字符串为空则为0
+        public static string getNum(string num)
+        {
+            string numValue = "0";
+            if (!string.IsNullOrWhiteSpace(num))
+            {
+                numValue = num;
+            }
+
+            return numValue;
+        }
+        /// <summary>
+        /// sql过滤不安全字符串
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string FilterSqlStr(string str)
+        {
+            if (!string.IsNullOrWhiteSpace(str))
+            {
+                str = str.Replace("'", "");
+                str = str.Replace(" ", "");
+                str = str.Replace("?", "");
+                str = str.Replace("\"", "");
+                str = str.Replace("&", "&amp");
+                str = str.Replace("<", "&lt");
+                str = str.Replace(">", "&gt");
+                str = str.Replace("delete", "");
+                str = str.Replace("update", "");
+                str = str.Replace("insert", "");
+            }
+
+            return str;
+        }
+        /// <summary>
         /// 获取路径
         /// </summary>
         /// <returns></returns>

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -196,8 +198,10 @@ namespace BenDingForm
 
         private void button11_Click(object sender, EventArgs e)
         {
+          
             var macActiveX = new MacActiveX();
             var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+        
             var paramEntity = new ReadCardInfoParam();
             if (CheckPwd.Checked == false)
             {
@@ -212,7 +216,7 @@ namespace BenDingForm
             }
             paramEntity.InsuranceType = 0;
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
-            var data = macActiveX.OutpatientMethods(JsonConvert.SerializeObject(paramEntity), baseParam, "ReadCardInfo");
+            var data = macActiveX.OutpatientMethods(txtPwd.Text, baseParam, "ReadCardInfo");
             textBox1.Text = data;
         }
 
@@ -374,6 +378,305 @@ namespace BenDingForm
             var data = OutpatientService.NationEcTransUser(null, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             textBox1.Text = data.Data;
             
+        }
+
+        private void button8_Click_1(object sender, EventArgs e)
+        {
+            string strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;";  //C#读取Excel的连接字符串  
+            strConnection += @"Data Source = D:\xmmx.accdb"; 
+       
+            //创建OleDb连接对象
+            try
+            {
+                OleDbConnection conn = new OleDbConnection(strConnection);
+                OleDbCommand cmd = conn.CreateCommand();
+               
+                cmd.CommandText = "select * from xmmx";
+                conn.Open();
+                OleDbDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                if (dr.HasRows)
+                {
+                    for (int i = 0; i < dr.FieldCount; i++)
+                    {
+                        dt.Columns.Add(dr.GetName(i));
+                    }
+                    dt.Rows.Clear();
+                }
+                while (dr.Read())
+                {
+                    DataRow row = dt.NewRow();
+                    for (int i = 0; i < dr.FieldCount; i++)
+                    {
+                        row[i] = dr[i];
+                    }
+                    dt.Rows.Add(row);
+                }
+                cmd.Dispose();
+                conn.Close();
+                var drugCatalogData = new List<ResidentProjectDownloadRowDataRowDto>();
+                int totalNum = 0;
+                foreach (DataRow drc in dt.Rows)
+                {
+                    var item = new ResidentProjectDownloadRowDataRowDto
+                    {
+                        ProjectCode = CommonHelp.FilterSqlStr(drc["AKA090"].ToString()),
+                        ProjectName = CommonHelp.FilterSqlStr(drc["AKA091"].ToString()),
+                        ProjectBigType = "1",//CommonHelp.FilterSqlStr(dr["1"].ToString()),// 1 药品 2 诊疗 3 材料 4 其他
+                        ProjectLevel = drc["AKA065"].ToString(),
+                        ProjectCodeType = CommonHelp.FilterSqlStr(drc["AKA063"].ToString()),
+                        WorkersSelfPayProportion = CommonHelp.getNum(drc["AKA069"].ToString()),
+                        ResidentSelfPayProportion = CommonHelp.getNum(drc["CKE899"].ToString()),
+                        Unit = CommonHelp.FilterSqlStr(drc["AKA067"].ToString()),
+                        Specification = drc["AKA074"].ToString(),
+                        Formulation = drc["AKA070"].ToString(),
+                        QuasiFontSize = CommonHelp.FilterSqlStr(drc["CKA603"].ToString()),
+                        RestrictionSign = drc["AKA036"].ToString() == "1" ? "1" : "0",
+                        LimitPaymentScope = CommonHelp.FilterSqlStr(drc["CKE599"].ToString()),
+                        MnemonicCode = CommonHelp.FilterSqlStr(drc["AKA066"].ToString()),
+                        ZeroBlock = CommonHelp.getNum(drc["CKA599"].ToString()),
+                        OneBlock = CommonHelp.getNum(drc["CKA578"].ToString()),
+                        TwoBlock = CommonHelp.getNum(drc["CKA579"].ToString()),
+                        ThreeBlock = CommonHelp.getNum(drc["CKA580"].ToString()),
+                        FourBlock = CommonHelp.getNum(drc["CKA560"].ToString()),
+                        Manufacturer = drc["AKA098"].ToString(),
+                        NewCodeMark = drc["CKE897"].ToString(),
+                        EffectiveSign = drc["AAE100"].ToString(),
+                        StartTime = drc["AAE030"].ToString(),
+                        EndTime = drc["AAE031"].ToString(),
+                        NewUpdateTime = drc["AAE036"].ToString(),
+                        Remark = drc["AAE013"].ToString(),
+                    };
+
+                    drugCatalogData.Add(item);
+
+                    if (drugCatalogData.Count() >= 300)
+                    {
+                        SaveDrugCatalog(drugCatalogData, "76EDB472F6E544FD8DC8D354BB088BD7");
+                        totalNum += drugCatalogData.Count();
+                        drugCatalogData = new List<ResidentProjectDownloadRowDataRowDto>();
+                    }
+                }
+                //执行剩余的数据
+                if (drugCatalogData.Any())
+                {
+                    SaveDrugCatalog(drugCatalogData, "76EDB472F6E544FD8DC8D354BB088BD7");
+                    totalNum += drugCatalogData.Count();
+                }
+
+                MessageBox.Show("导入数据:" + totalNum + "条");
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
+            // OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\\xmmx.accdb"); //Jet OLEDB:Database Password=
+            
+        }
+
+        private void SaveDrugCatalog(List<ResidentProjectDownloadRowDataRowDto> param, string userId)
+        {
+            string conStr = "server=.;database=Test;uid=sa;pwd=wdd@155066";
+            using (var sqlConnection = new SqlConnection(conStr))
+            {
+                string insterSql = null;
+                string insterCount = null;
+                try
+                {
+                    sqlConnection.Open();
+                    if (param.Any())
+                    {
+
+                        foreach (var item in param)
+                        {
+
+                            var projectName = CommonHelp.FilterSqlStr(item.ProjectName);
+                            insterSql = $@"INSERT INTO [dbo].[MedicalInsuranceProjectBak]
+                               (id,[ProjectCode],[ProjectName] ,[ProjectCodeType] ,[ProjectLevel],[WorkersSelfPayProportion]
+                               ,[Unit],[MnemonicCode] ,[Formulation],[ResidentSelfPayProportion],[RestrictionSign]
+                               ,[ZeroBlock],[OneBlock],[TwoBlock],[ThreeBlock],[FourBlock],[EffectiveSign],[ResidentOutpatientSign]
+                               ,[ResidentOutpatientBlock],[Manufacturer] ,[QuasiFontSize] ,[Specification],[Remark],[NewCodeMark]
+                               ,[NewUpdateTime],[StartTime] ,[EndTime],[LimitPaymentScope],[CreateTime],[CreateUserId],[IsDelete],[ProjectBigType]
+                               )
+                              VALUES('{Guid.NewGuid()}','{item.ProjectCode}','{projectName}','{item.ProjectCodeType}','{item.ProjectLevel}',{CommonHelp.ValueToDecimal(item.WorkersSelfPayProportion)}
+                                      ,'{item.Unit}','{item.MnemonicCode}', '{item.Formulation}',{CommonHelp.ValueToDecimal(item.ResidentSelfPayProportion)},'{item.RestrictionSign}'
+                                      ,{CommonHelp.ValueToDecimal(item.ZeroBlock)},{CommonHelp.ValueToDecimal(item.OneBlock)},{CommonHelp.ValueToDecimal(item.TwoBlock)},{CommonHelp.ValueToDecimal(item.ThreeBlock)},{CommonHelp.ValueToDecimal(item.FourBlock)},'{item.EffectiveSign}','{item.ResidentOutpatientSign}'
+                                      ,{CommonHelp.ValueToDecimal(item.ResidentOutpatientBlock)},'{item.Manufacturer}','{item.QuasiFontSize}','{item.Specification}','{item.Remark}','{item.NewCodeMark}'
+                                      ,'{item.NewUpdateTime}','{item.StartTime}','{item.EndTime}','{item.LimitPaymentScope}',GETDATE(),'{userId}',0,'{item.ProjectBigType}'
+                                   );";
+                            insterCount += insterSql;
+                        }
+                        SqlCommand com = new SqlCommand();
+
+                        com.CommandType = CommandType.Text;
+                        com.Connection = sqlConnection;
+                        com.CommandText = insterCount;
+                        com.ExecuteNonQuery();
+                        sqlConnection.Close();
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+
+
+
+            }
+        }
+        private DataTable SaveDataBase(string strsql)
+        {
+            //server=.;database=WR_DATA;uid=wr_zg_sl;pwd=sl@123456
+            //server=QUBER-PC-SAING\SQL2012;database=WR_DATA;uid=sa;pwd=123456
+            //125.66.152.66
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "server=.;database=Test;uid=sa;pwd=BenDingPwd@";
+            con.Open();
+            SqlCommand com = new SqlCommand();
+            com.Connection = con;
+            com.CommandType = CommandType.Text;
+            com.CommandText = strsql;
+            DataTable dt = new DataTable();
+            try
+            {
+                SqlDataReader dr = com.ExecuteReader();//执行SQL语句
+                dt.Load(dr);
+                dr.Close();//关闭执行
+                con.Close();//关闭数据库
+
+            }
+            catch (Exception ex)
+            {
+
+                
+
+            }
+            return dt;
+        }
+
+        private void button14_Click_1(object sender, EventArgs e)
+        {
+            var baseParam = "{\"Account\": \"ybx3105\", 	\"Pwd\": \"bbbb1234\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var data=OutpatientService.Login("",JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+            MessageBox.Show(data);
+            //Logs.LogWrite(new LogParam()
+            //{
+            //    Params = "111",
+
+            //    Msg = "333"
+            //});
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            string param = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            param += @" <ROW>
+                    <PI_AKC190>5413540383579899382</PI_AKC190>\r\n  
+                    <PI_AAC002>511502198711028868</PI_AAC002>\r\n  
+                    <PI_AAC003>吴能勇</PI_AAC003>\r\n  
+                    <PI_AKA131>1</PI_AKA131>\r\n
+                    <PI_CARDID>Y01926189</PI_CARDID>\r\n  
+                    <PI_ICD10>R10.402</PI_ICD10>\r\n  
+                    <PI_JBMC>腹痛</PI_JBMC>\r\n  
+                    <PI_NUM>2</PI_NUM>\r\n  
+                    <PI_AKB066>1.62</PI_AKB066>\r\n  
+                    <PI_XFSJ>20201228162221</PI_XFSJ>\r\n  
+                    <ROWDATA>\r\n    
+                        <ROW>\r\n      
+                            <BKE019>0</BKE019>\r\n      
+                            <AKE001>86901815000356</AKE001>\r\n      
+                            <AKE002>维生素C片</AKE002>\r\n      
+                            <CKE521>0.0250</CKE521>\r\n      
+                            <AKC226>1</AKC226>\r\n      
+                            <CKC526>0.02</CKC526>\r\n    
+                        </ROW>\r\n    
+                        <ROW>\r\n      
+                            <BKE019>1</BKE019>\r\n      
+                            <AKE001>110100001</AKE001>\r\n      
+                            <AKE002>挂号费</AKE002>\r\n      
+                            <CKE521>1.60</CKE521>\r\n      
+                            <AKC226>1</AKC226>\r\n      
+                            <CKC526>1.60</CKC526>\r\n    
+                        </ROW>\r\n  
+                    </ROWDATA>\r\n
+                </ROW>";
+        
+          
+            var data = OutpatientService.ResidentSettlement(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+
+            MessageBox.Show(data.Data);
+        }
+
+
+        private void button16_Click_2(object sender, EventArgs e)
+        {
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            string param = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            param += @"<ROW> 
+                    <PI_JSLB>1</PI_JSLB>
+                    <PI_AAZ216>1013426519</PI_AAZ216>
+                    <PI_AAC002>身份证号</PI_AAC002>
+                    <PI_AAC003>吴能勇</PI_AAC003>
+                    <PI_AKA131>1</PI_AKA131>
+                    <PI_CARDID>Y01926189</PI_CARDID>
+                    <PI_PSW>Y01926189</PI_PSW>
+                </ROW>";
+
+
+            var data = OutpatientService.ResidentSettlementCard(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            string param = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            param += @"<ROW> 
+                    <PI_AKC600>1013451212</PI_AKC600>
+                    <PI_AAE013>测试</PI_AAE013>
+                </ROW>";
+
+
+            var data = OutpatientService.CancelResidentSettlement(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+            MessageBox.Show(data.Data);
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+            // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
+          
+            param += @"<ROW> 
+                <PI_AKC190>5596002356832625993</PI_AKC190>
+                <PI_AAC002>51152519940825145X</PI_AAC002>
+                <PI_AAC003>雷洪</PI_AAC003>
+                <PI_ICD10>Z71.900</PI_ICD10>
+                <PI_JBMC>咨询</PI_JBMC>
+                <PI_NUM>1</PI_NUM>
+                <PI_AKB066>0.10</PI_AKB066>
+                <PI_XFSJ>20201226160851</PI_XFSJ>
+                <ROWDATA> 
+                    <ROW>    
+                        <BKE019>0</BKE019>
+                        <AKE001>YBYC00010</AKE001>  
+                        <AKE002>新筛外检</AKE002>
+                        <CKE521>0.10</CKE521>    
+                        <AKC226>1</AKC226>    
+                        <CKC526>0.10</CKC526>
+                    </ROW>
+                </ROWDATA>
+            </ROW>";
+            var data = OutpatientService.NationEcTransResident(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+            MessageBox.Show(data.Data);
+        }
+
+       
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

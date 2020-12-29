@@ -109,5 +109,13 @@ namespace BenDingActive.Help
             var port = myFile.IniReadValue("NationEcTrans", "Url");
             return port;
         }
+        public string OutpatientResidentUrl()
+        {
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\BenDing.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\BenDing.ini";
+            IniFile myFile = new IniFile(path);
+            var port = myFile.IniReadValue("OutpatientResident", "Url");
+            return port;
+        }
     }
 }

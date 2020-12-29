@@ -869,10 +869,7 @@ namespace BenDingActive.Service
                 var accountPayment = new byte[1024];
                 //现金支付
                 var cashPayment = new byte[1024];
-                ////返回状态
-                //var resultState = new byte[1024];
-                //消息
-                //var msg = new byte[1024];
+             
                 MedicalInsuranceDll.WorkerHospitalSettlement
                 (   port,
                     paramIni.CardPwd,

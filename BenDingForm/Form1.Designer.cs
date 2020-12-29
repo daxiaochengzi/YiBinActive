@@ -47,6 +47,12 @@
             this.lbl_pwd = new System.Windows.Forms.Label();
             this.txtPwd = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -71,7 +77,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(462, 38);
+            this.button2.Location = new System.Drawing.Point(461, 41);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -113,7 +119,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(543, 41);
+            this.button7.Location = new System.Drawing.Point(542, 41);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 7;
@@ -242,11 +248,83 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click_1);
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(472, 149);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 22;
+            this.button8.Text = "导数据";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Visible = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click_1);
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(245, 181);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(75, 23);
+            this.button14.TabIndex = 23;
+            this.button14.Text = "居民登陆测试";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Visible = false;
+            this.button14.Click += new System.EventHandler(this.button14_Click_1);
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(326, 181);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(110, 23);
+            this.button15.TabIndex = 24;
+            this.button15.Text = "居民结算";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Visible = false;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(539, 181);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(75, 23);
+            this.button16.TabIndex = 25;
+            this.button16.Text = "居民划卡";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Visible = false;
+            this.button16.Click += new System.EventHandler(this.button16_Click_2);
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(442, 181);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(91, 23);
+            this.button17.TabIndex = 26;
+            this.button17.Text = "居民取消报销";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Visible = false;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(129, 181);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(110, 23);
+            this.button18.TabIndex = 27;
+            this.button18.Text = "电子凭证居民";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Visible = false;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 194);
+            this.ClientSize = new System.Drawing.Size(647, 216);
+            this.Controls.Add(this.button18);
+            this.Controls.Add(this.button17);
+            this.Controls.Add(this.button16);
+            this.Controls.Add(this.button15);
+            this.Controls.Add(this.button14);
+            this.Controls.Add(this.button8);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.txtPwd);
             this.Controls.Add(this.lbl_pwd);
@@ -269,6 +347,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "医保读卡器设置";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,6 +374,12 @@
         private System.Windows.Forms.Label lbl_pwd;
         private System.Windows.Forms.TextBox txtPwd;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Button button18;
     }
 }
 

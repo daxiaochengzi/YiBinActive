@@ -101,7 +101,9 @@ namespace BenDingActive.Model.Dto
         /// 统筹支付余额
         /// </summary>
         public string PO_TCZFYE { get; set; }
-        
-     
+        public  string WorkersCardNo { get; set; }
+
+
+
     }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:intf="http://10.162.129.76:7001/web/services/YbsiService" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="http://10.162.129.76:7001/web/services/YbsiService" targetNamespace="http://10.162.129.76:7001/web/services/YbsiService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types />
+  <wsdl:message name="isUseCertSignResponse">
+    <wsdl:part name="isUseCertSignReturn" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="callServiceRequest">
+    <wsdl:part name="sid" type="soapenc:string" />
+    <wsdl:part name="inXml" type="soapenc:string" />
+    <wsdl:part name="operId" type="soapenc:string" />
+    <wsdl:part name="operPsw" type="soapenc:string" />
+    <wsdl:part name="base64Cert" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="callServiceResponse">
+    <wsdl:part name="callServiceReturn" type="soapenc:string" />
+  </wsdl:message>
+  <wsdl:message name="isUseCertSignRequest" />
+  <wsdl:portType name="YbsiService">
+    <wsdl:operation name="callService" parameterOrder="sid inXml operId operPsw base64Cert">
+      <wsdl:input name="callServiceRequest" message="impl:callServiceRequest" />
+      <wsdl:output name="callServiceResponse" message="impl:callServiceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="isUseCertSign">
+      <wsdl:input name="isUseCertSignRequest" message="impl:isUseCertSignRequest" />
+      <wsdl:output name="isUseCertSignResponse" message="impl:isUseCertSignResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="YbsiServiceSoapBinding" type="impl:YbsiService">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="callService">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="callServiceRequest">
+        <wsdlsoap:body use="encoded" namespace="http://service.yyjk.sinobest.cn" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="callServiceResponse">
+        <wsdlsoap:body use="encoded" namespace="http://10.162.129.76:7001/web/services/YbsiService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isUseCertSign">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="isUseCertSignRequest">
+        <wsdlsoap:body use="encoded" namespace="http://service.yyjk.sinobest.cn" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output name="isUseCertSignResponse">
+        <wsdlsoap:body use="encoded" namespace="http://10.162.129.76:7001/web/services/YbsiService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="YbsiServiceService">
+    <wsdl:port name="YbsiService" binding="impl:YbsiServiceSoapBinding">
+      <wsdlsoap:address location="http://10.162.129.76:7001/web/services/YbsiService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

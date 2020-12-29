@@ -4,9 +4,14 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using BenDingActive.Help;
 using BenDingActive.Model;
 using BenDingActive.Model.BendParam;
@@ -15,6 +20,7 @@ using BenDingActive.Model.Dto.Bend;
 using BenDingActive.Model.Dto.OutpatientDepartment;
 using BenDingActive.Model.Params;
 using BenDingActive.Model.Params.OutpatientDepartment;
+using BenDingActive.ServiceReferenceMedicalInsurance;
 using Newtonsoft.Json;
 
 namespace BenDingActive.Service
@@ -720,7 +726,7 @@ namespace BenDingActive.Service
             //myprocess.WaitForExit();
             //string output = myprocess.StandardOutput.ReadToEnd();
 
-            var param = JsonConvert.DeserializeObject<ReadCardInfoParam>(paramStr);
+          //  var param = JsonConvert.DeserializeObject<ReadCardInfoParam>(paramStr);
             var resultData = new ApiJsonResultData { Success = true };
             //工作单位
             var unitName = new byte[1024];
@@ -749,14 +755,13 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 //居民职工
-                if (param.InsuranceType == 0)
-                {
+          
                     var iniFile = new IniFile("");
                     //端口号
                     int port = Convert.ToInt16(iniFile.GetIni());
                     var readCardData = MedicalInsuranceDll.WorkerReadCardInfo(
                         port,
-                        param.CardPwd,
+                        paramStr,
                         unitName,
                         workersCardNo,
                         idCardNo,
@@ -778,19 +783,22 @@ namespace BenDingActive.Service
                         PO_XB = CommonHelp.StrToTransCoding(patientSex),
                         PO_LXDZ = CommonHelp.StrToTransCoding(birthPlace),
                         PO_ZGZHYE = CommonHelp.StrToTransCoding(insuranceBalance),
+                        WorkersCardNo = CommonHelp.StrToTransCoding(workersCardNo),
+                        PO_SFZH = CommonHelp.StrToTransCoding(idCardNo),
+                        PO_JBZHYE= CommonHelp.StrToTransCoding(insuranceBalance),
+                      
                     };
                     resultData.Data = JsonConvert.SerializeObject(userData);
                     //userData = XmlHelp.DeSerializerModel(new Model.Dto.GetResidentUserInfoDto(), true);
-                    //数据日志存入
-                    param.CardPwd = "******";
+                   
                     Logs.LogWriteData(new LogWriteDataParam()
                     {
-                        JoinJson = JsonConvert.SerializeObject(param),
+                     
                         ReturnJson = JsonConvert.SerializeObject(userData),
                         OperatorId = baseParam.OperatorId
                     });
 
-                }
+                
 
             }
             catch (Exception e)
@@ -801,7 +809,7 @@ namespace BenDingActive.Service
                 {
                     Msg = e.Message,
                     OperatorCode = baseParam.OperatorId,
-                    Params = Logs.ToJson(param),
+                   
                     TransactionCode = "ReadCard",
                     ResultData = Logs.ToJson(userData)
 
@@ -1051,6 +1059,7 @@ namespace BenDingActive.Service
             {
                 resultData.Success = false;
                 resultData.Message = e.Message;
+                var resultStr = XmlHelp.SerializerModelJson();
                 Logs.LogErrorWrite(new LogParam()
                 {
                     Msg = e.Message + "error:" + e.StackTrace,
@@ -1117,6 +1126,440 @@ namespace BenDingActive.Service
 
             return resultData;
         }
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <returns></returns>
+        public string Login(string param, HisBaseParam baseParam)
+        {
+            //Dictionary<string, string> parameters = new Dictionary<string, string>();
+            //parameters.Add("sid", "MZBX001");
+            //parameters.Add("inXml", "");
+            //parameters.Add("operId", baseParam.Account);
+            //parameters.Add("operPsw", baseParam.Pwd);
+            //parameters.Add("base64Cert", "");
 
+            //WebService(parameters, "callService");
+
+            var paramIni = new ResidentParam()
+            {
+                Sid = "MZBX001",
+                OperatorId = baseParam.Account,
+                OperatorPsw = baseParam.Pwd,
+                InXml = ""
+
+            };
+           var resultData= GetWebServiceData(paramIni);
+            
+            return resultData;
+        }
+        /// <summary>
+        /// 门诊居民结算
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+        public ApiJsonResultData ResidentSettlement(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            try
+            {
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = param,
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+               Login(param, baseParam);
+
+                
+                var paramIni = new ResidentParam()
+                {
+                    Sid = "MZBX003",
+                    OperatorId = baseParam.Account,
+                    OperatorPsw = baseParam.Pwd,
+                    InXml = param
+
+                };
+                var resultString = GetWebServiceData(paramIni);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = resultString,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "MZBX003"
+               });
+                resultData.Data = resultString;
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = "MZBX003"
+
+                });
+
+            }
+
+            return resultData;
+        }
+        /// <summary>
+        /// 门诊居民结算取消
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+        public ApiJsonResultData CancelResidentSettlement(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            try
+            {
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = param,
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+                Login(param, baseParam);
+                var paramIni = new ResidentParam()
+                {
+                    Sid = "MZBX004",
+                    OperatorId = baseParam.Account,
+                    OperatorPsw = baseParam.Pwd,
+                    InXml = param
+
+                };
+                var resultString = GetWebServiceData(paramIni);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = resultString,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "MZBX004"
+                });
+                resultData.Data = resultString;
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = "MZBX004"
+
+                });
+
+            }
+
+            return resultData;
+        }
+        /// <summary>
+        /// 门诊居民划卡
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+        public ApiJsonResultData ResidentSettlementCard(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            try
+            {
+                var paramIni = new ResidentParam()
+                {
+                    Sid = "MZBX013",
+                    OperatorId = baseParam.Account,
+                    OperatorPsw = baseParam.Pwd,
+                    InXml = param
+
+                };
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = JsonConvert.SerializeObject(paramIni),
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+                 Login(param, baseParam);
+                //Dictionary<string, string> parameters = new Dictionary<string, string>();
+                //parameters.Add("sid", "MZBX013");
+                //parameters.Add("inXml", param);
+                //parameters.Add("operId", baseParam.Account);
+                //parameters.Add("operPsw", baseParam.Pwd);
+                //parameters.Add("base64Cert", "");
+                var settlementData = GetWebServiceData(paramIni);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = settlementData,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "MZBX013"
+                });
+                resultData.Data = settlementData;
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = "MZBX013"
+
+                });
+
+            }
+            return resultData;
+        }
+        /// <summary>
+        /// 门诊居民结算查询
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+
+        public ApiJsonResultData ResidentSettlementQuery(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            try
+            {
+                var paramIni = new ResidentParam()
+                {
+                    Sid = "MZBX005",
+                    OperatorId = baseParam.Account,
+                    OperatorPsw = baseParam.Pwd,
+                    InXml = param
+
+                };
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = JsonConvert.SerializeObject(paramIni),
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+                Login(param, baseParam);
+                var settlementData = GetWebServiceData(paramIni);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = settlementData,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "MZBX005"
+                });
+                resultData.Data = settlementData;
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = "MZBX005"
+
+                });
+
+            }
+            return resultData;
+        }
+        /// <summary>
+        /// 门诊居民结算汇总
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+
+        public ApiJsonResultData ResidentSettlementSummary(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            try
+            {
+                var paramIni = new ResidentParam()
+                {
+                    Sid = "MZBX006",
+                    OperatorId = baseParam.Account,
+                    OperatorPsw = baseParam.Pwd,
+                    InXml = param
+
+                };
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = JsonConvert.SerializeObject(paramIni),
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+                Login(param, baseParam);
+                var settlementData = GetWebServiceData(paramIni);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = settlementData,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "MZBX006"
+                });
+                resultData.Data = settlementData;
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = "MZBX006"
+
+                });
+
+            }
+            return resultData;
+        }
+        /// <summary>
+        /// 门诊居民结算汇总取消
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+
+        public ApiJsonResultData ResidentSettlementSummaryCancel(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            try
+            {
+                var paramIni = new ResidentParam()
+                {
+                    Sid = "MZBX007",
+                    OperatorId = baseParam.Account,
+                    OperatorPsw = baseParam.Pwd,
+                    InXml = param
+
+                };
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = JsonConvert.SerializeObject(paramIni),
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+                Login(param, baseParam);
+                var settlementData = GetWebServiceData(paramIni);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = settlementData,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "MZBX007"
+                });
+                resultData.Data = settlementData;
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = "MZBX007"
+
+                });
+
+            }
+            return resultData;
+        }
+        /// <summary>
+        /// 门诊居民结算汇总查询
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+
+        public ApiJsonResultData ResidentSettlementSummaryQuery(string param, HisBaseParam baseParam)
+        {
+            var resultData = new ApiJsonResultData { Success = true };
+            try
+            {
+                var paramIni = new ResidentParam()
+                {
+                    Sid = "MZBX008",
+                    OperatorId = baseParam.Account,
+                    OperatorPsw = baseParam.Pwd,
+                    InXml = param
+
+                };
+                Logs.LogWrite(new LogParam()
+                {
+                    Params = JsonConvert.SerializeObject(paramIni),
+                    Msg = JsonConvert.SerializeObject(baseParam)
+                });
+                Login(param, baseParam);
+                var settlementData = GetWebServiceData(paramIni);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = settlementData,
+                    OperatorId = baseParam.OperatorId,
+                    TransactionCode = "MZBX008"
+                });
+                resultData.Data = settlementData;
+            }
+            catch (Exception e)
+            {
+                resultData.Success = false;
+                resultData.Message = e.Message;
+                Logs.LogErrorWrite(new LogParam()
+                {
+                    Msg = e.Message + "error:" + e.StackTrace,
+                    OperatorCode = baseParam.OperatorId,
+                    Params = Logs.ToJson(param),
+                    ResultData = resultData.Data,
+                    TransactionCode = "MZBX008"
+
+                });
+
+            }
+            return resultData;
+        }
+
+        private string GetWebServiceData(ResidentParam param)
+        {//11008
+           
+            // 创建 HTTP 绑定对象与设置最大传输接受数量
+            var binding = new BasicHttpBinding { MaxReceivedMessageSize = 2147483647 };
+            // 根据 WebService 的 URL 构建终端点对象
+            var iniFile = new IniFile("");
+            var urlStr = iniFile.OutpatientResidentUrl();
+            //正式
+            var endpoint = new EndpointAddress(urlStr);
+            // 创建调用接口的工厂，注意这里泛型只能传入接口 添加服务引用时生成的 webservice的接口 一般是 (XXXSoap)
+            var factory = new ChannelFactory<YbsiService>(binding, endpoint);
+            // 从工厂获取具体的调用实例 
+            var callClient = factory.CreateChannel();
+        
+            var paramIni = new callServiceRequest(
+                param.Sid,
+                param.InXml, 
+                param.OperatorId,
+                param.OperatorPsw,
+                param.Base64Cert);
+          
+            //var paramIni = new ExecuteSPRequest(new ExecuteSPRequestBody() {param = param});
+            var dataXml=  callClient.callService(paramIni);
+            var resultStr = dataXml.callServiceReturn;
+            var resultData = XmlHelp.DeSerializer<ResultBaseXmlDto>(resultStr);
+            if (resultData.ReturnState!="1") throw  new Exception(resultData.ReturnMsg);
+            return resultStr;
+        }
     }
 }
