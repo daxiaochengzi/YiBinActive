@@ -857,11 +857,10 @@ namespace BenDingActive.Service
                 var iniFile = new IniFile("");
                 //端口号
                 int port = Convert.ToInt16(iniFile.GetIni());
-
-                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
-               
                 var paramIni = JsonConvert.DeserializeObject<WorkerHospitalSettlementCardDto>(param);
                 ReadCardInfo(paramIni.CardPwd, baseParam);
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                if (loginData != 1) throw new Exception("医保登陆失败!!!");
                 //流水号
                 var serialNumber = new byte[1024];
               
@@ -1165,12 +1164,14 @@ namespace BenDingActive.Service
             var userData = new GetResidentUserInfoDto();
             try
             {//需要登陆
-                    //if (paramStr == "1")
-                    //{
-                    //    var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
-                    //    if (loginData != 1) throw new Exception("医保登陆失败!!!");
-                    //}
-                    var iniFile = new IniFile("");
+             //if (paramStr == "1")
+             //{
+             //    var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+             //    if (loginData != 1) throw new Exception("医保登陆失败!!!");
+             //}
+                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                  if (loginData != 1) throw new Exception("医保登陆失败!!!");
+                var iniFile = new IniFile("");
                     //端口号
                     int port = Convert.ToInt16(iniFile.GetIni());
                     var readCardData = MedicalInsuranceDll.WorkerReadCardInfo(
