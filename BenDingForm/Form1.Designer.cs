@@ -53,6 +53,8 @@
             this.button16 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
             this.button18 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -88,7 +90,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(93, 149);
+            this.button3.Location = new System.Drawing.Point(5, 178);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(118, 23);
             this.button3.TabIndex = 3;
@@ -162,9 +164,9 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(391, 149);
+            this.button12.Location = new System.Drawing.Point(267, 149);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 23);
+            this.button12.Size = new System.Drawing.Size(64, 23);
             this.button12.TabIndex = 12;
             this.button12.Text = "取消划卡";
             this.button12.UseVisualStyleBackColor = true;
@@ -173,22 +175,24 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(285, 151);
+            this.textBox2.Location = new System.Drawing.Point(161, 151);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 13;
             this.textBox2.Text = "101080301174";
             this.textBox2.Visible = false;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(217, 154);
+            this.label1.Location = new System.Drawing.Point(93, 154);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 14;
             this.label1.Text = "划卡流水号";
             this.label1.Visible = false;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button13
             // 
@@ -250,7 +254,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(472, 149);
+            this.button8.Location = new System.Drawing.Point(531, 148);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 22;
@@ -314,11 +318,32 @@
             this.button18.Visible = false;
             this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(381, 150);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(140, 21);
+            this.textBox3.TabIndex = 28;
+            this.textBox3.Text = ".";
+            this.textBox3.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(344, 154);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "地址:";
+            this.label2.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(647, 216);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button18);
             this.Controls.Add(this.button17);
             this.Controls.Add(this.button16);
@@ -380,6 +405,8 @@
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button17;
         private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label2;
     }
 }
 

@@ -223,8 +223,8 @@ namespace BenDingForm
         private void button12_Click(object sender, EventArgs e)
         {
             var macActiveX = new MacActiveX();
-            
-            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var baseParam = "{\"Account\": \"jlsqwsy\", 	\"Pwd\": \"sq222222\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+           // var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
              paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";
              var data = macActiveX.HospitalizationMethods(paramXml, baseParam, "WorkerCancelSettlementCard");
@@ -380,17 +380,17 @@ namespace BenDingForm
             
         }
 
-        private void button8_Click_1(object sender, EventArgs e)
+        private int SaveDetail()
         {
+            int resultData = 0;
             string strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;";  //C#读取Excel的连接字符串  
-            strConnection += @"Data Source = D:\xmmx.accdb"; 
-       
+            strConnection += @"Data Source = D:\xmmx.accdb";
+
             //创建OleDb连接对象
             try
             {
                 OleDbConnection conn = new OleDbConnection(strConnection);
                 OleDbCommand cmd = conn.CreateCommand();
-               
                 cmd.CommandText = "select * from xmmx";
                 conn.Open();
                 OleDbDataReader dr = cmd.ExecuteReader();
@@ -415,7 +415,7 @@ namespace BenDingForm
                 cmd.Dispose();
                 conn.Close();
                 var drugCatalogData = new List<ResidentProjectDownloadRowDataRowDto>();
-                int totalNum = 0;
+            
                 foreach (DataRow drc in dt.Rows)
                 {
                     var item = new ResidentProjectDownloadRowDataRowDto
@@ -453,7 +453,7 @@ namespace BenDingForm
                     if (drugCatalogData.Count() >= 300)
                     {
                         SaveDrugCatalog(drugCatalogData, "76EDB472F6E544FD8DC8D354BB088BD7");
-                        totalNum += drugCatalogData.Count();
+                        resultData += drugCatalogData.Count();
                         drugCatalogData = new List<ResidentProjectDownloadRowDataRowDto>();
                     }
                 }
@@ -461,23 +461,83 @@ namespace BenDingForm
                 if (drugCatalogData.Any())
                 {
                     SaveDrugCatalog(drugCatalogData, "76EDB472F6E544FD8DC8D354BB088BD7");
-                    totalNum += drugCatalogData.Count();
+                    resultData += drugCatalogData.Count();
                 }
 
-                MessageBox.Show("导入数据:" + totalNum + "条");
+                
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
                 throw;
             }
-            // OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\\xmmx.accdb"); //Jet OLEDB:Database Password=
-            
+           
+            return resultData;
         }
+
+        /// <summary>
+        /// 更新数据
+        /// </summary>
+        private void UpdateData(string sql)
+        {
+            string conStr = $"server={textBox3.Text};database=NFineBase;uid=sa;pwd=BenDingPwd@";
+            using (var sqlConnection = new SqlConnection(conStr))
+            {
+                string insterSql = null;
+             
+                try
+                {//update [dbo].[MedicalInsuranceProject] set [IsDelete]=0 where IsDelete=3;
+                    sqlConnection.Open();
+                    insterSql = sql;
+                    SqlCommand com = new SqlCommand();
+                    com.CommandType = CommandType.Text;
+                    com.Connection = sqlConnection;
+                    com.CommandText = insterSql;
+                    com.ExecuteNonQuery();
+                    sqlConnection.Close();
+                    
+                }
+                catch (Exception e)
+                {
+                   
+                    throw  new Exception(e.Message);
+                }
+            }
+        }
+
+        private void button8_Click_1(object sender, EventArgs e)
+        {
+           string path = @"D:\xmmx.accdb";
+            if (!string.IsNullOrWhiteSpace(textBox3.Text.Trim()) == false)
+            {
+                MessageBox.Show("服务器地址不能为空!!!");
+                return;
+
+            }
+
+            if (!File.Exists(path))
+            {
+                MessageBox.Show(@"D:\xmmx.accdb"+"数据文件不存在!!!");
+                return;
+            }
+            var count = SaveDetail();
+            if (count > 0)
+            {
+                string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
+                string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
+                UpdateData(deleteStr);
+                UpdateData(updateStr);
+                MessageBox.Show("成功导入:" + count + "条");
+            }
+
+
+
+        }
+
 
         private void SaveDrugCatalog(List<ResidentProjectDownloadRowDataRowDto> param, string userId)
         {
-            string conStr = "server=.;database=Test;uid=sa;pwd=wdd@155066";
+            string conStr = $"server={textBox3.Text};database=NFineBase;uid=sa;pwd=BenDingPwd@";
             using (var sqlConnection = new SqlConnection(conStr))
             {
                 string insterSql = null;
@@ -492,7 +552,7 @@ namespace BenDingForm
                         {
 
                             var projectName = CommonHelp.FilterSqlStr(item.ProjectName);
-                            insterSql = $@"INSERT INTO [dbo].[MedicalInsuranceProjectBak]
+                            insterSql = $@"INSERT INTO [dbo].[MedicalInsuranceProject]
                                (id,[ProjectCode],[ProjectName] ,[ProjectCodeType] ,[ProjectLevel],[WorkersSelfPayProportion]
                                ,[Unit],[MnemonicCode] ,[Formulation],[ResidentSelfPayProportion],[RestrictionSign]
                                ,[ZeroBlock],[OneBlock],[TwoBlock],[ThreeBlock],[FourBlock],[EffectiveSign],[ResidentOutpatientSign]
@@ -503,12 +563,11 @@ namespace BenDingForm
                                       ,'{item.Unit}','{item.MnemonicCode}', '{item.Formulation}',{CommonHelp.ValueToDecimal(item.ResidentSelfPayProportion)},'{item.RestrictionSign}'
                                       ,{CommonHelp.ValueToDecimal(item.ZeroBlock)},{CommonHelp.ValueToDecimal(item.OneBlock)},{CommonHelp.ValueToDecimal(item.TwoBlock)},{CommonHelp.ValueToDecimal(item.ThreeBlock)},{CommonHelp.ValueToDecimal(item.FourBlock)},'{item.EffectiveSign}','{item.ResidentOutpatientSign}'
                                       ,{CommonHelp.ValueToDecimal(item.ResidentOutpatientBlock)},'{item.Manufacturer}','{item.QuasiFontSize}','{item.Specification}','{item.Remark}','{item.NewCodeMark}'
-                                      ,'{item.NewUpdateTime}','{item.StartTime}','{item.EndTime}','{item.LimitPaymentScope}',GETDATE(),'{userId}',0,'{item.ProjectBigType}'
+                                      ,'{item.NewUpdateTime}','{item.StartTime}','{item.EndTime}','{item.LimitPaymentScope}',GETDATE(),'{userId}',3,'{item.ProjectBigType}'
                                    );";
                             insterCount += insterSql;
                         }
                         SqlCommand com = new SqlCommand();
-
                         com.CommandType = CommandType.Text;
                         com.Connection = sqlConnection;
                         com.CommandText = insterCount;
@@ -621,7 +680,6 @@ namespace BenDingForm
                     <PI_AAC003>吴能勇</PI_AAC003>
                     <PI_AKA131>1</PI_AKA131>
                     <PI_CARDID>Y01926189</PI_CARDID>
-                    <PI_PSW>Y01926189</PI_PSW>
                 </ROW>";
 
 
@@ -630,10 +688,10 @@ namespace BenDingForm
 
         private void button17_Click(object sender, EventArgs e)
         {
-            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var baseParam = "{\"Account\": \"jlsqwsy\", 	\"Pwd\": \"sq222222\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             string param = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
-            param += @"<ROW> 
-                    <PI_AKC600>1013451212</PI_AKC600>
+            param += $@"<ROW> 
+                    <PI_AKC600>{textBox2.Text}</PI_AKC600>
                     <PI_AAE013>测试</PI_AAE013>
                 </ROW>";
 
@@ -675,6 +733,16 @@ namespace BenDingForm
        
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
