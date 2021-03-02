@@ -95,12 +95,13 @@ namespace BenDingForm
              //    BsCode = "23",
              //    TransKey = "6721F4DA50B349AF9F5F387707C1647A"
              //});
-             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"cpq2677\",\"Pwd\":\"888888\"}";
+             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"513701199002124815\",\"AfferentSign\":\"1\"}";
             var paramEntity = new UserInfoParam();
             paramEntity.PI_CRBZ = "1";
-            paramEntity.PI_SFBZ = "513701199002124815";
+            paramEntity.PI_SFBZ = "51150420201014012X";//513701199002124815
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
-            var data = macActiveX.OutpatientMethods(JsonConvert.SerializeObject(paramEntity), baseParam, "GetUserInfo");
+            var paramStr = "{\"IdentityMark\":\"51150420201014012X\",\"AfferentSign\":\"1\"}";
+                var data = macActiveX.OutpatientMethods(paramStr, baseParam, "GetUserInfo");
            textBox1.Text = data.ToString();
         }
 
@@ -148,7 +149,7 @@ namespace BenDingForm
 
         private void button9_Click(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"xzq17808\",\"Pwd\":\"111111\"}";
             string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
            param += "<ROW>";
@@ -223,8 +224,8 @@ namespace BenDingForm
         private void button12_Click(object sender, EventArgs e)
         {
             var macActiveX = new MacActiveX();
-            var baseParam = "{\"Account\": \"jlsqwsy\", 	\"Pwd\": \"sq222222\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
-           // var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+           //var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
              paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";
              var data = macActiveX.HospitalizationMethods(paramXml, baseParam, "WorkerCancelSettlementCard");
@@ -632,33 +633,33 @@ namespace BenDingForm
             var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             string param = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
             param += @" <ROW>
-                    <PI_AKC190>5413540383579899382</PI_AKC190>\r\n  
-                    <PI_AAC002>511502198711028868</PI_AAC002>\r\n  
-                    <PI_AAC003>吴能勇</PI_AAC003>\r\n  
-                    <PI_AKA131>1</PI_AKA131>\r\n
-                    <PI_CARDID>Y01926189</PI_CARDID>\r\n  
-                    <PI_ICD10>R10.402</PI_ICD10>\r\n  
-                    <PI_JBMC>腹痛</PI_JBMC>\r\n  
+                    <PI_AKC190>4821307938443769417</PI_AKC190>\r\n  
+                    <PI_AAC002>51192320181025982X</PI_AAC002>\r\n  
+                    <PI_AAC003>张芯悦</PI_AAC003>\r\n  
+                    <PI_AKA131>2</PI_AKA131>\r\n
+                    <PI_PSW>123456</PI_PSW>\r\n
+                    <PI_ICD10>Z71.900</PI_ICD10>\r\n  
+                    <PI_JBMC>咨询</PI_JBMC>\r\n  
                     <PI_NUM>2</PI_NUM>\r\n  
-                    <PI_AKB066>1.62</PI_AKB066>\r\n  
-                    <PI_XFSJ>20201228162221</PI_XFSJ>\r\n  
+                    <PI_AKB066>0.01</PI_AKB066>\r\n  
+                    <PI_XFSJ>20210219162221</PI_XFSJ>\r\n 
                     <ROWDATA>\r\n    
                         <ROW>\r\n      
                             <BKE019>0</BKE019>\r\n      
                             <AKE001>86901815000356</AKE001>\r\n      
                             <AKE002>维生素C片</AKE002>\r\n      
-                            <CKE521>0.0250</CKE521>\r\n      
+                            <CKE521>0.020</CKE521>\r\n      
                             <AKC226>1</AKC226>\r\n      
                             <CKC526>0.02</CKC526>\r\n    
                         </ROW>\r\n    
-                        <ROW>\r\n      
+                         <ROW>\r\n      
                             <BKE019>1</BKE019>\r\n      
-                            <AKE001>110100001</AKE001>\r\n      
-                            <AKE002>挂号费</AKE002>\r\n      
-                            <CKE521>1.60</CKE521>\r\n      
-                            <AKC226>1</AKC226>\r\n      
-                            <CKC526>1.60</CKC526>\r\n    
-                        </ROW>\r\n  
+                            <AKE001>C00000002</AKE001>\r\n      
+                            <AKE002>居民门诊可报销西药</AKE002>\r\n      
+                            <CKE521>0.010</CKE521>\r\n      
+                            <AKC226>-1</AKC226>\r\n      
+                            <CKC526>-0.010</CKC526>\r\n    
+                        </ROW>\r\n 
                     </ROWDATA>\r\n
                 </ROW>";
         
@@ -702,19 +703,19 @@ namespace BenDingForm
 
         private void button18_Click(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"xzq17808\",\"Pwd\":\"111111\"}";
             string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
           
             param += @"<ROW> 
-                <PI_AKC190>5596002356832625993</PI_AKC190>
-                <PI_AAC002>51152519940825145X</PI_AAC002>
-                <PI_AAC003>雷洪</PI_AAC003>
+                <PI_AKC190>5596002356832624993</PI_AKC190>
+                <PI_AAC002>512527197610271213</PI_AAC002>
+                <PI_AAC003>程继兵</PI_AAC003>
                 <PI_ICD10>Z71.900</PI_ICD10>
                 <PI_JBMC>咨询</PI_JBMC>
                 <PI_NUM>1</PI_NUM>
                 <PI_AKB066>0.10</PI_AKB066>
-                <PI_XFSJ>20201226160851</PI_XFSJ>
+                <PI_XFSJ>20210122160851</PI_XFSJ>
                 <ROWDATA> 
                     <ROW>    
                         <BKE019>0</BKE019>
@@ -745,6 +746,41 @@ namespace BenDingForm
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            Logs.LogErrorWrite(new LogParam()
+            {
+                OperatorCode="123",
+                Msg="1111"
+            });
+        }
+
+        private void button19_Click_1(object sender, EventArgs e)
+        {
+            var macActiveX = new MacActiveX();
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var data = macActiveX.YdMedicalInsuranceMethods(txtPwd.Text, baseParam, "YdReadCardInfo");
+            //var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            //var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            //paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";
+            //var data = macActiveX.HospitalizationMethods(paramXml, baseParam, "WorkerCancelSettlementCard");
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            var macActiveX = new MacActiveX();
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            paramXml += @"<ROW>
+                        <pi_xzqh>" + textBox2.Text + "</pi_xzqh>" +
+                        "<pi_fyze>0.1</pi_fyze>" +
+                        "<pi_cardid>测试</pi_cardid> " +
+                        "<pi_hklb>1</pi_hklb> " +
+                        "<pi_jbr>1</pi_jbr> " +
+                        "</ROW>";
+            var data = macActiveX.YdMedicalInsuranceMethods(paramXml, baseParam, "YdReadCardInfo");
         }
     }
 }

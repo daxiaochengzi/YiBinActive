@@ -72,7 +72,7 @@ namespace BenDingActive.Help
         {
             string sql = $@"INSERT INTO Data (OperatorId, JoinJson, ReturnJson,TransactionCode,CreateTime)
                  VALUES ('{param.OperatorId}', '{param.JoinJson}', '{param.ReturnJson}','{param.TransactionCode}','{ DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-           SqLiteHelper.ExecuteNonQuery(CommonHelp.GetConnStr(), sql, CommandType.Text);
+           //SqLiteHelper.ExecuteNonQuery(CommonHelp.GetConnStr(), sql, CommandType.Text);
             string path = null;
             var is64Bit = Environment.Is64BitOperatingSystem;
             if (is64Bit)
@@ -130,7 +130,7 @@ namespace BenDingActive.Help
         {
             string sql = $@"INSERT INTO DataError (OperatorId, JoinJson, ReturnJson,TransactionCode,CreateTime)
                  VALUES ('{param.OperatorCode}', '{param.Msg}', '{param.ResultData}','{param.TransactionCode}','{ DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-          SqLiteHelper.ExecuteNonQuery(CommonHelp.GetConnStr(), sql, CommandType.Text);
+         // SqLiteHelper.ExecuteNonQuery(CommonHelp.GetConnStr(), sql, CommandType.Text);
            
             string path = null;
             var is64Bit = Environment.Is64BitOperatingSystem;

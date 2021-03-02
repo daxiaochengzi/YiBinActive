@@ -42,7 +42,7 @@ namespace BenDingActive.Service
                 }
 
                
-                var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
+                var loginData = MedicalInsuranceDll.YdConnectAppServer(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("异地" + code + "医保执行失败!!!");
                 int result = MedicalInsuranceDll.CallService_cxjb(code);
                 if (result == 1)
@@ -107,7 +107,6 @@ namespace BenDingActive.Service
                     if (data.InsuredState == "0")
                     {
                         throw new Exception(data.UnEnjoyRemark);
-                       
                     }
                     else
                     {

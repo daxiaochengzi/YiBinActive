@@ -101,6 +101,7 @@
     <Compile Include="Model\Dto\Bend\UserInfoDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardBackDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardDto.cs" />
+    <Compile Include="Model\Dto\Bend\YdResidentUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
     <Compile Include="Model\Params\Service\WorkerBaseParam.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalizationPreSettlementDto.cs" />
