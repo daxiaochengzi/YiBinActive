@@ -171,7 +171,6 @@
             this.button12.TabIndex = 12;
             this.button12.Text = "取消划卡";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Visible = false;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // textBox2
@@ -181,7 +180,6 @@
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 13;
             this.textBox2.Text = "101080301174";
-            this.textBox2.Visible = false;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1

@@ -95,12 +95,12 @@ namespace BenDingForm
              //    BsCode = "23",
              //    TransKey = "6721F4DA50B349AF9F5F387707C1647A"
              //});
-             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"513701199002124815\",\"AfferentSign\":\"1\"}";
+             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"51192320181025982X\",\"AfferentSign\":\"1\"}";
             var paramEntity = new UserInfoParam();
             paramEntity.PI_CRBZ = "1";
             paramEntity.PI_SFBZ = "51150420201014012X";//513701199002124815
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
-            var paramStr = "{\"IdentityMark\":\"51150420201014012X\",\"AfferentSign\":\"1\"}";
+            var paramStr = "{\"IdentityMark\":\"51192320181025982X\",\"AfferentSign\":\"1\"}";
                 var data = macActiveX.OutpatientMethods(paramStr, baseParam, "GetUserInfo");
            textBox1.Text = data.ToString();
         }
@@ -224,7 +224,7 @@ namespace BenDingForm
         private void button12_Click(object sender, EventArgs e)
         {
             var macActiveX = new MacActiveX();
-            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var baseParam = "{\"Account\": \"cnzzxwsy\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
            //var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
              paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";
