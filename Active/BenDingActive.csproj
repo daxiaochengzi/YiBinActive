@@ -97,10 +97,12 @@
     <Compile Include="Model\Dto\Bend\ResidentProjectDownloadDto.cs" />
     <Compile Include="Model\Dto\Bend\ResidentUserInfoDto.cs" />
     <Compile Include="Model\Dto\Bend\ResidentUserInfoJsonDto.cs" />
+    <Compile Include="Model\Dto\Bend\ResidentUserInfoJsonIniDto.cs" />
     <Compile Include="Model\Dto\Bend\ResultBaseXmlDto.cs" />
     <Compile Include="Model\Dto\Bend\UserInfoDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardBackDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardDto.cs" />
+    <Compile Include="Model\Dto\Bend\YdNationEcTransUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdResidentUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
     <Compile Include="Model\Params\Service\WorkerBaseParam.cs" />

@@ -943,6 +943,12 @@ namespace BenDingActive.Service
             };
             return resultData;
         }
+        /// <summary>
+        /// 职工电子凭证
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
         public ApiJsonResultData NationEcTrans(string param, HisBaseParam baseParam)
         {
             var resultData = new ApiJsonResultData { Success = true };
@@ -1007,6 +1013,12 @@ namespace BenDingActive.Service
 
             return resultData;
         }
+        /// <summary>
+        /// 居民电子凭证
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
         public ApiJsonResultData NationEcTransResident(string param, HisBaseParam baseParam)
         {
             var resultData = new ApiJsonResultData { Success = true };
@@ -1072,7 +1084,12 @@ namespace BenDingActive.Service
 
             return resultData;
         }
-
+        /// <summary>
+        /// 电子凭证身份识别
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
         public ApiJsonResultData NationEcTransUser(string param, HisBaseParam baseParam)
         {
             var resultData = new ApiJsonResultData { Success = true };
@@ -1091,14 +1108,31 @@ namespace BenDingActive.Service
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception(tipsMsg + "医保执行失败!!!");
                 int result = MedicalInsuranceDll.NationEcTrans_call("DZPZ002", nationEcTransUrl, resultState, msg);
-                Logs.LogWrite(new LogParam()
+       
+                var dataIni = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonIniDto(), true);
+               // resultData.Data = JsonConvert.SerializeObject(data);
+                if (!string.IsNullOrWhiteSpace(dataIni.AdministrativeArea))
                 {
-                    Params = "123123",
-                    Msg = "77777" + CommonHelp.StrToTransCoding(msg)
+                    string areaCode = dataIni.AdministrativeArea.Substring(0, 4);
+                    if (areaCode == "5115") //本地
+                    {
+                        var data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
+                        resultData.Data = JsonConvert.SerializeObject(data);
+                    }
+                    if (areaCode != "5115") //异地
+                    {
+                        var data = XmlHelp.DeSerializerModel(new YdNationEcTransUserInfoJsonDto(), true);
+                        //data.InsuranceType 为预设置值310或342者判断，具体需根据实际情况更改
+                        //职工
+                        if (data.InsuranceType == "310") data.WorkersInsuranceBalance = data.AccountBalance;
+                        //居民
+                        if (data.InsuranceType == "342") data.ResidentInsuranceBalance = data.AccountBalance;
+                         resultData.Data = JsonConvert.SerializeObject(data);
 
-                });
-                var data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
-                resultData.Data = JsonConvert.SerializeObject(data);
+                    }
+
+                }
+
                 Logs.LogWriteData(new LogWriteDataParam()
                 {
                     JoinJson = param,

@@ -95,12 +95,12 @@ namespace BenDingForm
              //    BsCode = "23",
              //    TransKey = "6721F4DA50B349AF9F5F387707C1647A"
              //});
-             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"51192320181025982X\",\"AfferentSign\":\"1\"}";
+             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"512529195202082097\",\"AfferentSign\":\"1\"}";
             var paramEntity = new UserInfoParam();
             paramEntity.PI_CRBZ = "1";
-            paramEntity.PI_SFBZ = "51150420201014012X";//513701199002124815
+            paramEntity.PI_SFBZ = "51152119810705716X";//513701199002124815
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
-            var paramStr = "{\"IdentityMark\":\"51192320181025982X\",\"AfferentSign\":\"1\"}";
+            var paramStr = "{\"IdentityMark\":\"51152119810705716X\",\"AfferentSign\":\"1\"}";
                 var data = macActiveX.OutpatientMethods(paramStr, baseParam, "GetUserInfo");
            textBox1.Text = data.ToString();
         }
@@ -730,8 +730,6 @@ namespace BenDingForm
             var data = OutpatientService.NationEcTransResident(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             MessageBox.Show(data.Data);
         }
-
-       
 
         private void Form1_Load(object sender, EventArgs e)
         {
