@@ -37,7 +37,6 @@ namespace BenDingActive.Service
         public ApiJsonResultData GetUserInfo(string param, HisBaseParam baseParam)
         {
             var resultData = new ApiJsonResultData { Success = true };
-
             var data = new ResidentUserInfoJsonDto();
             try
             {//
@@ -1325,7 +1324,6 @@ namespace BenDingActive.Service
         /// <param name="param"></param>
         /// <param name="baseParam"></param>
         /// <returns></returns>
-
         public ApiJsonResultData ResidentSettlementQuery(string param, HisBaseParam baseParam)
         {
             var resultData = new ApiJsonResultData { Success = true };

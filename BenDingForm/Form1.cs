@@ -95,12 +95,13 @@ namespace BenDingForm
              //    BsCode = "23",
              //    TransKey = "6721F4DA50B349AF9F5F387707C1647A"
              //});
-             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"cpq2677\",\"Pwd\":\"888888\"}";
+             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"513701199002124815\",\"AfferentSign\":\"1\"}";
             var paramEntity = new UserInfoParam();
             paramEntity.PI_CRBZ = "1";
-            paramEntity.PI_SFBZ = "513701199002124815";
+            paramEntity.PI_SFBZ = "51150420201014012X";//513701199002124815
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
-            var data = macActiveX.OutpatientMethods(JsonConvert.SerializeObject(paramEntity), baseParam, "GetUserInfo");
+            var paramStr = "{\"IdentityMark\":\"51150420201014012X\",\"AfferentSign\":\"1\"}";
+                var data = macActiveX.OutpatientMethods(paramStr, baseParam, "GetUserInfo");
            textBox1.Text = data.ToString();
         }
 
@@ -148,7 +149,7 @@ namespace BenDingForm
 
         private void button9_Click(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"xzq17808\",\"Pwd\":\"111111\"}";
             string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
            param += "<ROW>";
@@ -223,8 +224,8 @@ namespace BenDingForm
         private void button12_Click(object sender, EventArgs e)
         {
             var macActiveX = new MacActiveX();
-            var baseParam = "{\"Account\": \"jlsqwsy\", 	\"Pwd\": \"sq222222\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
-           // var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+           //var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
              paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";
              var data = macActiveX.HospitalizationMethods(paramXml, baseParam, "WorkerCancelSettlementCard");
@@ -521,14 +522,15 @@ namespace BenDingForm
                 return;
             }
             var count = SaveDetail();
-            if (count > 0)
-            {
-                string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
-                string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
-                UpdateData(deleteStr);
-                UpdateData(updateStr);
-                MessageBox.Show("成功导入:" + count + "条");
-            }
+            MessageBox.Show("成功导入:" + count + "条");
+            //if (count > 0)
+            //{
+            //    string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
+            //    string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
+            //    UpdateData(deleteStr);
+            //    UpdateData(updateStr);
+               
+            //}
 
 
 
@@ -632,33 +634,33 @@ namespace BenDingForm
             var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             string param = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
             param += @" <ROW>
-                    <PI_AKC190>5413540383579899382</PI_AKC190>\r\n  
-                    <PI_AAC002>511502198711028868</PI_AAC002>\r\n  
-                    <PI_AAC003>吴能勇</PI_AAC003>\r\n  
-                    <PI_AKA131>1</PI_AKA131>\r\n
-                    <PI_CARDID>Y01926189</PI_CARDID>\r\n  
-                    <PI_ICD10>R10.402</PI_ICD10>\r\n  
-                    <PI_JBMC>腹痛</PI_JBMC>\r\n  
+                    <PI_AKC190>4821307938443769417</PI_AKC190>\r\n  
+                    <PI_AAC002>51192320181025982X</PI_AAC002>\r\n  
+                    <PI_AAC003>张芯悦</PI_AAC003>\r\n  
+                    <PI_AKA131>2</PI_AKA131>\r\n
+                    <PI_PSW>123456</PI_PSW>\r\n
+                    <PI_ICD10>Z71.900</PI_ICD10>\r\n  
+                    <PI_JBMC>咨询</PI_JBMC>\r\n  
                     <PI_NUM>2</PI_NUM>\r\n  
-                    <PI_AKB066>1.62</PI_AKB066>\r\n  
-                    <PI_XFSJ>20201228162221</PI_XFSJ>\r\n  
+                    <PI_AKB066>0.01</PI_AKB066>\r\n  
+                    <PI_XFSJ>20210219162221</PI_XFSJ>\r\n 
                     <ROWDATA>\r\n    
                         <ROW>\r\n      
                             <BKE019>0</BKE019>\r\n      
                             <AKE001>86901815000356</AKE001>\r\n      
                             <AKE002>维生素C片</AKE002>\r\n      
-                            <CKE521>0.0250</CKE521>\r\n      
+                            <CKE521>0.020</CKE521>\r\n      
                             <AKC226>1</AKC226>\r\n      
                             <CKC526>0.02</CKC526>\r\n    
                         </ROW>\r\n    
-                        <ROW>\r\n      
+                         <ROW>\r\n      
                             <BKE019>1</BKE019>\r\n      
-                            <AKE001>110100001</AKE001>\r\n      
-                            <AKE002>挂号费</AKE002>\r\n      
-                            <CKE521>1.60</CKE521>\r\n      
-                            <AKC226>1</AKC226>\r\n      
-                            <CKC526>1.60</CKC526>\r\n    
-                        </ROW>\r\n  
+                            <AKE001>C00000002</AKE001>\r\n      
+                            <AKE002>居民门诊可报销西药</AKE002>\r\n      
+                            <CKE521>0.010</CKE521>\r\n      
+                            <AKC226>-1</AKC226>\r\n      
+                            <CKC526>-0.010</CKC526>\r\n    
+                        </ROW>\r\n 
                     </ROWDATA>\r\n
                 </ROW>";
         
@@ -702,19 +704,19 @@ namespace BenDingForm
 
         private void button18_Click(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"xzq17808\",\"Pwd\":\"111111\"}";
             string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
           
             param += @"<ROW> 
-                <PI_AKC190>5596002356832625993</PI_AKC190>
-                <PI_AAC002>51152519940825145X</PI_AAC002>
-                <PI_AAC003>雷洪</PI_AAC003>
+                <PI_AKC190>5596002356832624993</PI_AKC190>
+                <PI_AAC002>512527197610271213</PI_AAC002>
+                <PI_AAC003>程继兵</PI_AAC003>
                 <PI_ICD10>Z71.900</PI_ICD10>
                 <PI_JBMC>咨询</PI_JBMC>
                 <PI_NUM>1</PI_NUM>
                 <PI_AKB066>0.10</PI_AKB066>
-                <PI_XFSJ>20201226160851</PI_XFSJ>
+                <PI_XFSJ>20210122160851</PI_XFSJ>
                 <ROWDATA> 
                     <ROW>    
                         <BKE019>0</BKE019>
@@ -745,6 +747,181 @@ namespace BenDingForm
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            Logs.LogErrorWrite(new LogParam()
+            {
+                OperatorCode="123",
+                Msg="1111"
+            });
+        }
+
+        private void button19_Click_1(object sender, EventArgs e)
+        {
+            var macActiveX = new MacActiveX();
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var data = macActiveX.YdMedicalInsuranceMethods(txtPwd.Text, baseParam, "YdReadCardInfo");
+            //var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            //var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            //paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";
+            //var data = macActiveX.HospitalizationMethods(paramXml, baseParam, "WorkerCancelSettlementCard");
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            var macActiveX = new MacActiveX();
+            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            paramXml += @"<ROW>
+                        <pi_xzqh>" + textBox2.Text + "</pi_xzqh>" +
+                        "<pi_fyze>0.1</pi_fyze>" +
+                        "<pi_cardid>测试</pi_cardid> " +
+                        "<pi_hklb>1</pi_hklb> " +
+                        "<pi_jbr>1</pi_jbr> " +
+                        "</ROW>";
+            var data = macActiveX.YdMedicalInsuranceMethods(paramXml, baseParam, "YdReadCardInfo");
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            string path = @"D:\ICD10.accdb";
+            if (!string.IsNullOrWhiteSpace(textBox3.Text.Trim()) == false)
+            {
+                MessageBox.Show("服务器地址不能为空!!!");
+                return;
+
+            }
+
+            if (!File.Exists(path))
+            {
+                MessageBox.Show(@"D:\ICD10.accdb" + "数据文件不存在!!!");
+                return;
+            }
+
+            var count = SaveDetailICD10();
+            if (count > 0)
+            {
+                string deleteStr = "delete [dbo].[ICD10] where [IsMedicalInsurance]=1 and CreateTime< dateadd(dd,-1,getdate())";
+                UpdateData(deleteStr);
+                MessageBox.Show("成功导入:" + count + "条");
+            }
+        }
+
+
+        private int SaveDetailICD10()
+        {
+            int resultData = 0;
+            string strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;";  //C#读取Excel的连接字符串  
+            strConnection += @"Data Source = D:\ICD10.accdb";
+
+            //创建OleDb连接对象
+            try
+            {
+                OleDbConnection conn = new OleDbConnection(strConnection);
+                OleDbCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "select * from ICD10";
+                conn.Open();
+                OleDbDataReader dr = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                if (dr.HasRows)
+                {
+                    for (int i = 0; i < dr.FieldCount; i++)
+                    {
+                        dt.Columns.Add(dr.GetName(i));
+                    }
+                    dt.Rows.Clear();
+                }
+                while (dr.Read())
+                {
+                    DataRow row = dt.NewRow();
+                    for (int i = 0; i < dr.FieldCount; i++)
+                    {
+                        row[i] = dr[i];
+                    }
+                    dt.Rows.Add(row);
+                }
+                cmd.Dispose();
+                conn.Close();
+                var drugCatalogData = new List<ICDDto>();
+
+                foreach (DataRow drc in dt.Rows)
+                {
+                    var item = new ICDDto
+                    {
+                        ProjectCode = CommonHelp.FilterSqlStr(drc["AAZ164"].ToString()),
+                        ProjectName = CommonHelp.FilterSqlStr(drc["AKA121"].ToString()),
+                       
+                        MnemonicCode = CommonHelp.FilterSqlStr(drc["AKA020"].ToString()),
+                       
+                    };
+
+                    drugCatalogData.Add(item);
+
+                    if (drugCatalogData.Count() >= 300)
+                    {
+                        SaveDrugCatalogICD10(drugCatalogData);
+                        resultData += drugCatalogData.Count();
+                        drugCatalogData = new List<ICDDto>();
+                    }
+                }
+                //执行剩余的数据
+                if (drugCatalogData.Any())
+                {
+                       SaveDrugCatalogICD10(drugCatalogData);
+                       resultData += drugCatalogData.Count();
+                }
+
+
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
+
+            return resultData;
+        }
+
+        private void SaveDrugCatalogICD10(List<ICDDto> param)
+        {
+            string conStr = $"server={textBox3.Text};database=NFineBase;uid=sa;pwd=BenDingPwd@";
+            using (var sqlConnection = new SqlConnection(conStr))
+            {
+                string insterSql = null;
+                string insterCount = null;
+                try
+                {
+                    sqlConnection.Open();
+                    if (param.Any())
+                    {
+
+                        foreach (var item in param)
+                        {
+
+                            var projectName = CommonHelp.FilterSqlStr(item.ProjectName);
+                            insterSql =
+                                $@"insert into [dbo].[ICD10](Id,[DiseaseCoding],[DiseaseName],[MnemonicCode],[CreateTime],[IsMedicalInsurance],IsDelete)
+                              VALUES('{Guid.NewGuid()}','{item.ProjectCode}','{projectName}','{item.MnemonicCode}',getDate(),1,0 );";
+                            insterCount += insterSql;
+                        }
+
+                        SqlCommand com = new SqlCommand();
+                        com.CommandType = CommandType.Text;
+                        com.Connection = sqlConnection;
+                        com.CommandText = insterCount;
+                        com.ExecuteNonQuery();
+                        sqlConnection.Close();
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+
+
+            }
         }
     }
 }

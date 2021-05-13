@@ -90,6 +90,7 @@
     <Compile Include="Model\BendParam\ResidentUserInfoParam.cs" />
     <Compile Include="Model\BendParam\WorkersSettlementParam.cs" />
     <Compile Include="Model\Dto\Bend\BatchConfirmParam.cs" />
+    <Compile Include="Model\Dto\Bend\ICDDto.cs" />
     <Compile Include="Model\Dto\Bend\ModifyWorkerHospitalizationParam.cs" />
     <Compile Include="Model\Dto\Bend\OutpatientResidentLoginDto.cs" />
     <Compile Include="Model\Dto\Bend\PrescriptionUploadDto.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Model\Dto\Bend\UserInfoDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardBackDto.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalSettlementCardDto.cs" />
+    <Compile Include="Model\Dto\Bend\YdResidentUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
     <Compile Include="Model\Params\Service\WorkerBaseParam.cs" />
     <Compile Include="Model\Dto\Bend\WorkerHospitalizationPreSettlementDto.cs" />
