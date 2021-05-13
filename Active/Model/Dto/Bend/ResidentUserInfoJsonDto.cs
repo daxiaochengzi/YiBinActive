@@ -144,5 +144,21 @@ namespace BenDingActive.Model.Dto.Bend
         /// </summary>
         [JsonProperty(PropertyName = "PO_TCZFYE")]
         public decimal OverallPaymentBalance { get; set; }
+        /// <summary>
+        /// 电子凭证TOKEN
+        /// </summary>
+        public string ECTOKEN { get; set; }
+        /// <summary>
+        /// 电子凭证外部索引号
+        /// </summary>
+        public string ECINDEXNO { get; set; }
+        /// <summary>
+        /// 证件类型
+        /// </summary>
+        public string IDTYPE { get; set; }
+        /// <summary>
+        /// 电子凭证二维码值
+        /// </summary>
+        public string ECQRCODE { get; set; }
     }
 }

@@ -95,12 +95,12 @@ namespace BenDingForm
              //    BsCode = "23",
              //    TransKey = "6721F4DA50B349AF9F5F387707C1647A"
              //});
-             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"513701199002124815\",\"AfferentSign\":\"1\"}";
+             var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\",\"IdentityMark\":\"512529195202082097\",\"AfferentSign\":\"1\"}";
             var paramEntity = new UserInfoParam();
             paramEntity.PI_CRBZ = "1";
-            paramEntity.PI_SFBZ = "51150420201014012X";//513701199002124815
+            paramEntity.PI_SFBZ = "51152119810705716X";//513701199002124815
             // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
-            var paramStr = "{\"IdentityMark\":\"51150420201014012X\",\"AfferentSign\":\"1\"}";
+            var paramStr = "{\"IdentityMark\":\"51152119810705716X\",\"AfferentSign\":\"1\"}";
                 var data = macActiveX.OutpatientMethods(paramStr, baseParam, "GetUserInfo");
            textBox1.Text = data.ToString();
         }
@@ -224,7 +224,7 @@ namespace BenDingForm
         private void button12_Click(object sender, EventArgs e)
         {
             var macActiveX = new MacActiveX();
-            var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
+            var baseParam = "{\"Account\": \"cnzzxwsy\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
            //var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
              paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";
@@ -522,15 +522,14 @@ namespace BenDingForm
                 return;
             }
             var count = SaveDetail();
-            MessageBox.Show("成功导入:" + count + "条");
-            //if (count > 0)
-            //{
-            //    string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
-            //    string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
-            //    UpdateData(deleteStr);
-            //    UpdateData(updateStr);
-               
-            //}
+            if (count > 0)
+            {
+                string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
+                string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
+                UpdateData(deleteStr);
+                UpdateData(updateStr);
+                MessageBox.Show("成功导入:" + count + "条");
+            }
 
 
 
@@ -732,8 +731,6 @@ namespace BenDingForm
             MessageBox.Show(data.Data);
         }
 
-       
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -782,146 +779,6 @@ namespace BenDingForm
                         "<pi_jbr>1</pi_jbr> " +
                         "</ROW>";
             var data = macActiveX.YdMedicalInsuranceMethods(paramXml, baseParam, "YdReadCardInfo");
-        }
-
-        private void button21_Click(object sender, EventArgs e)
-        {
-            string path = @"D:\ICD10.accdb";
-            if (!string.IsNullOrWhiteSpace(textBox3.Text.Trim()) == false)
-            {
-                MessageBox.Show("服务器地址不能为空!!!");
-                return;
-
-            }
-
-            if (!File.Exists(path))
-            {
-                MessageBox.Show(@"D:\ICD10.accdb" + "数据文件不存在!!!");
-                return;
-            }
-
-            var count = SaveDetailICD10();
-            if (count > 0)
-            {
-                string deleteStr = "delete [dbo].[ICD10] where [IsMedicalInsurance]=1 and CreateTime< dateadd(dd,-1,getdate())";
-                UpdateData(deleteStr);
-                MessageBox.Show("成功导入:" + count + "条");
-            }
-        }
-
-
-        private int SaveDetailICD10()
-        {
-            int resultData = 0;
-            string strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;";  //C#读取Excel的连接字符串  
-            strConnection += @"Data Source = D:\ICD10.accdb";
-
-            //创建OleDb连接对象
-            try
-            {
-                OleDbConnection conn = new OleDbConnection(strConnection);
-                OleDbCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "select * from ICD10";
-                conn.Open();
-                OleDbDataReader dr = cmd.ExecuteReader();
-                DataTable dt = new DataTable();
-                if (dr.HasRows)
-                {
-                    for (int i = 0; i < dr.FieldCount; i++)
-                    {
-                        dt.Columns.Add(dr.GetName(i));
-                    }
-                    dt.Rows.Clear();
-                }
-                while (dr.Read())
-                {
-                    DataRow row = dt.NewRow();
-                    for (int i = 0; i < dr.FieldCount; i++)
-                    {
-                        row[i] = dr[i];
-                    }
-                    dt.Rows.Add(row);
-                }
-                cmd.Dispose();
-                conn.Close();
-                var drugCatalogData = new List<ICDDto>();
-
-                foreach (DataRow drc in dt.Rows)
-                {
-                    var item = new ICDDto
-                    {
-                        ProjectCode = CommonHelp.FilterSqlStr(drc["AAZ164"].ToString()),
-                        ProjectName = CommonHelp.FilterSqlStr(drc["AKA121"].ToString()),
-                       
-                        MnemonicCode = CommonHelp.FilterSqlStr(drc["AKA020"].ToString()),
-                       
-                    };
-
-                    drugCatalogData.Add(item);
-
-                    if (drugCatalogData.Count() >= 300)
-                    {
-                        SaveDrugCatalogICD10(drugCatalogData);
-                        resultData += drugCatalogData.Count();
-                        drugCatalogData = new List<ICDDto>();
-                    }
-                }
-                //执行剩余的数据
-                if (drugCatalogData.Any())
-                {
-                       SaveDrugCatalogICD10(drugCatalogData);
-                       resultData += drugCatalogData.Count();
-                }
-
-
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-                throw;
-            }
-
-            return resultData;
-        }
-
-        private void SaveDrugCatalogICD10(List<ICDDto> param)
-        {
-            string conStr = $"server={textBox3.Text};database=NFineBase;uid=sa;pwd=BenDingPwd@";
-            using (var sqlConnection = new SqlConnection(conStr))
-            {
-                string insterSql = null;
-                string insterCount = null;
-                try
-                {
-                    sqlConnection.Open();
-                    if (param.Any())
-                    {
-
-                        foreach (var item in param)
-                        {
-
-                            var projectName = CommonHelp.FilterSqlStr(item.ProjectName);
-                            insterSql =
-                                $@"insert into [dbo].[ICD10](Id,[DiseaseCoding],[DiseaseName],[MnemonicCode],[CreateTime],[IsMedicalInsurance],IsDelete)
-                              VALUES('{Guid.NewGuid()}','{item.ProjectCode}','{projectName}','{item.MnemonicCode}',getDate(),1,0 );";
-                            insterCount += insterSql;
-                        }
-
-                        SqlCommand com = new SqlCommand();
-                        com.CommandType = CommandType.Text;
-                        com.Connection = sqlConnection;
-                        com.CommandText = insterCount;
-                        com.ExecuteNonQuery();
-                        sqlConnection.Close();
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new Exception(e.Message);
-                }
-
-
-            }
         }
     }
 }

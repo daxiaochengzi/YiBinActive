@@ -57,7 +57,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button19 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
-            this.button21 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -172,7 +171,6 @@
             this.button12.TabIndex = 12;
             this.button12.Text = "取消划卡";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Visible = false;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // textBox2
@@ -182,7 +180,6 @@
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 13;
             this.textBox2.Text = "101080301174";
-            this.textBox2.Visible = false;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1
@@ -260,8 +257,9 @@
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 22;
-            this.button8.Text = "导目录数据";
+            this.button8.Text = "导数据";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.button8_Click_1);
             // 
             // button14
@@ -323,7 +321,8 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(101, 21);
             this.textBox3.TabIndex = 28;
-            this.textBox3.Text = "11.21.1.210";
+            this.textBox3.Text = ".";
+            this.textBox3.Visible = false;
             // 
             // label2
             // 
@@ -355,22 +354,11 @@
             this.button20.UseVisualStyleBackColor = true;
             this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
-            // button21
-            // 
-            this.button21.Location = new System.Drawing.Point(505, 210);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(92, 25);
-            this.button21.TabIndex = 32;
-            this.button21.Text = "导icd10";
-            this.button21.UseVisualStyleBackColor = true;
-            this.button21.Click += new System.EventHandler(this.button21_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(647, 241);
-            this.Controls.Add(this.button21);
             this.Controls.Add(this.button20);
             this.Controls.Add(this.button19);
             this.Controls.Add(this.label2);
@@ -440,7 +428,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button20;
-        private System.Windows.Forms.Button button21;
     }
 }
 

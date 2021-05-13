@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace BenDingActive.Model.Dto.Bend
 {
     [XmlRoot("ROW", IsNullable = false)]
-   public class ResultBaseXmlDto
+    public class ResultBaseXmlDto
     {
         [XmlElementAttribute("PO_FHZ", IsNullable = false)]
         public string ReturnState { get; set; }
