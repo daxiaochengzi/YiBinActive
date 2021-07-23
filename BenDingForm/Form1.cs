@@ -149,24 +149,14 @@ namespace BenDingForm
 
         private void button9_Click(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"xzq17808\",\"Pwd\":\"111111\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"cnzzxwsy\",\"Pwd\":\"aaaaaa\"}";
             string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
            param += "<ROW>";
-            param += @"<BKC142>0.03</BKC142>
+            param += @"<BKC142>1.5</BKC142>
               <HKLB>1</HKLB>
-              <NUMS>1</NUMS>
-              <DATAROW>
-                <ROW>
-                  <BKE019>0</BKE019>
-                  <AAZ231>86901162001518</AAZ231>
-                  <BKE026>5507949376579844504</BKE026>
-                  <BKE027>维生素C片</BKE027>
-                  <AKC225>0.0250</AKC225>
-                  <AKC226>1</AKC226>
-                  <AKC264>0.03</AKC264>
-                </ROW>
-              </DATAROW>
+              <NUMS>0</NUMS>
+             <DATAROW></DATAROW>
             </ROW>";
             var data = OutpatientService.NationEcTrans(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             textBox1.Text = data.Data;
@@ -375,7 +365,7 @@ namespace BenDingForm
 
         private void button6_Click_1(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"cnzzxwsy\",\"Pwd\":\"aaaaaa\"}";
             var data = OutpatientService.NationEcTransUser(null, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             textBox1.Text = data.Data;
             
@@ -385,7 +375,7 @@ namespace BenDingForm
         {
             int resultData = 0;
             string strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;";  //C#读取Excel的连接字符串  
-            strConnection += @"Data Source = D:\xmmx.accdb";
+            strConnection += @"Data Source = D:\xmmx.mdb";
 
             //创建OleDb连接对象
             try
@@ -508,7 +498,8 @@ namespace BenDingForm
 
         private void button8_Click_1(object sender, EventArgs e)
         {
-           string path = @"D:\xmmx.accdb";
+            //string path = @"D:\xmmx.accdb";
+            string path = @"D:\xmmx.mdb";
             if (!string.IsNullOrWhiteSpace(textBox3.Text.Trim()) == false)
             {
                 MessageBox.Show("服务器地址不能为空!!!");
@@ -518,18 +509,18 @@ namespace BenDingForm
 
             if (!File.Exists(path))
             {
-                MessageBox.Show(@"D:\xmmx.accdb"+"数据文件不存在!!!");
+                MessageBox.Show(@"D:\xmmx.mdb" + "数据文件不存在!!!");
                 return;
             }
             var count = SaveDetail();
-            if (count > 0)
-            {
-                string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
-                string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
-                UpdateData(deleteStr);
-                UpdateData(updateStr);
-                MessageBox.Show("成功导入:" + count + "条");
-            }
+            //if (count > 0)
+            //{
+            //    string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
+            //    string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
+            //    UpdateData(deleteStr);
+            //    UpdateData(updateStr);
+            //    MessageBox.Show("成功导入:" + count + "条");
+            //}
 
 
 
@@ -833,6 +824,16 @@ namespace BenDingForm
                   </ROWDATA>
                 </ROW>";
             var data = OutpatientService.ResidentSettlement(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
