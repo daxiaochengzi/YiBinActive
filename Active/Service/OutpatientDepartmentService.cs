@@ -1117,7 +1117,22 @@ namespace BenDingActive.Service
                     if (areaCode == "5115") //本地
                     {
                         var data = XmlHelp.DeSerializerModel(new ResidentUserInfoJsonDto(), true);
-                        resultData.Data = JsonConvert.SerializeObject(data);
+                        JsonConvert.SerializeObject(data);
+                        string paramC = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+                     //   paramC += "<ROW>";
+                     //   paramC += $@"<BKC142>1.5</BKC142>
+                     //         <HKLB>1</HKLB>
+                     //         <NUMS>0</NUMS>
+                     //         <DATAROW></DATAROW>
+                     //        <IDTYPE>{data.IDTYPE}</IDTYPE>
+                     //       <AAC002>{data.IdCardNo}</AAC002>
+                     //       <AAC003>{data.PatientName}</AAC003>
+                     //       <ECTOKEN>{data.ECTOKEN}</ECTOKEN>
+                     //       <ECINDEXNO>{data.ECINDEXNO}</ECINDEXNO>
+                     //       <ECQRCODE>{data.ECQRCODE}</ECQRCODE>
+                     // </ROW>";
+                     //var dddds=  NationEcTrans(paramC, baseParam);
+                     //   resultData.Data = JsonConvert.SerializeObject(dddds);
                     }
                     if (areaCode != "5115") //异地
                     {

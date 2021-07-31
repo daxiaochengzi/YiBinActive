@@ -289,7 +289,7 @@ namespace BenDingActive.Service
         /// <param name="aReaderPort">端口号</param>
         /// <param name="aCardPasswd">密码</param>
         /// <returns></returns>
-        [DllImport("YBRSHisInterface.dll", EntryPoint = "ConnectAppServer", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("YBRSHisInterface.dll", EntryPoint = "ReadCardInfo", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern int YdReadCardInfo(int aReaderPort, string aCardPasswd);
         /// <summary>
         /// 异地交易

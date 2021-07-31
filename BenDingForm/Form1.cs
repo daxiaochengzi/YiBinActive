@@ -149,24 +149,14 @@ namespace BenDingForm
 
         private void button9_Click(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"xzq17808\",\"Pwd\":\"111111\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"cnzzxwsy\",\"Pwd\":\"aaaaaa\"}";
             string param = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
             // param = "<ROW xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
            param += "<ROW>";
-            param += @"<BKC142>0.03</BKC142>
+            param += @"<BKC142>1.5</BKC142>
               <HKLB>1</HKLB>
-              <NUMS>1</NUMS>
-              <DATAROW>
-                <ROW>
-                  <BKE019>0</BKE019>
-                  <AAZ231>86901162001518</AAZ231>
-                  <BKE026>5507949376579844504</BKE026>
-                  <BKE027>维生素C片</BKE027>
-                  <AKC225>0.0250</AKC225>
-                  <AKC226>1</AKC226>
-                  <AKC264>0.03</AKC264>
-                </ROW>
-              </DATAROW>
+              <NUMS>0</NUMS>
+             <DATAROW></DATAROW>
             </ROW>";
             var data = OutpatientService.NationEcTrans(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             textBox1.Text = data.Data;
@@ -375,7 +365,7 @@ namespace BenDingForm
 
         private void button6_Click_1(object sender, EventArgs e)
         {
-            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"ybx12865\",\"Pwd\":\"aaaaaa\"}";
+            var baseParam = "{\"OperatorId\":\"E075AC49FCE443778F897CF839F3B924\",\"Account\":\"cnzzxwsy\",\"Pwd\":\"aaaaaa\"}";
             var data = OutpatientService.NationEcTransUser(null, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
             textBox1.Text = data.Data;
             
@@ -385,7 +375,7 @@ namespace BenDingForm
         {
             int resultData = 0;
             string strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;";  //C#读取Excel的连接字符串  
-            strConnection += @"Data Source = D:\xmmx.accdb";
+            strConnection += @"Data Source = D:\xmmx.mdb";
 
             //创建OleDb连接对象
             try
@@ -508,7 +498,8 @@ namespace BenDingForm
 
         private void button8_Click_1(object sender, EventArgs e)
         {
-           string path = @"D:\xmmx.accdb";
+            //string path = @"D:\xmmx.accdb";
+            string path = @"D:\xmmx.mdb";
             if (!string.IsNullOrWhiteSpace(textBox3.Text.Trim()) == false)
             {
                 MessageBox.Show("服务器地址不能为空!!!");
@@ -518,18 +509,18 @@ namespace BenDingForm
 
             if (!File.Exists(path))
             {
-                MessageBox.Show(@"D:\xmmx.accdb"+"数据文件不存在!!!");
+                MessageBox.Show(@"D:\xmmx.mdb" + "数据文件不存在!!!");
                 return;
             }
             var count = SaveDetail();
-            if (count > 0)
-            {
-                string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
-                string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
-                UpdateData(deleteStr);
-                UpdateData(updateStr);
-                MessageBox.Show("成功导入:" + count + "条");
-            }
+            //if (count > 0)
+            //{
+            //    string updateStr = "update [dbo].[MedicalInsuranceProject] set IsDelete=0 where IsDelete=1";
+            //    string deleteStr = "delete [dbo].[MedicalInsuranceProject] where IsDelete=0";
+            //    UpdateData(deleteStr);
+            //    UpdateData(updateStr);
+            //    MessageBox.Show("成功导入:" + count + "条");
+            //}
 
 
 
@@ -779,6 +770,70 @@ namespace BenDingForm
                         "<pi_jbr>1</pi_jbr> " +
                         "</ROW>";
             var data = macActiveX.YdMedicalInsuranceMethods(paramXml, baseParam, "YdReadCardInfo");
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            
+               var baseParam = "{\"Account\": \"ybx3102\", 	\"Pwd\": \"aaaaaa12\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1025629937\", 	\"AfferentSign\": \"2\" }";
+            string param = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
+            param += @" <ROW>
+                  <PI_AKC190>5486697101372358359</PI_AKC190>
+                  <PI_AKA131>2</PI_AKA131>
+                  <PI_AAC002>512527194509189123</PI_AAC002>
+                  <PI_AAC003>陶天富</PI_AAC003>
+                  <PI_PSW>123321</PI_PSW>
+                  <PI_ICD10>K29.603</PI_ICD10>
+                  <PI_JBMC>糜烂性胃炎</PI_JBMC>
+                  <PI_NUM>4</PI_NUM>
+                  <PI_AKB066>40.8072</PI_AKB066>
+                  <PI_XFSJ>20210502093518</PI_XFSJ>
+                  <ROWDATA>
+                    <ROW>
+                      <BKE019>0</BKE019>
+                      <AKE001>86904141000069</AKE001>
+                      <AKE002>奥美拉唑肠溶胶囊</AKE002>
+                      <CKE521>0.1992</CKE521>
+                      <AKC226>8</AKC226>
+                      <CKC526>1.5936</CKC526>
+                    </ROW>
+                    <ROW>
+                      <BKE019>1</BKE019>
+                      <AKE001>86900290001216</AKE001>
+                      <AKE002>硫糖铝口服混悬液</AKE002>
+                      <CKE521>18.36</CKE521>
+                      <AKC226>1</AKC226>
+                      <CKC526>18.36</CKC526>
+                    </ROW>
+                    <ROW>
+                      <BKE019>2</BKE019>
+                      <AKE001>86905590000174</AKE001>
+                      <AKE002>香砂养胃片（48片/盒）</AKE002>
+                      <CKE521>18.90</CKE521>
+                      <AKC226>1</AKC226>
+                      <CKC526>18.90</CKC526>
+                    </ROW>
+                    <ROW>
+                      <BKE019>3</BKE019>
+                      <AKE001>86901162000931</AKE001>
+                      <AKE002>维生素B6片</AKE002>
+                      <CKE521>0.0814</CKE521>
+                      <AKC226>24</AKC226>
+                      <CKC526>1.9536</CKC526>
+                    </ROW>
+                  </ROWDATA>
+                </ROW>";
+            var data = OutpatientService.ResidentSettlement(param, JsonConvert.DeserializeObject<HisBaseParam>(baseParam));
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

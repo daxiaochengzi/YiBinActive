@@ -137,9 +137,8 @@
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(75, 23);
             this.button9.TabIndex = 9;
-            this.button9.Text = "电子医保测试";
+            this.button9.Text = "电子职工医保测试";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
@@ -259,7 +258,6 @@
             this.button8.TabIndex = 22;
             this.button8.Text = "导数据";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.button8_Click_1);
             // 
             // button14
@@ -322,7 +320,7 @@
             this.textBox3.Size = new System.Drawing.Size(101, 21);
             this.textBox3.TabIndex = 28;
             this.textBox3.Text = ".";
-            this.textBox3.Visible = false;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label2
             // 
@@ -332,7 +330,7 @@
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 29;
             this.label2.Text = "地址:";
-            this.label2.Visible = false;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // button19
             // 

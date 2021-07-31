@@ -160,5 +160,6 @@ namespace BenDingActive.Model.Dto.Bend
         /// 电子凭证二维码值
         /// </summary>
         public string ECQRCODE { get; set; }
+    
     }
 }
