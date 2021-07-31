@@ -86,6 +86,11 @@ namespace BenDingActive.Model.BendParam
         [XmlElementAttribute("AKC225", IsNullable = false)]
         public decimal UnitPrice { get; set; }
         /// <summary>
+        /// 国家编码
+        /// </summary>
+        [XmlElementAttribute("AAZ231", IsNullable = false)]
+        public string CountryCode { get; set; }
+        /// <summary>
         /// 数量   (12,4)
         /// </summary>
         [XmlElementAttribute("AKC226", IsNullable = false)]
