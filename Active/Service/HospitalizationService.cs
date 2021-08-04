@@ -362,6 +362,7 @@ namespace BenDingActive.Service
                 });
                 var uploadDataParam = JsonConvert.DeserializeObject<PrescriptionUploadParam>(param);
                 var xmlStr = XmlHelp.SaveXmlEntity(uploadDataParam);
+            
                 if (!xmlStr) throw new Exception("处方数据上传保存参数出错!!!");
                 var loginData = MedicalInsuranceDll.ConnectAppServer_cxjb(baseParam.Account, baseParam.Pwd);
                 if (loginData != 1) throw new Exception("处方数据上传医保执行失败!!!");

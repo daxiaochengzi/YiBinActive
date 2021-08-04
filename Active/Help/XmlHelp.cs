@@ -257,6 +257,7 @@ namespace BenDingActive.Help
         {
             string pathXml = null;
             var strXmls = XmlSerialize(t);
+           
             bool result = false;
             if (string.IsNullOrWhiteSpace(strXmls))
             {
