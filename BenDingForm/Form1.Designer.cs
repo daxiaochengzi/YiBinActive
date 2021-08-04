@@ -67,6 +67,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "获取基本资料";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
@@ -139,6 +140,7 @@
             this.button9.TabIndex = 9;
             this.button9.Text = "电子职工医保测试";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Visible = false;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
@@ -170,6 +172,7 @@
             this.button12.TabIndex = 12;
             this.button12.Text = "取消划卡";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Visible = false;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // textBox2
@@ -179,6 +182,7 @@
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 13;
             this.textBox2.Text = "101080301174";
+            this.textBox2.Visible = false;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1
@@ -258,6 +262,7 @@
             this.button8.TabIndex = 22;
             this.button8.Text = "导数据";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.button8_Click_1);
             // 
             // button14
@@ -279,6 +284,7 @@
             this.button15.TabIndex = 24;
             this.button15.Text = "居民结算";
             this.button15.UseVisualStyleBackColor = true;
+            this.button15.Visible = false;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // button16
@@ -320,6 +326,7 @@
             this.textBox3.Size = new System.Drawing.Size(101, 21);
             this.textBox3.TabIndex = 28;
             this.textBox3.Text = ".";
+            this.textBox3.Visible = false;
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label2
@@ -330,6 +337,7 @@
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 29;
             this.label2.Text = "地址:";
+            this.label2.Visible = false;
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // button19
@@ -340,6 +348,7 @@
             this.button19.TabIndex = 30;
             this.button19.Text = "异地读卡";
             this.button19.UseVisualStyleBackColor = true;
+            this.button19.Visible = false;
             this.button19.Click += new System.EventHandler(this.button19_Click_1);
             // 
             // button20
@@ -350,6 +359,7 @@
             this.button20.TabIndex = 31;
             this.button20.Text = "异地划卡";
             this.button20.UseVisualStyleBackColor = true;
+            this.button20.Visible = false;
             this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // Form1
