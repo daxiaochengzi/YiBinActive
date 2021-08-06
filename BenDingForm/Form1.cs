@@ -375,7 +375,7 @@ namespace BenDingForm
         {
             int resultData = 0;
             string strConnection = "Provider = Microsoft.ACE.OLEDB.12.0;";  //C#读取Excel的连接字符串  
-            strConnection += @"Data Source = D:\xmmx.mdb";
+            strConnection += @"Data Source = D:\xmmx.accdb";
 
             //创建OleDb连接对象
             try
@@ -498,8 +498,8 @@ namespace BenDingForm
 
         private void button8_Click_1(object sender, EventArgs e)
         {
-            //string path = @"D:\xmmx.accdb";
-            string path = @"D:\xmmx.mdb";
+            string path = @"D:\xmmx.accdb";
+            //string path = @"D:\xmmx.mdb";
             if (!string.IsNullOrWhiteSpace(textBox3.Text.Trim()) == false)
             {
                 MessageBox.Show("服务器地址不能为空!!!");
@@ -509,7 +509,7 @@ namespace BenDingForm
 
             if (!File.Exists(path))
             {
-                MessageBox.Show(@"D:\xmmx.mdb" + "数据文件不存在!!!");
+                MessageBox.Show(@"D:\xmmx.accdb" + "数据文件不存在!!!");
                 return;
             }
             var count = SaveDetail();
