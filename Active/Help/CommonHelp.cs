@@ -125,5 +125,26 @@ namespace BenDingActive.Help
 
             return connStr;
         }
+        /// <summary>
+        /// 获取路径
+        /// </summary>
+        /// <returns></returns>
+        public static string GetPathWindowsStr()
+        {
+            string connStr = null;
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            if (is64Bit)
+            {
+
+                connStr = @"C:\Windows\SysWOW64";
+            }
+            else
+            {
+
+                connStr = @"C:\Windows\System32";
+            }
+
+            return connStr;
+        }
     }
 }

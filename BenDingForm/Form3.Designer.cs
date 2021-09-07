@@ -37,11 +37,13 @@
             this.txt_Input = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.txt_Transaction_Code);
             this.panel1.Controls.Add(this.button1);
@@ -89,18 +91,18 @@
             // 
             // txt_Output
             // 
-            this.txt_Output.Location = new System.Drawing.Point(115, 338);
+            this.txt_Output.Location = new System.Drawing.Point(65, 332);
             this.txt_Output.Multiline = true;
             this.txt_Output.Name = "txt_Output";
-            this.txt_Output.Size = new System.Drawing.Size(885, 253);
+            this.txt_Output.Size = new System.Drawing.Size(935, 253);
             this.txt_Output.TabIndex = 7;
             // 
             // txt_Input
             // 
-            this.txt_Input.Location = new System.Drawing.Point(115, 121);
+            this.txt_Input.Location = new System.Drawing.Point(65, 115);
             this.txt_Input.Multiline = true;
             this.txt_Input.Name = "txt_Input";
-            this.txt_Input.Size = new System.Drawing.Size(885, 200);
+            this.txt_Input.Size = new System.Drawing.Size(935, 200);
             this.txt_Input.TabIndex = 6;
             // 
             // label2
@@ -120,6 +122,16 @@
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 9;
             this.label1.Text = "入参：";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(27, 28);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "控件注册";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form3
             // 
@@ -151,5 +163,6 @@
         private System.Windows.Forms.TextBox txt_Input;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button2;
     }
 }
