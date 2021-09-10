@@ -8,18 +8,33 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BenDingActive.Model.Dto.YiHai;
+using BenDingActive.Model.Params.Service;
+using BenDingActive.Model.Params.YinHai;
+using Newtonsoft.Json;
 
 namespace BenDingForm
 {
     public partial class Form3 : Form
     {
+        //安全控件初始化参数
+        private string secureMediaData = null;
+        private SecureMediaOutputDto secureMediaIni = null;
         public Form3()
         {
             InitializeComponent();
+            textBox2.Text = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var secureMedia = new SecureMediaDto()
+            {
+                data = new SecureMediaDataDto()
+            };
+
+            secureMediaData = JsonConvert.SerializeObject(secureMedia);
         }
 
         private void btn_ini_Click(object sender, EventArgs e)
@@ -34,19 +49,26 @@ namespace BenDingForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string msg = "";
-            YinHaiCOM.yh_CHS_call(txt_Transaction_Code.Text, txt_Input.Text.Trim(), ref msg);
-            if (!string.IsNullOrWhiteSpace(msg))
-            {
-                Logs.LogWriteData(new LogWriteDataParam()
-                {
-                    JoinJson = txt_Transaction_Code.Text,
-                    ReturnJson = msg,
-                    OperatorId = "",
-                    TransactionCode = txt_Input.Text.Trim()
-                });
-                txt_Output.Text = msg;
-            }
+            //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+            //string msg = "";
+            //var paramData = GetBaseParam("1101", lab_sign_no.Text);
+            //var ddd = new PersonInputDto()
+            //{
+            //    card_sn = "",
+            //    certno = "511023197201145538",
+            //    psn_name = "周雪松",
+            //    mdtrt_cert_no = "511023197201145538",
+            //    mdtrt_cert_type = "02",
+            //    psn_cert_type = "1",
+
+            //};
+            //paramData.input = ddd;
+            //var postParam = JsonConvert.SerializeObject(paramData);
+            //txt_Input.Text = "";
+            //txt_Input.Text = postParam;
+            //var resultDataText = PostWebRequest(url, postParam);
+            //txt_Output.Text = resultDataText;
+
         }
         public void CopyDirectory(string scrPath, string savePath)
         {
@@ -171,6 +193,208 @@ namespace BenDingForm
             }
 
             return result;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Logs.LogWriteData(new LogWriteDataParam()
+            {
+                JoinJson ="123",
+                ReturnJson = "123123",
+                OperatorId ="12312",
+                TransactionCode = "WorkerHospitalizationSettlement"
+            });
+        }
+        /// <summary>
+        /// Post提交数据
+        /// </summary>
+        /// <param name="postUrl">URL</param>
+        /// <param name="paramData">参数</param>
+        /// <returns></returns>
+        private string PostWebRequest(string postUrl, string paramData)
+        {
+            string ret = string.Empty;
+            try
+            {
+                if (!postUrl.StartsWith("http://"))
+                    return "";
+
+                byte[] byteArray = Encoding.Default.GetBytes(paramData); //转化
+                HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(new Uri(postUrl));
+                webReq.Method = "POST";
+                webReq.ContentType = "application/json";
+                webReq.ContentLength = byteArray.Length;
+                Stream newStream = webReq.GetRequestStream();
+                newStream.Write(byteArray, 0, byteArray.Length);//写入参数
+                newStream.Close();
+                HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
+                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                ret = sr.ReadToEnd();
+                sr.Close();
+                response.Close();
+                newStream.Close();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            return ret;
+        }
+
+        private YinHaiGetBaseParam GetBaseParam(string infno,string sign_no)
+        {
+            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+            var iniParam = new YinHaiGetBaseParam()
+            {
+                msgid = "H51200200049" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
+                infno = infno,
+                sign_no= sign_no
+            };
+            //输入参数
+            var inputData = new SignInInputDto();
+            //输入数据
+            var data = new SignInInputDataDto()
+            {
+                opter_no = "N511527007263",
+                ip = "192.168.71.1",
+                mac = "08-62-66-0C-D8-47"
+            };
+            inputData.signIn = data;
+            
+            return iniParam;
+        }
+
+        private void btn_Signin_Click(object sender, EventArgs e)
+        {
+            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+            var iniParm = new YinHaiGetBaseParam()
+            {
+                msgid = "H51200200049" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
+                infno = "9001"
+            };
+            //输入参数
+            var inputData = new SignInInputDto();
+            //输入数据
+            var data = new SignInInputDataDto()
+            {
+                opter_no = "N511527007263",
+                ip = "192.168.71.1",
+                mac = "08-62-66-0C-D8-47"
+            };
+            inputData.signIn = data;
+            iniParm.input = inputData;
+
+            var postParam = JsonConvert.SerializeObject(iniParm);
+            txt_Input.Text = postParam;
+            var resultDataText = PostWebRequest(url, postParam);
+            txt_Output.Text = resultDataText;
+            var resultData= JsonConvert.DeserializeObject<YinHaiOutBaseParam>(resultDataText);
+            if (resultData.infcode == "0")
+            {
+                var output = resultData.output;
+                var outputData = JsonConvert.DeserializeObject<SignInOutputDto>(output.ToString());
+                lab_sign_no.Text = outputData.signinoutb.sign_no;
+            }
+            else
+            {
+                MessageBox.Show("签到失败!!!");
+            }
+
+           
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button3_Click_2(object sender, EventArgs e)
+        {
+            var ddd = new OutpatientSettlementInputDto();
+            var dddData = new OutpatientSettlementInputDataDto();
+
+            dddData.psn_no = "123123";
+            dddData.mdtrt_cert_type = "02";
+            dddData.mdtrt_cert_no = "511023197201145538";
+            dddData.med_type = "11";
+            dddData.medfee_sumamt = 1;
+            dddData.psn_setlway = "01";
+            dddData.acct_used_flag = "01";
+            dddData.card_token = "";
+            ddd.data = dddData;
+            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+            string msg = "";
+            var paramData = GetBaseParam("2207", lab_sign_no.Text);
+           
+            paramData.input = ddd;
+            var postParam = JsonConvert.SerializeObject(paramData);
+            txt_Input.Text = "";
+            txt_Input.Text = postParam;
+            var resultDataText = PostWebRequest(url, postParam);
+            txt_Output.Text = resultDataText;
+           
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string msg = "";
+            string iniMsg = "";
+            var resultData = YinHaiCOM.Init(out iniMsg);
+            YinHaiCOM.yh_CHS_call(txt_Transaction_Code.Text, secureMediaData, ref msg);
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                 secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = txt_Transaction_Code.Text,
+                    ReturnJson = msg,
+                    OperatorId = "",
+                    TransactionCode = txt_Input.Text.Trim()
+                });
+                txt_Output.Text = msg;
+            }
+        }
+
+        private void button3_Click_3(object sender, EventArgs e)
+        {
+            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+            string msg = "";
+            var paramData = GetBaseParam("1101", lab_sign_no.Text);
+         
+            if (secureMediaIni == null)
+            {
+                MessageBox.Show("安全介质为空!!!");
+            }
+            else
+            {
+                var tokenData = new PersonInputCardTokenDto()
+                {
+                    card_token = secureMediaIni.data.card_token
+                };
+                paramData.insuplc_admdvs = secureMediaIni.data.insuplc_admdvs;
+                var personInput = new PersonInputDto();
+               
+                var personInputData = new PersonInputDataDto
+                {
+                    card_sn = secureMediaIni.data.card_sn,
+                    certno = secureMediaIni.data.certno,
+                    psn_name = "陈静",
+                    mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
+                    mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
+                    psn_cert_type = secureMediaIni.data.psn_cert_type,
+                    expContent = tokenData,
+                    begntime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                };
+                personInput.data = personInputData;
+                paramData.input = personInput;
+                var postParam = JsonConvert.SerializeObject(paramData);
+                txt_Input.Text = "";
+                txt_Input.Text = postParam;
+                var resultDataText = PostWebRequest(url, postParam);
+                txt_Output.Text = resultDataText;
+            }
+
+           
         }
     }
 
