@@ -105,12 +105,15 @@
     <Compile Include="Model\Dto\Bend\YdNationEcTransUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdResidentUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
+    <Compile Include="Model\Dto\YiHai\OutpatientRegisterCancelInputDataDto.cs" />
+    <Compile Include="Model\Dto\YiHai\OutpatientRegisterInputDataParam.cs" />
     <Compile Include="Model\Dto\YiHai\OutpatientSettlementInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\PersonInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\SecureMediaDto.cs" />
     <Compile Include="Model\Dto\YiHai\SecureMediaOutputDto.cs" />
     <Compile Include="Model\Dto\YiHai\SignInInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\SignInOutputDto.cs" />
+    <Compile Include="Model\Dto\YiHai\YinHaiBaseIniDiseinfoInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\YinHaiOutBaseParam.cs" />
     <Compile Include="Model\Params\Service\BaseService.cs" />
     <Compile Include="Model\Params\Service\WorkerBaseParam.cs" />

@@ -79,7 +79,7 @@ namespace BenDingActive.Model.Params.YinHai
         /// <summary>
         /// 参保地医保区划 (如果交易输入中含有人员编号，此项必填)
         /// </summary>
-        public string insuplc_admdvs { get; set; } = "";
+        public string insuplc_admdvs { get; set; } = "512000";
         /// <summary>
         /// 签名类型
         /// </summary>

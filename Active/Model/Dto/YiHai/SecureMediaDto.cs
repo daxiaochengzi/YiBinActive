@@ -8,7 +8,13 @@ namespace BenDingActive.Model.Dto.YiHai
 {
    public class SecureMediaDto
    {
-       public string tran_no { get; set; } = "1101";
+        /// <summary>
+        /// 交易状态
+        /// </summary>
+        public string tran_no { get; set; } = "1101";
+        /// <summary>
+        /// 
+        /// </summary>
         public string tran_time { get; set; } = DateTime.Now.ToString("yyyyMMddHHmmss");
 
         public SecureMediaDataDto data { get; set; }
@@ -17,8 +23,14 @@ namespace BenDingActive.Model.Dto.YiHai
 
     public class SecureMediaDataDto
     {
+        /// <summary>
+        /// 定点医药机构编号
+        /// </summary>
         public string fixmedins_code { get; set; } = "H51200200049";
-        public string psn_no { get; set; } = "51000051200000512099000007";
+        /// <summary>
+        /// 人员编号
+        /// </summary>
+        public string psn_no { get; set; } = "";
         public string mdtrtarea_admvs { get; set; } = "512000";
         public string local_type { get; set; } = "1";
         public string out_type { get; set; } = "1";

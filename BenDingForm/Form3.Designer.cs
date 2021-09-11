@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.txt_PatientName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.lab_sign_no = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -42,17 +47,18 @@
             this.txt_Input = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button7);
+            this.panel1.Controls.Add(this.button6);
+            this.panel1.Controls.Add(this.button5);
+            this.panel1.Controls.Add(this.txt_PatientName);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.lab_sign_no);
             this.panel1.Controls.Add(this.label4);
@@ -67,9 +73,56 @@
             this.panel1.Size = new System.Drawing.Size(835, 100);
             this.panel1.TabIndex = 8;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(87, 60);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 18;
+            this.button6.Text = "取消挂号";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(3, 60);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 17;
+            this.button5.Text = "挂号";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // txt_PatientName
+            // 
+            this.txt_PatientName.Location = new System.Drawing.Point(654, 68);
+            this.txt_PatientName.Name = "txt_PatientName";
+            this.txt_PatientName.Size = new System.Drawing.Size(100, 21);
+            this.txt_PatientName.TabIndex = 16;
+            this.txt_PatientName.Text = "周雪松";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(579, 71);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 12);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "病人姓名:";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(162, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(90, 23);
+            this.button3.TabIndex = 14;
+            this.button3.Text = "获取病人信息";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_3);
+            // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(27, 64);
+            this.button4.Location = new System.Drawing.Point(87, 28);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 11;
@@ -97,7 +150,7 @@
             // 
             // btn_Signin
             // 
-            this.btn_Signin.Location = new System.Drawing.Point(189, 28);
+            this.btn_Signin.Location = new System.Drawing.Point(6, 28);
             this.btn_Signin.Name = "btn_Signin";
             this.btn_Signin.Size = new System.Drawing.Size(75, 23);
             this.btn_Signin.TabIndex = 5;
@@ -107,7 +160,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(27, 28);
+            this.button2.Location = new System.Drawing.Point(0, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
@@ -134,7 +187,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(270, 28);
+            this.button1.Location = new System.Drawing.Point(168, 29);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -144,7 +197,7 @@
             // 
             // btn_ini
             // 
-            this.btn_ini.Location = new System.Drawing.Point(108, 29);
+            this.btn_ini.Location = new System.Drawing.Point(81, 3);
             this.btn_ini.Name = "btn_ini";
             this.btn_ini.Size = new System.Drawing.Size(75, 23);
             this.btn_ini.TabIndex = 0;
@@ -186,31 +239,15 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "入参：";
             // 
-            // label6
+            // button7
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(387, 69);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(47, 12);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "时间戳:";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(454, 66);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(184, 21);
-            this.textBox2.TabIndex = 13;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(108, 65);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(90, 23);
-            this.button3.TabIndex = 14;
-            this.button3.Text = "获取病人信息";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_3);
+            this.button7.Location = new System.Drawing.Point(168, 60);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 19;
+            this.button7.Text = "病人信息上传";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form3
             // 
@@ -235,7 +272,6 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txt_Transaction_Code;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btn_ini;
         private System.Windows.Forms.TextBox txt_Output;
@@ -247,8 +283,12 @@
         private System.Windows.Forms.Label lab_sign_no;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox txt_PatientName;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TextBox txt_Transaction_Code;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
     }
 }

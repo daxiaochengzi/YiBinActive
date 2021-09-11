@@ -28,7 +28,7 @@ namespace BenDingForm
         public Form3()
         {
             InitializeComponent();
-            textBox2.Text = DateTime.Now.ToString("yyyyMMddHHmmss");
+          
             var secureMedia = new SecureMediaDto()
             {
                 data = new SecureMediaDataDto()
@@ -49,25 +49,27 @@ namespace BenDingForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            //string msg = "";
-            //var paramData = GetBaseParam("1101", lab_sign_no.Text);
-            //var ddd = new PersonInputDto()
-            //{
-            //    card_sn = "",
-            //    certno = "511023197201145538",
-            //    psn_name = "周雪松",
-            //    mdtrt_cert_no = "511023197201145538",
-            //    mdtrt_cert_type = "02",
-            //    psn_cert_type = "1",
-
-            //};
-            //paramData.input = ddd;
-            //var postParam = JsonConvert.SerializeObject(paramData);
-            //txt_Input.Text = "";
-            //txt_Input.Text = postParam;
-            //var resultDataText = PostWebRequest(url, postParam);
-            //txt_Output.Text = resultDataText;
+            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+            string msg = "";
+           
+           var resultDataText = PostWebRequest(url, txt_Input.Text);
+            txt_Output.Text = resultDataText;
+            var resultData = JsonConvert.DeserializeObject<YinHaiOutBaseParam>(resultDataText);
+            if (resultData.infcode == "0")
+            {
+                var output = resultData.output;
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = txt_Input.Text.Trim(),
+                    ReturnJson = output!=null?resultData.output.ToString():"",
+                    OperatorId = "",
+                    TransactionCode = txt_Transaction_Code.Text 
+                });
+            }
+            else
+            {
+                MessageBox.Show("操作失败!!!");
+            }
 
         }
         public void CopyDirectory(string scrPath, string savePath)
@@ -195,16 +197,6 @@ namespace BenDingForm
             return result;
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Logs.LogWriteData(new LogWriteDataParam()
-            {
-                JoinJson ="123",
-                ReturnJson = "123123",
-                OperatorId ="12312",
-                TransactionCode = "WorkerHospitalizationSettlement"
-            });
-        }
         /// <summary>
         /// Post提交数据
         /// </summary>
@@ -303,14 +295,11 @@ namespace BenDingForm
            
         }
 
-        private void button3_Click_1(object sender, EventArgs e)
-        {
-            
-        }
+
 
         private void button3_Click_2(object sender, EventArgs e)
         {
-            var ddd = new OutpatientSettlementInputDto();
+            
             var dddData = new OutpatientSettlementInputDataDto();
 
             dddData.psn_no = "123123";
@@ -321,12 +310,11 @@ namespace BenDingForm
             dddData.psn_setlway = "01";
             dddData.acct_used_flag = "01";
             dddData.card_token = "";
-            ddd.data = dddData;
             string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
             string msg = "";
             var paramData = GetBaseParam("2207", lab_sign_no.Text);
            
-            paramData.input = ddd;
+            paramData.input = new {data= dddData };
             var postParam = JsonConvert.SerializeObject(paramData);
             txt_Input.Text = "";
             txt_Input.Text = postParam;
@@ -340,7 +328,7 @@ namespace BenDingForm
             string msg = "";
             string iniMsg = "";
             var resultData = YinHaiCOM.Init(out iniMsg);
-            YinHaiCOM.yh_CHS_call(txt_Transaction_Code.Text, secureMediaData, ref msg);
+            YinHaiCOM.yh_CHS_call("1101", secureMediaData, ref msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                  secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
@@ -378,15 +366,16 @@ namespace BenDingForm
                 {
                     card_sn = secureMediaIni.data.card_sn,
                     certno = secureMediaIni.data.certno,
-                    psn_name = "陈静",
+                    psn_name = txt_PatientName.Text,
                     mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
                     mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
                     psn_cert_type = secureMediaIni.data.psn_cert_type,
                     expContent = tokenData,
                     begntime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 };
+             
                 personInput.data = personInputData;
-                paramData.input = personInput;
+                paramData.input = new {data = personInputData};
                 var postParam = JsonConvert.SerializeObject(paramData);
                 txt_Input.Text = "";
                 txt_Input.Text = postParam;
@@ -395,6 +384,71 @@ namespace BenDingForm
             }
 
            
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2201", lab_sign_no.Text);
+            var registerParam = new OutpatientRegisterInputDataParam()
+            {
+                expContent =new { card_token = secureMediaIni .data.card_token},
+                mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
+                dept_code = "A03",
+                caty = "A03",
+                mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
+                atddr_no = "777",
+                dr_name = "6666",
+                dept_name = "内科",
+                ipt_otp_no = "12323",
+                psn_no = "51000051200000512099000007",
+                begntime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+               insutype  = "310"
+            };
+
+            var data = new {data = registerParam};
+            paramData.input = data;
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+          
+          
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            
+            var paramData = GetBaseParam("2202", lab_sign_no.Text);
+            var registerParam = new OutpatientRegisterCancelInputDataDto()
+            {
+                expContent = new { card_token = secureMediaIni.data.card_token },
+               
+                ipt_otp_no = "12323",
+                psn_no = "51000051200000512099000007",
+                mdtrt_id= "512000G0000000382104",
+
+
+            };
+
+            var data = new { data = registerParam };
+            paramData.input = data;
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2203A", lab_sign_no.Text);
+            var registerParam = new OutpatientRegisterCancelInputDataDto()
+            {
+                expContent = new { card_token = secureMediaIni.data.card_token },
+
+                ipt_otp_no = "12323",
+                psn_no = "51000051200000512099000007",
+                mdtrt_id = "512000G0000000382104",
+
+
+            };
+
+            var data = new { data = registerParam };
+            paramData.input = data;
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
         }
     }
 
