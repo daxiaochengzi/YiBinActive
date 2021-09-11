@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace BenDingActive.Model.Dto.YiHai
 {
-    public class OutpatientSettlementInputDto
+  public  class OutpatientPreSettlementDataInputDto
     {
-        public OutpatientSettlementInputDataDto data { get; set; }
-    }
-    public class OutpatientSettlementInputDataDto
-    {
-
         /// <summary>
         /// 人员编号 *
         /// </summary>
@@ -53,37 +48,10 @@ namespace BenDingActive.Model.Dto.YiHai
         /// 险种类型 *
         /// </summary>
         public string insutype { get; set; }
-
         /// <summary>
         /// 字段扩展
         /// </summary>
-        public object expContent { get; set; }
-
-        /// <summary>
-        /// 发票号
-        /// </summary>
-        public string invono { get; set; }
-
-        /// <summary>
-        /// 全自费金额
-        /// </summary>
-        public decimal fulamt_ownpay_amt { get; set; }
-        /// <summary>
-        /// 超限价金额
-        /// </summary>
-        public decimal overlmt_selfpay { get; set; }
-        /// <summary>
-        /// 先行自付金额
-        /// </summary>
-        public decimal preselfpay_amt { get; set; }
-        /// <summary>
-        /// 符合政策范围金额
-        /// </summary>
-        public decimal inscp_scp_amt { get; set; }
-        /// <summary>
-        /// 校验介质
-        /// </summary>
-
-        public string card_token { get; set; }
+        public object expContent { get; set; } 
+       
     }
 }

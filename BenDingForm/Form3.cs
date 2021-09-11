@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BenDingActive.Model.Dto.YiHai;
+using BenDingActive.Model.Dto.YiHai.Hospital;
 using BenDingActive.Model.Params.Service;
 using BenDingActive.Model.Params.YinHai;
 using Newtonsoft.Json;
@@ -286,6 +287,7 @@ namespace BenDingForm
                 var output = resultData.output;
                 var outputData = JsonConvert.DeserializeObject<SignInOutputDto>(output.ToString());
                 lab_sign_no.Text = outputData.signinoutb.sign_no;
+
             }
             else
             {
@@ -334,7 +336,7 @@ namespace BenDingForm
                  secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
                 Logs.LogWriteData(new LogWriteDataParam()
                 {
-                    JoinJson = txt_Transaction_Code.Text,
+                    JoinJson = secureMediaData,
                     ReturnJson = msg,
                     OperatorId = "",
                     TransactionCode = txt_Input.Text.Trim()
@@ -402,7 +404,7 @@ namespace BenDingForm
                 ipt_otp_no = "12323",
                 psn_no = "51000051200000512099000007",
                 begntime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-               insutype  = "310"
+                insutype  = "310"
             };
 
             var data = new {data = registerParam};
@@ -435,19 +437,193 @@ namespace BenDingForm
         private void button7_Click(object sender, EventArgs e)
         {
             var paramData = GetBaseParam("2203A", lab_sign_no.Text);
-            var registerParam = new OutpatientRegisterCancelInputDataDto()
-            {
-                expContent = new { card_token = secureMediaIni.data.card_token },
-
-                ipt_otp_no = "12323",
+            //输入参数
+            var inputData = new InformationUploadInputDto();
+            var mdtrtinfo = new InformationUploadInputMdtrtinfoDto()
+            { 
+                mdtrt_id = "512000G0000000382130",
                 psn_no = "51000051200000512099000007",
-                mdtrt_id = "512000G0000000382104",
+                med_type = "11",
+                begntime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                main_cond_dscr="心烦意燥",
+                dise_codg= "N05.900x003",
+                dise_name = "肾炎",
+                expContent = new { card_token = secureMediaIni.data.card_token },
+                birctrl_type="",
+            };
+            var diseinfo = new List<YinHaiBaseIniDiseinfo>();
+
+            var diseinfoData = new YinHaiBaseIniDiseinfo()
+            {   diag_type="0",
+                diag_code = "N05.900x003",
+                diag_name = "肾炎",
+                diag_srt_no = 1,
+                diag_time = Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss"),
+                dise_dor_name ="111",
+                dise_dor_no = "测试",
+                diag_dept= "内科"
+
+            };
+            diseinfo.Add(diseinfoData);
+            inputData.mdtrtinfo = mdtrtinfo;
+            inputData.diseinfo = diseinfo;
+            paramData.input = inputData;
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2204", lab_sign_no.Text);
+            var inputData=new List<OutpatientFeeUploadfeedetailInput>();
+            var inputFeeData = new OutpatientFeeUploadfeedetailInput()
+            {
+                feedetl_sn = "452118608000M202104040021",
+                mdtrt_id= "512000G0000000382130",
+                psn_no= "51000051200000512099000007",
+                chrg_bchno="1111",
+                dise_codg= "N05.900x003",
+                rxno="",
+                rx_circ_flag="0",
+                fee_ocur_time=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                med_list_codg= "ZI02AAN0001020103906",
+                medins_list_codg = "C30B4454648F4C4098F770C1A6DD0363",
+                det_item_fee_sumamt=15,
+                cnt=10,
+                pric=Convert.ToDecimal(1.5) ,
+                sin_dos_dscr="",
+                used_frqu_dscr="",
+                prd_days=0,
+                medc_way_dscr="",
+               
+                bilg_dept_codg="A03",
+                bilg_dept_name="内科",
+                bilg_dr_codg="1111",
+                bilg_dr_name="444",
+                hosp_appr_flag="1",
+                expContent= new { card_token = secureMediaIni.data.card_token }
 
 
             };
+            inputData.Add(inputFeeData);
+            paramData.input = new { feedetail = inputData };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+           
+        }
 
-            var data = new { data = registerParam };
-            paramData.input = data;
+        private void button9_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2206A", lab_sign_no.Text);
+            var inputData = new OutpatientPreSettlementDataInputDto()
+            {
+                expContent = new { card_token = secureMediaIni.data.card_token },
+                psn_no= "51000051200000512099000007",
+                mdtrt_cert_type= secureMediaIni.data.mdtrt_cert_type,
+                mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
+                med_type="11",
+                medfee_sumamt=15,
+                psn_setlway ="01",
+                mdtrt_id= "512000G0000000382130",
+                chrg_bchno= "1111",
+                acct_used_flag="0",
+                insutype="310"
+
+
+            };
+           
+            paramData.input = new { data = inputData };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2207A", lab_sign_no.Text);
+            var inputData = new OutpatientSettlementInputDataDto()
+            {
+                expContent = new { card_token = secureMediaIni.data.card_token },
+                psn_no = "51000051200000512099000007",
+                mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
+                mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
+                med_type = "11",
+                medfee_sumamt = 15,
+                psn_setlway = "01",
+                mdtrt_id = "512000G0000000382130",
+                chrg_bchno = "1111",
+                acct_used_flag = "0",
+                insutype = "310",
+                invono="K262489735",
+                inscp_scp_amt=0,
+                fulamt_ownpay_amt=15,
+                overlmt_selfpay=0,
+                preselfpay_amt=0
+
+            };
+
+            paramData.input = new { data = inputData };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2208", lab_sign_no.Text);
+            var inputData = new OutpatientCancelSettlementInputDataDto()
+            {
+                expContent = new { card_token = secureMediaIni.data.card_token },
+                psn_no = "51000051200000512099000007",
+                mdtrt_id = "512000G0000000382130",
+                setl_id= "512000G0000000349439"
+
+            };
+
+            paramData.input = new { data = inputData };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2401", lab_sign_no.Text);
+            //输入参数
+            var InputData = new HospitalRegisterInputDto();
+            var mdtrtinfo = new HospitalRegisterInputmdtrtinfoDto()
+            {   psn_no= "51000051200000512099000007",
+                adm_bed = "33",
+                begntime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                adm_dept_codg ="A03",
+                adm_dept_name = "内科",
+                atddr_no ="555",
+                chfpdr_name ="cccc",
+                dscg_maindiag_code = "N05.900x003",
+                dscg_maindiag_name = "肾炎",
+                ipt_no = "100120210223011",
+                //birctrl_matn_date = param.birctrl_matn_date,
+                //fetts = param.fetts,
+                //fetus_cnt = param.fetus_cnt,
+                //geso_val = param.geso_val,
+                //psn_no = param.psn_no,
+                insutype ="310",
+                //pret_flag = param.pret_flag,
+                mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
+                mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
+                med_type = "21",
+                expContent = new { card_token = secureMediaIni.data.card_token },
+            };
+            var diseinfo = new List<YinHaiBaseIniDiseinfo>();
+
+            var diseinfoData = new YinHaiBaseIniDiseinfo()
+            {
+                diag_type = "0",
+                diag_code = "N05.900x003",
+                diag_name = "肾炎",
+                diag_srt_no = 1,
+                diag_time = Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss"),
+                dise_dor_name = "111",
+                dise_dor_no = "测试",
+                diag_dept = "内科"
+
+            };
+            diseinfo.Add(diseinfoData);
+            InputData.diseinfo = diseinfo;
+            InputData.mdtrtinfo = mdtrtinfo;
+            paramData.input = InputData;
             txt_Input.Text = JsonConvert.SerializeObject(paramData);
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BenDingActive.Model.Dto.YiHai
 {
-   public class YinHaiBaseIniDiseinfoInputDto
+   public class YinHaiBaseIniDiseinfo
     {/// <summary>
         /// 人员编号 --住院,出院 *
         /// </summary>
@@ -56,5 +56,6 @@ namespace BenDingActive.Model.Dto.YiHai
         /// 有效标志
         /// </summary>
         public string vali_flag { get; set; } = "1";
+     
     }
 }
