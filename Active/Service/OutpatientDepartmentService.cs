@@ -1023,7 +1023,6 @@ namespace BenDingActive.Service
         {
             var resultData = new ApiJsonResultData { Success = true };
 
-            
             string code = "DZPZ003";
             var iniFile = new IniFile("");
             //端口号

@@ -29,6 +29,13 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button14 = new System.Windows.Forms.Button();
+            this.btn_SigninQuery = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -49,17 +56,24 @@
             this.txt_Input = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.btn_SigninQuery = new System.Windows.Forms.Button();
+            this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button20);
+            this.panel1.Controls.Add(this.button19);
+            this.panel1.Controls.Add(this.button18);
+            this.panel1.Controls.Add(this.button17);
+            this.panel1.Controls.Add(this.button16);
+            this.panel1.Controls.Add(this.button15);
+            this.panel1.Controls.Add(this.button14);
             this.panel1.Controls.Add(this.btn_SigninQuery);
             this.panel1.Controls.Add(this.button13);
             this.panel1.Controls.Add(this.button12);
@@ -86,6 +100,76 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(835, 120);
             this.panel1.TabIndex = 8;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(646, 89);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(75, 23);
+            this.button14.TabIndex = 27;
+            this.button14.Text = "button14";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // btn_SigninQuery
+            // 
+            this.btn_SigninQuery.Location = new System.Drawing.Point(88, 31);
+            this.btn_SigninQuery.Name = "btn_SigninQuery";
+            this.btn_SigninQuery.Size = new System.Drawing.Size(75, 23);
+            this.btn_SigninQuery.TabIndex = 26;
+            this.btn_SigninQuery.Text = "签到查询";
+            this.btn_SigninQuery.UseVisualStyleBackColor = true;
+            this.btn_SigninQuery.Click += new System.EventHandler(this.btn_SigninQuery_Click);
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(191, 89);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(75, 23);
+            this.button13.TabIndex = 25;
+            this.button13.Text = "出院办理";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(3, 89);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(75, 23);
+            this.button12.TabIndex = 24;
+            this.button12.Text = "入院办理";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(489, 60);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(75, 23);
+            this.button11.TabIndex = 23;
+            this.button11.Text = "取消结算";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(408, 60);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.TabIndex = 22;
+            this.button10.Text = "结算";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(327, 60);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 21;
+            this.button9.Text = "费用预结算";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button8
             // 
@@ -273,63 +357,65 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "入参：";
             // 
-            // button9
+            // button15
             // 
-            this.button9.Location = new System.Drawing.Point(327, 60);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 21;
-            this.button9.Text = "费用预结算";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.button15.Location = new System.Drawing.Point(84, 89);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(100, 23);
+            this.button15.TabIndex = 28;
+            this.button15.Text = "住院费用上传";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
-            // button10
+            // button16
             // 
-            this.button10.Location = new System.Drawing.Point(408, 60);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
-            this.button10.TabIndex = 22;
-            this.button10.Text = "结算";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.button16.Location = new System.Drawing.Point(272, 89);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(104, 23);
+            this.button16.TabIndex = 29;
+            this.button16.Text = "取消出院办理";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
-            // button11
+            // button17
             // 
-            this.button11.Location = new System.Drawing.Point(489, 60);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
-            this.button11.TabIndex = 23;
-            this.button11.Text = "取消结算";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button17.Location = new System.Drawing.Point(382, 89);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(75, 23);
+            this.button17.TabIndex = 30;
+            this.button17.Text = "住院预结算";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
-            // button12
+            // button18
             // 
-            this.button12.Location = new System.Drawing.Point(3, 89);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 23);
-            this.button12.TabIndex = 24;
-            this.button12.Text = "入院办理";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.button18.Location = new System.Drawing.Point(463, 89);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(75, 23);
+            this.button18.TabIndex = 31;
+            this.button18.Text = "住院结算";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
-            // button13
+            // button19
             // 
-            this.button13.Location = new System.Drawing.Point(87, 89);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 23);
-            this.button13.TabIndex = 25;
-            this.button13.Text = "出院办理";
-            this.button13.UseVisualStyleBackColor = true;
+            this.button19.Location = new System.Drawing.Point(544, 89);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(94, 23);
+            this.button19.TabIndex = 32;
+            this.button19.Text = "取消住院结算";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
-            // btn_SigninQuery
+            // button20
             // 
-            this.btn_SigninQuery.Location = new System.Drawing.Point(88, 31);
-            this.btn_SigninQuery.Name = "btn_SigninQuery";
-            this.btn_SigninQuery.Size = new System.Drawing.Size(75, 23);
-            this.btn_SigninQuery.TabIndex = 26;
-            this.btn_SigninQuery.Text = "签到查询";
-            this.btn_SigninQuery.UseVisualStyleBackColor = true;
+            this.button20.Location = new System.Drawing.Point(727, 89);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(75, 23);
+            this.button20.TabIndex = 33;
+            this.button20.Text = "下载";
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // Form3
             // 
@@ -379,5 +465,12 @@
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button btn_SigninQuery;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.Button button20;
     }
 }

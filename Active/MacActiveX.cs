@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using BenDingActive.Help;
 using BenDingActive.Model;
 using BenDingActive.Model.BendParam;
-
+using BenDingActive.Model.Params.Service;
 using BenDingActive.Service;
 using Newtonsoft.Json;
 
@@ -13,13 +13,45 @@ namespace BenDingActive
 {
     [Guid("67475F7D-57A1-45AD-96F3-428A679B2E6C")]
     public class MacActiveX : ActiveXControl
-    {     /// <summary>
-          /// 门诊方法集合
-          /// </summary>
-          /// <param name="param"></param>
-          /// <param name="baseParam"></param>
-          /// <param name="methodName"></param>
-          /// <returns></returns>
+    {
+        public  string YinHaiMethods(string param, string baseParam)
+        {
+            Logs.LogWrite(new LogParam()
+            {
+                Params = param,
+                Msg = JsonConvert.SerializeObject(baseParam)
+
+            });
+            var resultData = new ApiJsonResultData();
+            resultData.Success = true;
+            var baseService = new YinHaiBaseService();
+            var hisBase = JsonConvert.DeserializeObject<HisBaseParam>(baseParam);
+            //var resultData =
+            //    baseService.MedicalInsuranceExecute(param, hisBase);
+            return JsonConvert.SerializeObject(hisBase); ;
+        }
+       
+        public string YinHaiSignInPersonnel()
+        {
+            return YinHaiCOM.SignInUserId;
+        }
+        /// <summary>
+        /// 获取人员信息
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <returns></returns>
+        public string YinHaiGetPatient(string param, string baseParam)
+        {
+            return YinHaiCOM.GetPatient();
+        }
+        /// <summary>
+        /// 门诊方法集合
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="baseParam"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
         public string OutpatientMethods(string param, string baseParam, string methodName)
         {
             System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());

@@ -29,21 +29,25 @@ namespace BenDingActive.Model.Params.YinHai
         /// <summary>
         /// 定点医药机构编号 *
         /// </summary>
-        public string fixmedins_code { get; set; } = "H51200200049";
+        public string fixmedins_code { get; set; } = "H51202100005";
 
         /// <summary>
         /// 按地方要求传入经办人姓名/终端名称
         /// </summary>
-        public string opter_name { get; set; } = "510802195209130041";
+        public string opter_name { get; set; } = "管理员";
        
         /// <summary>
         /// 按地方要求传入经办人编号/终端编号 *
         /// </summary>
-        public string opter { get; set; } = "23003";
+        public string opter { get; set; } = "01100";
         /// <summary>
         /// 就医地医保区划 *  后台获取
         /// </summary>
         public string mdtrtarea_admvs { get; set; } = "512000";
+         /// <summary>
+        /// 参保地医保区划 (如果交易输入中含有人员编号，此项必填)
+        /// </summary>
+        public string insuplc_admdvs { get; set; } = "512099";
         /// <summary>
         /// 接收方系统代码* 
         /// </summary>
@@ -56,7 +60,7 @@ namespace BenDingActive.Model.Params.YinHai
         /// 定点医药机构名称 *
         /// </summary>
 
-        public string fixmedins_name { get; set; } = "资阳市第一人民医院";
+        public string fixmedins_name { get; set; } = "安岳县第三人民医院";
         /// <summary>
         /// 设备编号
         /// </summary>
@@ -76,10 +80,7 @@ namespace BenDingActive.Model.Params.YinHai
         /// </summary>
         public string inf_time { get; set; } = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-        /// <summary>
-        /// 参保地医保区划 (如果交易输入中含有人员编号，此项必填)
-        /// </summary>
-        public string insuplc_admdvs { get; set; } = "512000";
+       
         /// <summary>
         /// 签名类型
         /// </summary>

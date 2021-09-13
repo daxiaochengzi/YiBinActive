@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 namespace BenDingActive.Model.Dto.YiHai
 {
    public class YinHaiBaseIniDiseinfo
-    {/// <summary>
+    {
+        /// <summary>
+        /// 0 否 1是
+        /// </summary>
+        public string maindiag_flag { get; set; }
+
+        /// <summary>
         /// 人员编号 --住院,出院 *
         /// </summary>
         public string psn_no { get; set; }

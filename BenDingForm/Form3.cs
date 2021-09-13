@@ -2,6 +2,7 @@
 using BenDingActive.Help;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -262,7 +263,7 @@ namespace BenDingForm
             string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
             var iniParm = new YinHaiGetBaseParam()
             {
-                msgid = "H51200200049" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
+                msgid = "H51202100005" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
                 infno = "9001"
             };
             //输入参数
@@ -270,7 +271,7 @@ namespace BenDingForm
             //输入数据
             var data = new SignInInputDataDto()
             {
-                opter_no = "N511527007263",
+                opter_no = "01100",
                 ip = "192.168.71.1",
                 mac = "08-62-66-0C-D8-47"
             };
@@ -330,7 +331,7 @@ namespace BenDingForm
             string msg = "";
             string iniMsg = "";
             var resultData = YinHaiCOM.Init(out iniMsg);
-            YinHaiCOM.yh_CHS_call("1101", secureMediaData, ref msg);
+            YinHaiCOM.yh_CHS_call("2304A", secureMediaData, ref msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                  secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
@@ -584,16 +585,18 @@ namespace BenDingForm
             //输入参数
             var InputData = new HospitalRegisterInputDto();
             var mdtrtinfo = new HospitalRegisterInputmdtrtinfoDto()
-            {   psn_no= "51000051200000512099000007",
+            {   psn_no= "51000051200000512099025082",
                 adm_bed = "33",
-                begntime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                begntime = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd HH:mm:ss"),
                 adm_dept_codg ="A03",
                 adm_dept_name = "内科",
-                atddr_no ="555",
-                chfpdr_name ="cccc",
+                atddr_no = "4861632382718291017",
+                chfpdr_name ="李茜",
                 dscg_maindiag_code = "N05.900x003",
                 dscg_maindiag_name = "肾炎",
                 ipt_no = "100120210223011",
+                adm_diag_dscr= "4861632382718291017",
+                main_cond_dscr= "肾炎",
                 //birctrl_matn_date = param.birctrl_matn_date,
                 //fetts = param.fetts,
                 //fetus_cnt = param.fetus_cnt,
@@ -609,22 +612,196 @@ namespace BenDingForm
             var diseinfo = new List<YinHaiBaseIniDiseinfo>();
 
             var diseinfoData = new YinHaiBaseIniDiseinfo()
-            {
-                diag_type = "0",
+            {   psn_no= "51000051200000512099025082",
+                diag_type = "1",
                 diag_code = "N05.900x003",
                 diag_name = "肾炎",
-                diag_srt_no = 1,
-                diag_time = Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss"),
-                dise_dor_name = "111",
-                dise_dor_no = "测试",
-                diag_dept = "内科"
-
+                diag_srt_no = 0,
+                diag_time = Convert.ToDateTime(DateTime.Now.AddDays(-1)).ToString("yyyy-MM-dd HH:mm:ss"),
+                dise_dor_name = "李茜",
+                dise_dor_no = "4861632382718291017",
+                diag_dept = "内科",
+                maindiag_flag = "1",
             };
             diseinfo.Add(diseinfoData);
             InputData.diseinfo = diseinfo;
             InputData.mdtrtinfo = mdtrtinfo;
             paramData.input = InputData;
             txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            var iniFile = new IniFile("");
+            var url = iniFile.YinHaiData("9001");
+        }
+
+        private void btn_SigninQuery_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2402", lab_sign_no.Text);
+            var mdtrtinfo = new LeaveHospitalInputDscgInfoDto()
+            {   mdtrt_id= "512000G0000000382203",
+                psn_no = "51000051200000512099025082",
+                insutype = "310",
+                endtime= Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss"),
+                dscg_dept_codg="A03",
+                dscg_dept_name="内科",
+              
+                dscg_way="1"
+            };
+            var diseinfo = new List<YinHaiBaseIniDiseinfo>();
+            var diseinfoData = new YinHaiBaseIniDiseinfo()
+            {
+                mdtrt_id = "512000G0000000382203",
+                psn_no = "51000051200000512099025082",
+                diag_type = "1",
+                diag_code = "N05.900x003",
+                diag_name = "肾炎",
+                diag_srt_no = 0,
+                diag_time = Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss"),
+                dise_dor_name = "李茜",
+                dise_dor_no = "4861632382718291017",
+                diag_dept = "内科",
+                maindiag_flag = "1",
+            };
+            diseinfo.Add(diseinfoData);
+           
+            paramData.input = new { dscginfo= mdtrtinfo , diseinfo = diseinfo };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2301", lab_sign_no.Text);
+            var inputData = new List<UploadHospitalFeeInputRowDto>();
+            var inputFeeData = new UploadHospitalFeeInputRowDto()
+            {
+                feedetl_sn = "202105161100262",
+                mdtrt_id = "512000G0000000382203",
+                psn_no = "51000051200000512099025082",
+                med_type="21",
+                fee_ocur_time = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd HH:mm:ss"),
+                med_list_codg = "ZI02AAN0001020103906",
+                medins_list_codg = "0997F11C9A6243BBB8E05204C29B7218",
+                det_item_fee_sumamt = 15,
+                cnt = 10,
+                pric = Convert.ToDecimal(1.5),
+                bilg_dept_codg = "A03",
+                bilg_dept_name = "内科",
+                bilg_dr_codg = "4861632382718291017",
+                bilg_dr_name = "李茜",
+                hosp_appr_flag = "1"
+             
+
+
+            };
+            inputData.Add(inputFeeData);
+            paramData.input = new { feedetail = inputData };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2405", lab_sign_no.Text);
+            var data = new GetCancelLeaveHospitalInputDataDto()
+            {
+                mdtrt_id= "512000G0000000382203",
+                psn_no = "51000051200000512099025082"
+            };
+            paramData.input = new { data = data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2303", lab_sign_no.Text);
+            var inputData = new HospitalPreSettlementInputDataDto()
+            {
+                psn_no = "51000051200000512099025082",
+                mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
+                mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
+                medfee_sumamt = 15,
+                psn_setlway = "01",
+                mdtrt_id = "512000G0000000382203",
+                insutype = "310",
+                mid_setl_flag="0",
+                acct_used_flag="0",
+                expContent = new { card_token = secureMediaIni.data.card_token },
+  
+            };
+
+            paramData.input = new { data = inputData };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2304", lab_sign_no.Text);
+            var inputData = new HospitalPreSettlementInputDataDto()
+            {
+                psn_no = "51000051200000512099025082",
+                mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
+                mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
+                medfee_sumamt = 15,
+                psn_setlway = "01",
+                mdtrt_id = "512000G0000000382203",
+                insutype = "310",
+                mid_setl_flag = "0",
+                acct_used_flag = "0",
+                expContent = new { card_token = secureMediaIni.data.card_token },
+            };
+
+            paramData.input = new { data = inputData };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2305", lab_sign_no.Text);
+            var data = new GetHospitalCancelSettlementInputDataDto()
+            {
+                mdtrt_id = "512000G0000000382203",
+                psn_no = "51000051200000512099025082",
+                setl_id= "512000G0000000349477"
+            };
+            paramData.input = new { data = data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+           
+          
+                try
+                {
+                    HttpWebRequest Myrq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
+                    HttpWebResponse myrp = (System.Net.HttpWebResponse)Myrq.GetResponse();
+                    Stream st = myrp.GetResponseStream();
+                    Stream so = new System.IO.FileStream("www", System.IO.FileMode.Create);
+                    byte[] by = new byte[1024];
+                    int osize = st.Read(by, 0, (int)by.Length);
+                    while (osize > 0)
+                    {
+                        so.Write(by, 0, osize);
+                        osize = st.Read(by, 0, (int)by.Length);
+                    }
+                    so.Close();
+                    st.Close();
+                    myrp.Close();
+                    Myrq.Abort();
+                    
+                }
+                catch (System.Exception exx)
+                {
+                    
+                }
+            
         }
     }
 

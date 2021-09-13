@@ -35,7 +35,7 @@ namespace BenDingActive.Model.Dto.YiHai
         /// </summary>
         public string certno { get; set; }
         /// <summary>
-        /// 就诊凭证类型
+        /// 人员证件类型
         /// </summary>
         public string psn_cert_type { get; set; }
         /// <summary>

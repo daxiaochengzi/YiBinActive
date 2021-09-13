@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using BenDingActive.Model.Dto.YiHai.comm;
+using Newtonsoft.Json;
 
 namespace BenDingActive
 {
@@ -12,7 +14,7 @@ namespace BenDingActive
         static System.Type yhNew = Type.GetTypeFromProgID("YinHai.CHS.InterfaceSCS");
         static Object yhObject;
         //签到人员id
-        static string SignInUserId = "";
+       public static string SignInUserId = "";
         public static bool Init(out string msg)
         {
 
@@ -40,6 +42,34 @@ namespace BenDingActive
             //msg = "";
             return true;
         }
+
+        /// <summary>
+        /// 获取病人信息
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string GetPatient()
+        {
+            var inpatientBase = new InpatientBaseInfoDto()
+            {
+                psn_no = "51000051200000512099000007",
+                psn_cert_type= "90",//    社会保障卡
+                certno= "511023197201145538",
+                psn_name= "周雪松",
+            };
+            var insuinfo = new List<InpatientBaseInsuInfo>();
+            var insuinfoData = new InpatientBaseInsuInfo()
+            {
+                insutype="310",
+                balc=20,
+                insuplc_admdvs= "512000",
+                psn_type= "11"//在职
+            };
+            insuinfo.Add(insuinfoData);
+            inpatientBase.insuinfo = insuinfo;
+            return JsonConvert.SerializeObject(inpatientBase);
+        }
+
         private static bool yh_interface_destroy()
         {
             try

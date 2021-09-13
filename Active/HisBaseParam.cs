@@ -31,6 +31,10 @@ namespace BenDingActive.Model
         /// 传入标志 1为公民身份号码 2为个人编号
         /// </summary>
         public string AfferentSign { get; set; }
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TransactionCode { get; set; }
+
     }
 }

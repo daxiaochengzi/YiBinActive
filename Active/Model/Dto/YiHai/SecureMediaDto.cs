@@ -9,9 +9,9 @@ namespace BenDingActive.Model.Dto.YiHai
    public class SecureMediaDto
    {
         /// <summary>
-        /// 交易状态
+        /// 交易编号
         /// </summary>
-        public string tran_no { get; set; } = "1101";
+        public string tran_no { get; set; } = "2304A";
         /// <summary>
         /// 
         /// </summary>
@@ -26,7 +26,7 @@ namespace BenDingActive.Model.Dto.YiHai
         /// <summary>
         /// 定点医药机构编号
         /// </summary>
-        public string fixmedins_code { get; set; } = "H51200200049";
+        public string fixmedins_code { get; set; } = "H51202100005";
         /// <summary>
         /// 人员编号
         /// </summary>

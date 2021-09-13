@@ -105,7 +105,13 @@
     <Compile Include="Model\Dto\Bend\YdNationEcTransUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdResidentUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
+    <Compile Include="Model\Dto\YiHai\comm\InpatientBaseInfoDto.cs" />
+    <Compile Include="Model\Dto\YiHai\Hospital\GetCancelLeaveHospitalInputDataDto.cs" />
+    <Compile Include="Model\Dto\YiHai\Hospital\GetHospitalCancelSettlementInputDataDto.cs" />
+    <Compile Include="Model\Dto\YiHai\Hospital\HospitalPreSettlementInputDataDto.cs" />
     <Compile Include="Model\Dto\YiHai\Hospital\HospitalRegisterInputDto.cs" />
+    <Compile Include="Model\Dto\YiHai\Hospital\LeaveHospitalInputdscginfoDto.cs" />
+    <Compile Include="Model\Dto\YiHai\Hospital\UploadHospitalFeeInputRowDto.cs" />
     <Compile Include="Model\Dto\YiHai\InformationUploadInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\OutpatientCancelSettlementInputdataDto.cs" />
     <Compile Include="Model\Dto\YiHai\OutpatientFeeUploadfeedetailInput.cs" />
@@ -138,6 +144,7 @@
     <Compile Include="Model\Params\Service\WorKerHospitalizationRegisterParam.cs" />
     <Compile Include="Model\Params\Service\WorkerHospitalizationSettlementParam.cs" />
     <Compile Include="Model\Params\Service\WorkerSettlementCancelParam.cs" />
+    <Compile Include="Model\Params\Service\YinHaiBaseService.cs" />
     <Compile Include="Model\Params\UserInfoParam.cs" />
     <Compile Include="Model\Params\YinHai\YinHaiGetBaseParam.cs" />
     <Compile Include="Model\ResidentIni.cs" />
