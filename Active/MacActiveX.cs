@@ -14,11 +14,11 @@ namespace BenDingActive
     [Guid("67475F7D-57A1-45AD-96F3-428A679B2E6C")]
     public class MacActiveX : ActiveXControl
     {
-        public  string YinHaiMethods(string param, string baseParam)
+        public  string YinHaiMethods(object param, string baseParam, string JsonParam)
         {
             Logs.LogWrite(new LogParam()
             {
-                Params = param,
+                Params = JsonParam,
                 Msg = JsonConvert.SerializeObject(baseParam)
 
             });
@@ -41,9 +41,10 @@ namespace BenDingActive
         /// <param name="param"></param>
         /// <param name="baseParam"></param>
         /// <returns></returns>
-        public string YinHaiGetPatient(string param, string baseParam)
+        public string YinHaiGetPatient(object param, string baseParam, string JsonParam)
         {
             return YinHaiCOM.GetPatient();
+          
         }
         /// <summary>
         /// 门诊方法集合
