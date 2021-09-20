@@ -14,59 +14,7 @@ namespace BenDingActive.Model.Params.Service
 {
    public class YinHaiBaseService
     {
-        public ApiJsonResultData MedicalInsuranceExecute(string paramData, HisBaseParam baseParam)
-        {
-            var iniFile = new IniFile("");
-            var url = iniFile.YinHaiUrl();
-            var resultData = new ApiJsonResultData { Success = true };
-
-
-            try
-            {
-
-                var resultDataText = PostWebRequest(url, paramData);
-              
-                var outBaseData = JsonConvert.DeserializeObject<YinHaiOutBaseParam>(resultDataText);
-                if (outBaseData.infcode == "0")
-                {
-                    var output = outBaseData.output;
-                    Logs.LogWriteData(new LogWriteDataParam()
-                    {
-                        JoinJson = paramData,
-                        ReturnJson = output != null ? outBaseData.ToString() : "",
-                        OperatorId = baseParam.OperatorId,
-                       
-                    });
-                }
-                else
-                {
-                    resultData.Data = resultDataText;
-                    if (!string.IsNullOrWhiteSpace(outBaseData.err_msg)) throw new Exception(outBaseData.err_msg);
-                    throw new Exception("操作失败!!!");
-                }
-               
-
-
-                
-            }
-            catch (Exception e)
-            {
-                resultData.Success = false;
-                resultData.Message = e.Message;
-            
-                Logs.LogErrorWrite(new LogParam()
-                {
-                    Msg = e.Message + "error:" + e.StackTrace,
-                    OperatorCode = baseParam.OperatorId,
-                    Params = paramData,
-                    ResultData = resultData.Data,
-                    TransactionCode = baseParam.TransactionCode
-
-                });
-            }
-
-            return resultData;
-        }
+      
 
         /// <summary>
         /// Post提交数据

@@ -331,17 +331,18 @@ namespace BenDingForm
             string msg = "";
             string iniMsg = "";
             var resultData = YinHaiCOM.Init(out iniMsg);
-            YinHaiCOM.yh_CHS_call("2304A", secureMediaData, ref msg);
+            //2304A
+            YinHaiCOM.yh_CHS_call("1101", secureMediaData, ref msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                  secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
-                Logs.LogWriteData(new LogWriteDataParam()
-                {
-                    JoinJson = secureMediaData,
-                    ReturnJson = msg,
-                    OperatorId = "",
-                    TransactionCode = txt_Input.Text.Trim()
-                });
+                //Logs.LogWriteData(new LogWriteDataParam()
+                //{
+                //    JoinJson = secureMediaData,
+                //    ReturnJson = msg,
+                //    OperatorId = "",
+                //    TransactionCode = txt_Input.Text.Trim()
+                //});
                 txt_Output.Text = msg;
             }
         }

@@ -50,12 +50,19 @@ namespace BenDingActive
         /// <returns></returns>
         public static string GetPatient()
         {
+            //var inpatientBase = new InpatientBaseInfoDto()
+            //{
+            //    psn_no = "51000051200000512099000007",
+            //    psn_cert_type= "90",//    社会保障卡
+            //    certno= "511023197201145538",
+            //    psn_name= "周雪松",
+            //};
             var inpatientBase = new InpatientBaseInfoDto()
             {
-                psn_no = "51000051200000512099000007",
-                psn_cert_type= "90",//    社会保障卡
-                certno= "511023197201145538",
-                psn_name= "周雪松",
+                psn_no = "51000051200000512021037964",
+                psn_cert_type = "90",//    社会保障卡
+                certno = "513922198607153465",
+                psn_name = "陈静",
             };
             var insuinfo = new List<InpatientBaseInsuInfo>();
             var insuinfoData = new InpatientBaseInsuInfo()

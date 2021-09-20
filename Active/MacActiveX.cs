@@ -14,37 +14,70 @@ namespace BenDingActive
     [Guid("67475F7D-57A1-45AD-96F3-428A679B2E6C")]
     public class MacActiveX : ActiveXControl
     {
-        public  string YinHaiMethods(object param, string baseParam, string JsonParam)
+        public  string YinHaiMethods( string baseParam)
         {
             Logs.LogWrite(new LogParam()
             {
-                Params = JsonParam,
-                Msg = JsonConvert.SerializeObject(baseParam)
-
+                Params = "Params",
+                Msg = baseParam
             });
-            var resultData = new ApiJsonResultData();
-            resultData.Success = true;
-            var baseService = new YinHaiBaseService();
-            var hisBase = JsonConvert.DeserializeObject<HisBaseParam>(baseParam);
-            //var resultData =
-            //    baseService.MedicalInsuranceExecute(param, hisBase);
-            return JsonConvert.SerializeObject(hisBase); ;
+            var baseService = new YinHaiService();
+            var resultData =baseService.MedicalInsuranceExecute(baseParam);
+            return JsonConvert.SerializeObject(resultData); ;
         }
        
         public string YinHaiSignInPersonnel()
         {
             return YinHaiCOM.SignInUserId;
         }
+        public string YinHaiInit()
+        {
+            string msg = "";
+            string iniMsg = "";
+           var resultData= YinHaiCOM.Init(out iniMsg);
+            if (resultData==false)
+            {
+                msg ="控件初始化失败,请检查银海控件是否初始化成功!!!";
+            }
+            return msg;
+        }
+
         /// <summary>
         /// 获取人员信息
         /// </summary>
-        /// <param name="param"></param>
         /// <param name="baseParam"></param>
+        /// <param name="JsonParam"></param>
         /// <returns></returns>
-        public string YinHaiGetPatient(object param, string baseParam, string JsonParam)
+        public string YinHaiGetPatient(string baseParam, string JsonParam)
         {
             return YinHaiCOM.GetPatient();
           
+        }
+        /// <summary>
+        /// 获取地址信息
+        /// </summary>
+
+        public string YinHaiAddress()
+        {
+            var iniFile = new IniFile("");
+            var resultData = iniFile.YinHaiAddress();
+            return resultData;
+        }
+        /// <summary>
+        /// 安全控件获取信息
+        /// </summary>
+
+        public string SecurityControl(string param, string infno)
+        {
+            var yinHaiService = new YinHaiService();
+           var data= yinHaiService.SecurityControl(param, infno);
+            return JsonConvert.SerializeObject(data);
+        }
+
+        public string Signin( string baseParam)
+        {
+            var yinHaiService = new YinHaiService();
+            return JsonConvert.SerializeObject(yinHaiService.Signin(baseParam));
         }
         /// <summary>
         /// 门诊方法集合

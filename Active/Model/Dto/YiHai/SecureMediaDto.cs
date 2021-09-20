@@ -11,7 +11,7 @@ namespace BenDingActive.Model.Dto.YiHai
         /// <summary>
         /// 交易编号
         /// </summary>
-        public string tran_no { get; set; } = "2304A";
+        public string tran_no { get; set; } = "1101";
         /// <summary>
         /// 
         /// </summary>

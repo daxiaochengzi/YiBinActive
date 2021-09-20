@@ -164,6 +164,7 @@
     <Compile Include="Service\HospitalizationService.cs" />
     <Compile Include="Service\WorKerService.cs" />
     <Compile Include="Service\YdMedicalInsuranceService.cs" />
+    <Compile Include="Service\YinHaiService.cs" />
     <Compile Include="YinHaiCOM.cs" />
   </ItemGroup>
   <ItemGroup>
