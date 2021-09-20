@@ -495,7 +495,6 @@ namespace BenDingForm
                 used_frqu_dscr="",
                 prd_days=0,
                 medc_way_dscr="",
-               
                 bilg_dept_codg="A03",
                 bilg_dept_name="内科",
                 bilg_dr_codg="1111",
