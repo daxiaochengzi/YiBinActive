@@ -44,10 +44,11 @@ namespace BenDingActive.Model.Params.YinHai
         /// 就医地医保区划 *  后台获取
         /// </summary>
         public string mdtrtarea_admvs { get; set; } = "512000";
-         /// <summary>
+
+        /// <summary>
         /// 参保地医保区划 (如果交易输入中含有人员编号，此项必填)
         /// </summary>
-        public string insuplc_admdvs { get; set; } = "512099";
+        public string insuplc_admdvs { get; set; } = ""; //= "512099";
         /// <summary>
         /// 接收方系统代码* 
         /// </summary>

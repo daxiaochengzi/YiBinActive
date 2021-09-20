@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using BenDingActive.Model.Dto.YiHai;
+using Newtonsoft.Json;
 
 namespace BenDingActive.Help
 {
@@ -132,6 +134,19 @@ namespace BenDingActive.Help
             IniFile myFile = new IniFile(path);
             var port = myFile.IniReadValue("YinHaiData", codeNum);
             return port;
+        }
+        public string YinHaiAddress()
+        {
+            var signInData = new SignInInputDataDto();
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\BenDing.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\BenDing.ini";
+            IniFile myFile = new IniFile(path);
+            var ip = myFile.IniReadValue("YinHaiSet", "ip");
+            var mac = myFile.IniReadValue("YinHaiSet", "mac");
+            signInData.ip = ip;
+            signInData.mac = mac;
+            return JsonConvert.SerializeObject(signInData);
+          
         }
     }
 }
