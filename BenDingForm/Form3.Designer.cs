@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button14 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.button15 = new System.Windows.Forms.Button();
             this.btn_SigninQuery = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
@@ -56,24 +61,21 @@
             this.txt_Input = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
-            this.button19 = new System.Windows.Forms.Button();
-            this.button20 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
+            this.button21 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button21);
+            this.panel1.Controls.Add(this.button14);
             this.panel1.Controls.Add(this.button20);
             this.panel1.Controls.Add(this.button19);
             this.panel1.Controls.Add(this.button18);
             this.panel1.Controls.Add(this.button17);
             this.panel1.Controls.Add(this.button16);
             this.panel1.Controls.Add(this.button15);
-            this.panel1.Controls.Add(this.button14);
             this.panel1.Controls.Add(this.btn_SigninQuery);
             this.panel1.Controls.Add(this.button13);
             this.panel1.Controls.Add(this.button12);
@@ -101,15 +103,65 @@
             this.panel1.Size = new System.Drawing.Size(835, 120);
             this.panel1.TabIndex = 8;
             // 
-            // button14
+            // button20
             // 
-            this.button14.Location = new System.Drawing.Point(646, 89);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(75, 23);
-            this.button14.TabIndex = 27;
-            this.button14.Text = "button14";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
+            this.button20.Location = new System.Drawing.Point(727, 89);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(75, 23);
+            this.button20.TabIndex = 33;
+            this.button20.Text = "下载";
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(544, 89);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(94, 23);
+            this.button19.TabIndex = 32;
+            this.button19.Text = "取消住院结算";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(463, 89);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(75, 23);
+            this.button18.TabIndex = 31;
+            this.button18.Text = "住院结算";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(382, 89);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(75, 23);
+            this.button17.TabIndex = 30;
+            this.button17.Text = "住院预结算";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(272, 89);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(104, 23);
+            this.button16.TabIndex = 29;
+            this.button16.Text = "取消出院办理";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(84, 89);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(100, 23);
+            this.button15.TabIndex = 28;
+            this.button15.Text = "住院费用上传";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // btn_SigninQuery
             // 
@@ -213,7 +265,7 @@
             // 
             // txt_PatientName
             // 
-            this.txt_PatientName.Location = new System.Drawing.Point(654, 68);
+            this.txt_PatientName.Location = new System.Drawing.Point(654, 57);
             this.txt_PatientName.Name = "txt_PatientName";
             this.txt_PatientName.Size = new System.Drawing.Size(100, 21);
             this.txt_PatientName.TabIndex = 16;
@@ -222,7 +274,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(579, 71);
+            this.label5.Location = new System.Drawing.Point(579, 60);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 12);
             this.label5.TabIndex = 15;
@@ -357,65 +409,25 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "入参：";
             // 
-            // button15
+            // button14
             // 
-            this.button15.Location = new System.Drawing.Point(84, 89);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(100, 23);
-            this.button15.TabIndex = 28;
-            this.button15.Text = "住院费用上传";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
+            this.button14.Location = new System.Drawing.Point(646, 89);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(75, 23);
+            this.button14.TabIndex = 34;
+            this.button14.Text = "冲正";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click_1);
             // 
-            // button16
+            // button21
             // 
-            this.button16.Location = new System.Drawing.Point(272, 89);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(104, 23);
-            this.button16.TabIndex = 29;
-            this.button16.Text = "取消出院办理";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
-            // 
-            // button17
-            // 
-            this.button17.Location = new System.Drawing.Point(382, 89);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(75, 23);
-            this.button17.TabIndex = 30;
-            this.button17.Text = "住院预结算";
-            this.button17.UseVisualStyleBackColor = true;
-            this.button17.Click += new System.EventHandler(this.button17_Click);
-            // 
-            // button18
-            // 
-            this.button18.Location = new System.Drawing.Point(463, 89);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(75, 23);
-            this.button18.TabIndex = 31;
-            this.button18.Text = "住院结算";
-            this.button18.UseVisualStyleBackColor = true;
-            this.button18.Click += new System.EventHandler(this.button18_Click);
-            // 
-            // button19
-            // 
-            this.button19.Location = new System.Drawing.Point(544, 89);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(94, 23);
-            this.button19.TabIndex = 32;
-            this.button19.Text = "取消住院结算";
-            this.button19.UseVisualStyleBackColor = true;
-            this.button19.Click += new System.EventHandler(this.button19_Click);
-            // 
-            // button20
-            // 
-            this.button20.Location = new System.Drawing.Point(727, 89);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(75, 23);
-            this.button20.TabIndex = 33;
-            this.button20.Text = "下载";
-            this.button20.UseVisualStyleBackColor = true;
-            this.button20.Click += new System.EventHandler(this.button20_Click);
+            this.button21.Location = new System.Drawing.Point(261, 3);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(75, 23);
+            this.button21.TabIndex = 35;
+            this.button21.Text = "button21";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // Form3
             // 
@@ -465,12 +477,13 @@
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button btn_SigninQuery;
-        private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button17;
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button button21;
     }
 }

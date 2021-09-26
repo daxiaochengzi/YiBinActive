@@ -19,11 +19,11 @@ namespace BenDingActive.Service
             var url = iniFile.YinHaiUrl();
             var resultData = new ApiJsonResultData { Success = true };
 
-
+            var resultDataText = "";
             try
             {
 
-                var resultDataText = PostWebRequest( paramData);
+                 resultDataText = PostWebRequest( paramData);
 
                 var outBaseData = JsonConvert.DeserializeObject<YinHaiOutBaseParam>(resultDataText);
                 if (outBaseData.infcode == "0")
@@ -34,12 +34,12 @@ namespace BenDingActive.Service
                     Logs.LogWriteData(new LogWriteDataParam()
                     {
                         JoinJson = paramData,
-                        ReturnJson = output != null ? outBaseData.ToString() : "",
+                        ReturnJson = resultDataText,
                     });
                 }
                 else
                 {
-                    resultData.Message = outBaseData.err_msg;
+                   throw  new Exception(outBaseData.err_msg);
                    
                 }
             }
@@ -51,9 +51,9 @@ namespace BenDingActive.Service
                 Logs.LogErrorWrite(new LogParam()
                 {
                     Msg = e.Message + "error:" + e.StackTrace,
-
                     Params = paramData,
-                    ResultData = resultData.Data,
+                    ResultData = resultDataText,
+                  
 
 
                 });
@@ -85,7 +85,7 @@ namespace BenDingActive.Service
                 newStream.Write(byteArray, 0, byteArray.Length);//写入参数
                 newStream.Close();
                 HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
-                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("utf-8"));
                 ret = sr.ReadToEnd();
                 sr.Close();
                 response.Close();

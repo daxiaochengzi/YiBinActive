@@ -234,13 +234,45 @@ namespace BenDingForm
             }
             return ret;
         }
+        public static string PostWebReq(string PostUrl, string ParamData, Encoding DataEncode)
+        {
+            string ret = string.Empty;
+            try
+            {
+                byte[] byteArray = DataEncode.GetBytes(ParamData);
+                HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(new Uri(PostUrl));
+                webReq.Method = "POST";
+                webReq.ContentType = "application/json";
+                webReq.ContentLength = byteArray.Length;
 
+                Stream newStream = webReq.GetRequestStream();
+                newStream.Write(byteArray, 0, byteArray.Length);
+                newStream.Close();
+
+                HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
+                StreamReader sr = new StreamReader(response.GetResponseStream(), DataEncode);
+                ret = sr.ReadToEnd();
+
+                sr.Close();
+                response.Close();
+                newStream.Close();
+            }
+            catch (WebException ex)
+            {
+               
+            }
+            finally
+            {
+               
+            }
+            return ret;
+        }
         private YinHaiGetBaseParam GetBaseParam(string infno,string sign_no)
         {
             string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
             var iniParam = new YinHaiGetBaseParam()
             {
-                msgid = "H51200200049" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
+                msgid = "H51202100005" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
                 infno = infno,
                 sign_no= sign_no
             };
@@ -260,7 +292,8 @@ namespace BenDingForm
 
         private void btn_Signin_Click(object sender, EventArgs e)
         {
-            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+           string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+       
             var iniParm = new YinHaiGetBaseParam()
             {
                 msgid = "H51202100005" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
@@ -370,7 +403,7 @@ namespace BenDingForm
                 {
                     card_sn = secureMediaIni.data.card_sn,
                     certno = secureMediaIni.data.certno,
-                    psn_name = txt_PatientName.Text,
+                  
                     mdtrt_cert_no = secureMediaIni.data.mdtrt_cert_no,
                     mdtrt_cert_type = secureMediaIni.data.mdtrt_cert_type,
                     psn_cert_type = secureMediaIni.data.psn_cert_type,
@@ -585,7 +618,7 @@ namespace BenDingForm
             //输入参数
             var InputData = new HospitalRegisterInputDto();
             var mdtrtinfo = new HospitalRegisterInputmdtrtinfoDto()
-            {   psn_no= "51000051200000512099025082",
+            {   psn_no= "51000051200000512099001648",
                 adm_bed = "33",
                 begntime = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd HH:mm:ss"),
                 adm_dept_codg ="A03",
@@ -594,8 +627,9 @@ namespace BenDingForm
                 chfpdr_name ="李茜",
                 dscg_maindiag_code = "N05.900x003",
                 dscg_maindiag_name = "肾炎",
-                ipt_no = "100120210223011",
-                adm_diag_dscr= "4861632382718291017",
+                //ipt_no = "100120210223011",
+                ipt_no = "100210223011",
+                adm_diag_dscr = "4861632382718291017",
                 main_cond_dscr= "肾炎",
                 //birctrl_matn_date = param.birctrl_matn_date,
                 //fetts = param.fetts,
@@ -612,7 +646,7 @@ namespace BenDingForm
             var diseinfo = new List<YinHaiBaseIniDiseinfo>();
 
             var diseinfoData = new YinHaiBaseIniDiseinfo()
-            {   psn_no= "51000051200000512099025082",
+            {   psn_no= "51000051200000512099001648",
                 diag_type = "1",
                 diag_code = "N05.900x003",
                 diag_name = "肾炎",
@@ -763,45 +797,79 @@ namespace BenDingForm
         private void button19_Click(object sender, EventArgs e)
         {
             var paramData = GetBaseParam("2305", lab_sign_no.Text);
+            //var data = new GetHospitalCancelSettlementInputDataDto()
+            //{
+            //    mdtrt_id = "512000G0000000382203",
+            //    psn_no = "51000051200000512099025082",
+            //    setl_id= "512000G0000000349477"
+            //};
             var data = new GetHospitalCancelSettlementInputDataDto()
             {
-                mdtrt_id = "512000G0000000382203",
-                psn_no = "51000051200000512099025082",
-                setl_id= "512000G0000000349477"
+                mdtrt_id = "512000G0000000497068",
+                psn_no = "51000051200000512021037964",
+                setl_id = "512000G0000000393940"
             };
+         
             paramData.input = new { data = data };
             txt_Input.Text = JsonConvert.SerializeObject(paramData);
         }
 
         private void button20_Click(object sender, EventArgs e)
         {
-            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-           
           
-                try
+
+            var paramData = GetBaseParam("9102", lab_sign_no.Text);
+
+            var data33 = new fsDownloadInDto()
+            {
+                filename = "202109121134028121843524679.txt.zip",
+                fixmedins_code = "H51202100005",
+                file_qury_no = "fsi/plc/acee38eb5b334652b5d2c7a4c42ea3",
+            };
+            // var data =
+            //new {
+            //    type="gend",
+            //    parentvalue="",
+            //    admdvs= "512000",
+            //    date= "2021-09-17",
+            //    page_num=1,
+            //    vali_flag=1,
+            //    ver=0,
+            //    page_size = 1000,
+            //};
+            var data =
+                new
                 {
-                    HttpWebRequest Myrq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(url);
-                    HttpWebResponse myrp = (System.Net.HttpWebResponse)Myrq.GetResponse();
-                    Stream st = myrp.GetResponseStream();
-                    Stream so = new System.IO.FileStream("www", System.IO.FileMode.Create);
-                    byte[] by = new byte[1024];
-                    int osize = st.Read(by, 0, (int)by.Length);
-                    while (osize > 0)
-                    {
-                        so.Write(by, 0, osize);
-                        osize = st.Read(by, 0, (int)by.Length);
-                    }
-                    so.Close();
-                    st.Close();
-                    myrp.Close();
-                    Myrq.Abort();
-                    
-                }
-                catch (System.Exception exx)
-                {
-                    
-                }
-            
+                    ver = 0,
+                };
+            paramData.input =new { data = data33 } ;
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button14_Click_1(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2601", lab_sign_no.Text);
+            //var data = new GetHospitalCancelSettlementInputDataDto()
+            //{
+            //    mdtrt_id = "512000G0000000382203",
+            //    psn_no = "51000051200000512099025082",
+            //    setl_id= "512000G0000000349477"
+            //};
+            var data = new RightingDto()
+            {
+                psn_no= "51000051200000512099001648",
+                omsgid = "H51202100005202109251834289001",
+                oinfno = "2401",
+            };
+
+            paramData.input = new { data = data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
+            PostWebReq(url, txt_Input.Text, Encoding.UTF8);
         }
     }
 

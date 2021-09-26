@@ -56,6 +56,28 @@ namespace BenDingActive.Help
             //myFile.IniWriteValue("BenDingSet", "Port","'222'");
             return port;
         }
+        public void SaveAddress(string mac, string ip)
+        {
+          
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\hnsi.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\hnsi.ini";
+            IniFile myFile = new IniFile(path);
+            myFile.IniWriteValue("YinHaiSet", "ip", ip);
+            myFile.IniWriteValue("YinHaiSet", "mac", mac);
+
+        }
+
+        public void ReadAddress(out string mac, out string ip)
+        {
+            mac = "";
+            ip = "";
+            var is64Bit = Environment.Is64BitOperatingSystem;
+            path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件\hnsi.ini" : @"C:\Program Files\Microsoft\本鼎医保插件\hnsi.ini";
+            IniFile myFile = new IniFile(path);
+            mac = myFile.IniReadValue("YinHaiSet", "mac");
+            ip = myFile.IniReadValue("YinHaiSet", "ip");
+        }
+
         public string SetCardType( string cardType)
         {
             var is64Bit = Environment.Is64BitOperatingSystem;

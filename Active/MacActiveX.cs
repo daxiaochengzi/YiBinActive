@@ -16,11 +16,7 @@ namespace BenDingActive
     {
         public  string YinHaiMethods( string baseParam)
         {
-            Logs.LogWrite(new LogParam()
-            {
-                Params = "Params",
-                Msg = baseParam
-            });
+       
             var baseService = new YinHaiService();
             var resultData =baseService.MedicalInsuranceExecute(baseParam);
             return JsonConvert.SerializeObject(resultData); ;

@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 using BenDingActive;
@@ -20,6 +21,7 @@ using BenDingActive.Model.Dto.Bend;
 using BenDingActive.Model.Params;
 using BenDingActive.Model.Params.Service;
 using Newtonsoft.Json;
+using System.Management;
 
 namespace BenDingForm
 {
@@ -51,6 +53,7 @@ namespace BenDingForm
             //卡类型编码
             var iniFile = new  IniFile("");
             var cardTypeCode = iniFile.ReadCardType();
+            
             switch (cardTypeCode)
             {
                 case "hd":
@@ -79,7 +82,11 @@ namespace BenDingForm
                 lbl_pwd.Visible = true;
                 txtPwd.Visible = true;
             }
-
+            string  mac ;
+            string ip ;
+            iniFile.ReadAddress( out mac, out ip);
+            txt_ip.Text = ip;
+            txt_mac.Text = mac;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -834,6 +841,192 @@ namespace BenDingForm
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button21_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                //关闭ie
+                KillProcess("iexplore");
+                string mac;
+                string ip;
+                GetActiveIpAndMac1(out mac, out ip);
+                if (!string.IsNullOrWhiteSpace(ip) == false)
+                {
+                    MessageBox.Show("获取ip地址失败,请手动填写后更新地址!!!");
+                    return;
+                }
+                if (!string.IsNullOrWhiteSpace(mac) == false)
+                {
+                    MessageBox.Show("获取mac地址失败,请手动填写后更新地址!!!");
+                    return;
+                }
+
+                txt_mac.Text = mac;
+                txt_ip.Text = ip;
+                var iniFile = new IniFile("");
+                iniFile.SaveAddress(mac, ip);
+                //获取ip
+                var scrPath = CommonHelp.GetPathStr() + "\\securityDLL";
+                var savePath = CommonHelp.GetPathWindowsStr();
+                CopyDireToDire(scrPath, savePath);
+                var result = RegisterDll();
+                if (result == true)
+                {
+                    MessageBox.Show("程序初始化注册成功!!!");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void SaveAddress(string mac, string ip)
+        {
+            var iniFile = new IniFile("");
+            //端口号
+            int port = Convert.ToInt16(iniFile.GetIni());
+        }
+
+        /// <summary>
+        /// 获取当前激活网络的MAC地址、IPv4地址、IPv6地址 - 方法1
+        /// </summary>
+        /// <param name="mac">网卡物理地址</param>
+        /// <param name="ipv4">IPv4地址</param>
+    
+        public static void GetActiveIpAndMac1(out string mac, out string ipv4)
+        {
+            mac = "";
+            ipv4 = "";
+           
+
+            //需要引用：System.Management;
+            ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection moc = mc.GetInstances();
+            foreach (ManagementObject mo in moc)
+            {
+                if (mo["IPEnabled"].ToString() == "True")
+                {
+                    //获取MAC地址，每两位中间用横线【-】隔开
+                    mac = mo["MacAddress"].ToString().Replace(":", "-");
+                    string[] ipAddrs = mo["IPAddress"] as string[];
+                    if (ipAddrs != null && ipAddrs.Length >= 1)
+                    {
+                        //获取IPv4地址，4个十进制数字，中间用英文句号【.】隔开
+                        ipv4 = ipAddrs[0];
+                    }
+                    //if (ipAddrs != null && ipAddrs.Length >= 2)
+                    //{
+                    //    //获取IPv6地址，5个十六进制数字，中间用冒号【:】隔开
+                    //    ipv6 = ipAddrs[1];
+                    //}
+                    break;
+                }
+            }
+        }
+        private bool RegisterDll()
+        {
+            bool result = true;
+            try
+            {
+                var savePath = CommonHelp.GetPathWindowsStr();
+                string dllPath = Path.Combine(savePath, "yh_interface_chs.dll");//获得要注册的dll的物理路径
+                if (!File.Exists(dllPath))
+                {
+                    MessageBox.Show(string.Format("“{0}”目录下无 yh_interface_chs.dll文件", savePath));
+                    //Loger.Write(string.Format("“{0}”目录下无“XXX.dll”文件！", AppDomain.CurrentDomain.BaseDirectory));
+                    return false;
+                }
+                //拼接命令参数
+                string startArgs = string.Format("/s \"{0}\"", dllPath);
+
+                Process p = new Process();//创建一个新进程，以执行注册动作
+                p.StartInfo.FileName = "regsvr32";
+                p.StartInfo.Arguments = startArgs;
+
+                //以管理员权限注册dll文件
+                WindowsIdentity winIdentity = WindowsIdentity.GetCurrent(); //引用命名空间 System.Security.Principal
+                WindowsPrincipal winPrincipal = new WindowsPrincipal(winIdentity);
+                if (!winPrincipal.IsInRole(WindowsBuiltInRole.Administrator))
+                {
+                    p.StartInfo.Verb = "runas";//管理员权限运行
+                }
+                p.Start();
+                p.WaitForExit();
+                p.Close();
+                p.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                result = false;　　　　　　　　  //记录日志，抛出异常
+            }
+
+            return result;
+        }
+        public void CopyDireToDire(string sourceDire, string destDire, string backupsDire = null)
+        {
+            if (Directory.Exists(sourceDire) && Directory.Exists(destDire))
+            {
+                DirectoryInfo sourceDireInfo = new DirectoryInfo(sourceDire);
+                FileInfo[] fileInfos = sourceDireInfo.GetFiles();
+                foreach (FileInfo fInfo in fileInfos)
+                {
+                    string sourceFile = fInfo.FullName;
+                    string destFile = sourceFile.Replace(sourceDire, destDire);
+                    if (backupsDire != null && File.Exists(destFile))
+                    {
+                        Directory.CreateDirectory(backupsDire);
+                        string backFile = destFile.Replace(destDire, backupsDire);
+                        File.Copy(destFile, backFile, true);
+                    }
+                    File.Copy(sourceFile, destFile, true);
+                }
+                DirectoryInfo[] direInfos = sourceDireInfo.GetDirectories();
+                foreach (DirectoryInfo dInfo in direInfos)
+                {
+                    string sourceDire2 = dInfo.FullName;
+                    string destDire2 = sourceDire2.Replace(sourceDire, destDire);
+                    string backupsDire2 = null;
+                    if (backupsDire != null)
+                    {
+                        backupsDire2 = sourceDire2.Replace(sourceDire, backupsDire);
+                    }
+                    Directory.CreateDirectory(destDire2);
+                    CopyDireToDire(sourceDire2, destDire2, backupsDire2);
+                }
+            }
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txt_mac.Text) == false)
+            {
+                MessageBox.Show("mac地址不能为空!!!");
+                return;
+            }
+            if (!string.IsNullOrWhiteSpace(txt_ip.Text) == false)
+            {
+                MessageBox.Show("ip地址不能为空!!!");
+                return;
+            }
+
+            
+            var iniFile = new IniFile("");
+            iniFile.SaveAddress(txt_mac.Text.Trim(), txt_ip.Text.Trim());
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            string msg = "";
+            var resultData = YinHaiCOM.Init(out msg);
+            if (resultData)
+            {
+                MessageBox.Show("控件注册通过!!!");
+            }
         }
     }
 }
