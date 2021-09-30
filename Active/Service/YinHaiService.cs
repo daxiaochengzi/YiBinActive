@@ -109,7 +109,7 @@ namespace BenDingActive.Service
             string msg = "";
             string iniMsg = "";
             var resultData = YinHaiCOM.Init(out iniMsg);
-            YinHaiCOM.yh_CHS_call("2304A", param, ref msg);
+            YinHaiCOM.yh_CHS_call(infno, param, ref msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                 var msgData = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);

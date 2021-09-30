@@ -387,7 +387,7 @@ namespace BenDingForm
             string iniMsg = "";
             var resultData = YinHaiCOM.Init(out iniMsg);
             //2304A
-            YinHaiCOM.yh_CHS_call("1101", secureMediaData, ref msg);
+            YinHaiCOM.yh_CHS_call("2401", secureMediaData, ref msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                 secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
