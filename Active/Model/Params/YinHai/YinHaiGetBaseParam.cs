@@ -39,7 +39,7 @@ namespace BenDingActive.Model.Params.YinHai
         /// <summary>
         /// 按地方要求传入经办人编号/终端编号 *
         /// </summary>
-        public string opter { get; set; } = "01100";
+        public string opter { get; set; } = "1231231232";
         /// <summary>
         /// 就医地医保区划 *  后台获取
         /// </summary>

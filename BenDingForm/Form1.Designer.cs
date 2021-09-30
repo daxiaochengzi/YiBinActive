@@ -163,13 +163,12 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(129, 127);
+            this.button11.Location = new System.Drawing.Point(505, 20);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(75, 23);
             this.button11.TabIndex = 11;
             this.button11.Text = "读卡测试";
             this.button11.UseVisualStyleBackColor = true;
-            this.button11.Visible = false;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button12

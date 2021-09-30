@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button21 = new System.Windows.Forms.Button();
+            this.button14 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.button19 = new System.Windows.Forms.Button();
             this.button18 = new System.Windows.Forms.Button();
@@ -61,13 +63,13 @@
             this.txt_Input = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button14 = new System.Windows.Forms.Button();
-            this.button21 = new System.Windows.Forms.Button();
+            this.button22 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button22);
             this.panel1.Controls.Add(this.button21);
             this.panel1.Controls.Add(this.button14);
             this.panel1.Controls.Add(this.button20);
@@ -103,13 +105,33 @@
             this.panel1.Size = new System.Drawing.Size(835, 120);
             this.panel1.TabIndex = 8;
             // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(261, 3);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(75, 23);
+            this.button21.TabIndex = 35;
+            this.button21.Text = "button21";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(646, 89);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(75, 23);
+            this.button14.TabIndex = 34;
+            this.button14.Text = "冲正";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click_1);
+            // 
             // button20
             // 
-            this.button20.Location = new System.Drawing.Point(727, 89);
+            this.button20.Location = new System.Drawing.Point(757, 55);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(75, 23);
             this.button20.TabIndex = 33;
-            this.button20.Text = "下载";
+            this.button20.Text = "下载1";
             this.button20.UseVisualStyleBackColor = true;
             this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
@@ -409,25 +431,14 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "入参：";
             // 
-            // button14
+            // button22
             // 
-            this.button14.Location = new System.Drawing.Point(646, 89);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(75, 23);
-            this.button14.TabIndex = 34;
-            this.button14.Text = "冲正";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click_1);
-            // 
-            // button21
-            // 
-            this.button21.Location = new System.Drawing.Point(261, 3);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(75, 23);
-            this.button21.TabIndex = 35;
-            this.button21.Text = "button21";
-            this.button21.UseVisualStyleBackColor = true;
-            this.button21.Click += new System.EventHandler(this.button21_Click);
+            this.button22.Location = new System.Drawing.Point(751, 86);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(75, 23);
+            this.button22.TabIndex = 36;
+            this.button22.Text = "下载2";
+            this.button22.UseVisualStyleBackColor = true;
             // 
             // Form3
             // 
@@ -485,5 +496,6 @@
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Button button22;
     }
 }
