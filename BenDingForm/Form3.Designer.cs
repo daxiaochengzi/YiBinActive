@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button22 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
@@ -63,12 +64,13 @@
             this.txt_Input = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button22 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button23);
             this.panel1.Controls.Add(this.button22);
             this.panel1.Controls.Add(this.button21);
             this.panel1.Controls.Add(this.button14);
@@ -102,8 +104,17 @@
             this.panel1.Controls.Add(this.btn_ini);
             this.panel1.Location = new System.Drawing.Point(57, 9);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(835, 120);
+            this.panel1.Size = new System.Drawing.Size(835, 161);
             this.panel1.TabIndex = 8;
+            // 
+            // button22
+            // 
+            this.button22.Location = new System.Drawing.Point(751, 86);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(75, 23);
+            this.button22.TabIndex = 36;
+            this.button22.Text = "下载2";
+            this.button22.UseVisualStyleBackColor = true;
             // 
             // button21
             // 
@@ -296,7 +307,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(579, 60);
+            this.label5.Location = new System.Drawing.Point(601, 60);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 12);
             this.label5.TabIndex = 15;
@@ -407,10 +418,10 @@
             // 
             // txt_Input
             // 
-            this.txt_Input.Location = new System.Drawing.Point(62, 135);
+            this.txt_Input.Location = new System.Drawing.Point(62, 189);
             this.txt_Input.Multiline = true;
             this.txt_Input.Name = "txt_Input";
-            this.txt_Input.Size = new System.Drawing.Size(827, 145);
+            this.txt_Input.Size = new System.Drawing.Size(827, 91);
             this.txt_Input.TabIndex = 6;
             // 
             // label2
@@ -431,14 +442,15 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "入参：";
             // 
-            // button22
+            // button23
             // 
-            this.button22.Location = new System.Drawing.Point(751, 86);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(75, 23);
-            this.button22.TabIndex = 36;
-            this.button22.Text = "下载2";
-            this.button22.UseVisualStyleBackColor = true;
+            this.button23.Location = new System.Drawing.Point(88, 118);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(114, 23);
+            this.button23.TabIndex = 37;
+            this.button23.Text = "取消费用上传";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // Form3
             // 
@@ -497,5 +509,6 @@
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button21;
         private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button23;
     }
 }

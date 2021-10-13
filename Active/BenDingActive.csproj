@@ -92,6 +92,7 @@
     <Compile Include="Model\Dto\Bend\BatchConfirmParam.cs" />
     <Compile Include="Model\Dto\Bend\ModifyWorkerHospitalizationParam.cs" />
     <Compile Include="Model\Dto\Bend\OutpatientResidentLoginDto.cs" />
+    <Compile Include="Model\Dto\Bend\PrescriptionCancelUploadInputDataDto.cs" />
     <Compile Include="Model\Dto\Bend\PrescriptionUploadDto.cs" />
     <Compile Include="Model\Dto\Bend\ReadCardUserInfoJson.cs" />
     <Compile Include="Model\Dto\Bend\ResidentProjectDownloadDto.cs" />

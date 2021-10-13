@@ -64,6 +64,7 @@
             this.txt_mac = new System.Windows.Forms.TextBox();
             this.button22 = new System.Windows.Forms.Button();
             this.button23 = new System.Windows.Forms.Button();
+            this.btn_jz = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -433,11 +434,22 @@
             this.button23.UseVisualStyleBackColor = true;
             this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
+            // btn_jz
+            // 
+            this.btn_jz.Location = new System.Drawing.Point(174, 62);
+            this.btn_jz.Name = "btn_jz";
+            this.btn_jz.Size = new System.Drawing.Size(75, 23);
+            this.btn_jz.TabIndex = 39;
+            this.btn_jz.Text = "获取介质";
+            this.btn_jz.UseVisualStyleBackColor = true;
+            this.btn_jz.Click += new System.EventHandler(this.btn_jz_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(619, 238);
+            this.Controls.Add(this.btn_jz);
             this.Controls.Add(this.button23);
             this.Controls.Add(this.button22);
             this.Controls.Add(this.txt_mac);
@@ -521,6 +533,7 @@
         private System.Windows.Forms.TextBox txt_mac;
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Button btn_jz;
     }
 }
 

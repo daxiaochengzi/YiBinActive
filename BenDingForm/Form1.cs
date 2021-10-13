@@ -22,11 +22,14 @@ using BenDingActive.Model.Params;
 using BenDingActive.Model.Params.Service;
 using Newtonsoft.Json;
 using System.Management;
+using BenDingActive.Model.Dto.YiHai;
 
 namespace BenDingForm
 {
     public partial class Form1 : Form
-    {
+    {  //安全控件初始化参数
+        private string secureMediaData = null;
+        private SecureMediaOutputDto secureMediaIni = null;
         private int typeCard = 0;
          HospitalizationService hospitalService = new HospitalizationService();
         OutpatientDepartmentService OutpatientService = new OutpatientDepartmentService();
@@ -44,7 +47,12 @@ namespace BenDingForm
         public Form1()
         {
             InitializeComponent();
+            var secureMedia = new SecureMediaDto()
+            {
+                data = new SecureMediaDataDto()
+            };
 
+            secureMediaData = JsonConvert.SerializeObject(secureMedia);
             String[] arr = new String[] { "华大", "德卡", "德生", "明泰" };
             for (int i = 0; i < arr.Length; i++)
             {
@@ -1026,6 +1034,21 @@ namespace BenDingForm
             if (resultData)
             {
                 MessageBox.Show("控件注册通过!!!");
+            }
+        }
+
+        private void btn_jz_Click(object sender, EventArgs e)
+        {
+            string msg = "";
+            string iniMsg = "";
+            var resultData = YinHaiCOM.Init(out iniMsg);
+            //2304A
+            YinHaiCOM.yh_CHS_call("1101", secureMediaData, ref msg);
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
+
+                textBox1.Text = msg;
             }
         }
     }

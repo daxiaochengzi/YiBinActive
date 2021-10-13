@@ -76,9 +76,11 @@ namespace BenDingActive.Service
                 if (!postUrl.StartsWith("http://"))
                     return "";
 
-                byte[] byteArray = Encoding.Default.GetBytes(paramData); //转化
+                byte[] byteArray = Encoding.UTF8.GetBytes(paramData);
+               //转化
                 HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(new Uri(postUrl));
                 webReq.Method = "POST";
+                //webReq.ContentType = "application/json";
                 webReq.ContentType = "application/json";
                 webReq.ContentLength = byteArray.Length;
                 Stream newStream = webReq.GetRequestStream();
