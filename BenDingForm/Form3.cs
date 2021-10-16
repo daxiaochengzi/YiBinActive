@@ -390,7 +390,7 @@ namespace BenDingForm
             string iniMsg = "";
             var resultData = YinHaiCOM.Init(out iniMsg);
             //2304A
-            YinHaiCOM.yh_CHS_call("1101", secureMediaData, ref msg);
+            YinHaiCOM.yh_CHS_call("2304A", secureMediaData, ref msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                 secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
@@ -483,9 +483,9 @@ namespace BenDingForm
             {
                 expContent = new {card_token = secureMediaIni.data.card_token},
 
-                ipt_otp_no = "12323",
-                psn_no = "51000051200000512099000007",
-                mdtrt_id = "512000G0000000382104",
+                ipt_otp_no = "51000051150000001013871352",
+                psn_no = "51000051150000001013871352",
+                mdtrt_id = "511500G0000001040511",
 
 
             };
@@ -629,9 +629,9 @@ namespace BenDingForm
             var inputData = new OutpatientCancelSettlementInputDataDto()
             {
                 expContent = new {card_token = secureMediaIni.data.card_token},
-                psn_no = "51000051200000512099000007",
-                mdtrt_id = "512000G0000000382130",
-                setl_id = "512000G0000000349439"
+                psn_no = "51000051150000001000696264",
+                mdtrt_id = "511500G0000001033892",
+                setl_id = "511500G0000000930324"
 
             };
 
@@ -835,9 +835,9 @@ namespace BenDingForm
             //};
             var data = new GetHospitalCancelSettlementInputDataDto()
             {
-                mdtrt_id = "512000G0000000497068",
-                psn_no = "51000051200000512021037964",
-                setl_id = "512000G0000000393940"
+                mdtrt_id = "511500G0000000996601",
+                psn_no = "51000051150000001001290357",
+                setl_id = "511500G0000000891407"
             };
 
             paramData.input = new {data = data};

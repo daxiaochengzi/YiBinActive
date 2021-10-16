@@ -53,7 +53,7 @@ namespace BenDingForm
             };
 
             secureMediaData = JsonConvert.SerializeObject(secureMedia);
-            String[] arr = new String[] { "华大", "德卡", "德生", "明泰" };
+            String[] arr = new String[] {  "德卡", "华大", "德生" };
             for (int i = 0; i < arr.Length; i++)
             {
                 comboBox1.Items.Add(arr[i]); // 手动添加值
@@ -64,19 +64,15 @@ namespace BenDingForm
             
             switch (cardTypeCode)
             {
-                case "hd":
+                case "HNSICRW.dll":
                     comboBox1.SelectedIndex = 0;
                     break;
-                case "HNSICRW.dll":
+                case "hd.dll":
                     comboBox1.SelectedIndex = 1;
                     break;
                 case "LSCard.dll":
                     comboBox1.SelectedIndex = 2;
                     break;
-                case "YB_SSSReaderMT.dll":
-                    comboBox1.SelectedIndex = 3;
-                    break;
-
             }
 
             var codePwd = iniFile.ReadKeyPwd();
@@ -249,6 +245,7 @@ namespace BenDingForm
             var is64Bit = Environment.Is64BitOperatingSystem;
             var path = is64Bit ? @"C:\Program Files (x86)\Microsoft\本鼎医保插件" : @"C:\Program Files\Microsoft\本鼎医保插件";
             var iniFile = new IniFile("");
+            var pathNew = is64Bit ? @"C:\Windows\SysWOW64" : @"C:\Windows\System32";
             string cardTypeName = "";
             //   { "明泰", "德卡", "德生","华大"};
             var indexData = comboBox1.SelectedIndex;
@@ -264,21 +261,18 @@ namespace BenDingForm
             switch (indexData)
             {
                 case 0:
-                    CopyDirectory(path + "\\hd", path);
-                    cardTypeName = "hd";
-                    break;
-                case 1:
-                    CopyDirectory( path+"\\dk", path);
+                    CopyDirectory(path + "\\dk", pathNew);
                     cardTypeName = "'HNSICRW.dll'";
                     break;
+                case 1:
+                    CopyDirectory(path + "\\hd", pathNew);
+                    cardTypeName = "'hd.dll'";
+                    break;
                 case 2:
-                    CopyDirectory(path + "\\ds", path);
+                    CopyDirectory(path + "\\ds", pathNew);
                     cardTypeName = "'LSCard.dll'";
                     break;
-                case 3:
-                    CopyDirectory(path + "\\mt", path);
-                    cardTypeName = "'YB_SSSReaderMT.dll'";
-                    break;
+              
                 
 
             }

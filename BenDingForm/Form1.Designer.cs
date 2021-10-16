@@ -232,6 +232,7 @@
             this.CheckPwd.TabIndex = 18;
             this.CheckPwd.Text = "加密密码键盘";
             this.CheckPwd.UseVisualStyleBackColor = true;
+            this.CheckPwd.Visible = false;
             this.CheckPwd.CheckedChanged += new System.EventHandler(this.CheckPwd_CheckedChanged);
             // 
             // lbl_pwd
