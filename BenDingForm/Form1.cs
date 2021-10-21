@@ -262,14 +262,17 @@ namespace BenDingForm
             {
                 case 0:
                     CopyDirectory(path + "\\dk", pathNew);
+                    CopyDirectory(path + "\\dk", path);
                     cardTypeName = "'HNSICRW.dll'";
                     break;
                 case 1:
                     CopyDirectory(path + "\\hd", pathNew);
+                    CopyDirectory(path + "\\hd", path);
                     cardTypeName = "'hd.dll'";
                     break;
                 case 2:
                     CopyDirectory(path + "\\ds", pathNew);
+                    CopyDirectory(path + "\\ds", path);
                     cardTypeName = "'LSCard.dll'";
                     break;
               

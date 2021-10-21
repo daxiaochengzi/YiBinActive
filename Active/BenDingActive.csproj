@@ -107,6 +107,7 @@
     <Compile Include="Model\Dto\Bend\YdResidentUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\YiHai\comm\InpatientBaseInfoDto.cs" />
+    <Compile Include="Model\Dto\YiHai\comm\QueryData.cs" />
     <Compile Include="Model\Dto\YiHai\fsDownloadInDto.cs" />
     <Compile Include="Model\Dto\YiHai\Hospital\GetCancelLeaveHospitalInputDataDto.cs" />
     <Compile Include="Model\Dto\YiHai\Hospital\GetHospitalCancelSettlementInputDataDto.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Model\Dto\YiHai\SecureMediaOutputDto.cs" />
     <Compile Include="Model\Dto\YiHai\SignInInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\SignInOutputDto.cs" />
+    <Compile Include="Model\Dto\YiHai\VisitInformationQuerDto.cs" />
     <Compile Include="Model\Dto\YiHai\YinHaiBaseIniDiseinfo.cs" />
     <Compile Include="Model\Dto\YiHai\YinHaiOutBaseParam.cs" />
     <Compile Include="Model\Params\Service\BaseService.cs" />

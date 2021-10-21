@@ -20,6 +20,7 @@ using BenDingActive.Model.Dto.YiHai.Hospital;
 using BenDingActive.Model.Params.Service;
 using BenDingActive.Model.Params.YinHai;
 using Newtonsoft.Json;
+using BenDingActive.Model.Dto.YiHai.comm;
 
 namespace BenDingForm
 {
@@ -959,6 +960,38 @@ namespace BenDingForm
 
             };
             data.Add(inputFeeData);
+            paramData.input = new { data = data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void btn_query_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(textBox1.Text)==false)
+            {
+                MessageBox.Show("查询码值不能为空");
+            }
+            var paramData = GetBaseParam("1901", lab_sign_no.Text);
+           
+            var Data = new QueryData()
+            {
+                parentValue= "",
+                type= textBox1.Text,
+                date =DateTime.Now.ToString("yyyy-MM-dd"),
+                admdvs= "511502",
+                vali_flag="1"
+            };
+           
+            paramData.input = new { data = Data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("5201", lab_sign_no.Text);
+            var data = new VisitInformationQuerDto()
+            {
+                
+            };
             paramData.input = new { data = data };
             txt_Input.Text = JsonConvert.SerializeObject(paramData);
         }

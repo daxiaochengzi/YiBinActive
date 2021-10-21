@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn_query = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
             this.button22 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
@@ -64,12 +68,16 @@
             this.txt_Input = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
+            this.button24 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button24);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.btn_query);
             this.panel1.Controls.Add(this.button23);
             this.panel1.Controls.Add(this.button22);
             this.panel1.Controls.Add(this.button21);
@@ -106,6 +114,42 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(835, 161);
             this.panel1.TabIndex = 8;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(143, 129);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 40;
+            this.label6.Text = "查询字段";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(206, 123);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(130, 21);
+            this.textBox1.TabIndex = 39;
+            // 
+            // btn_query
+            // 
+            this.btn_query.Location = new System.Drawing.Point(342, 121);
+            this.btn_query.Name = "btn_query";
+            this.btn_query.Size = new System.Drawing.Size(75, 23);
+            this.btn_query.TabIndex = 38;
+            this.btn_query.Text = "字典查询";
+            this.btn_query.UseVisualStyleBackColor = true;
+            this.btn_query.Click += new System.EventHandler(this.btn_query_Click);
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(0, 118);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(114, 23);
+            this.button23.TabIndex = 37;
+            this.button23.Text = "取消费用上传";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // button22
             // 
@@ -442,15 +486,15 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "入参：";
             // 
-            // button23
+            // button24
             // 
-            this.button23.Location = new System.Drawing.Point(88, 118);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(114, 23);
-            this.button23.TabIndex = 37;
-            this.button23.Text = "取消费用上传";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
+            this.button24.Location = new System.Drawing.Point(423, 121);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(115, 23);
+            this.button24.TabIndex = 41;
+            this.button24.Text = "就诊信息查询";
+            this.button24.UseVisualStyleBackColor = true;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
             // Form3
             // 
@@ -510,5 +554,9 @@
         private System.Windows.Forms.Button button21;
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Button btn_query;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button24;
     }
 }
