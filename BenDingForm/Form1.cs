@@ -53,7 +53,7 @@ namespace BenDingForm
             };
 
             secureMediaData = JsonConvert.SerializeObject(secureMedia);
-            String[] arr = new String[] {  "德卡", "华大", "德生" };
+            String[] arr = new String[] {  "德卡", "华大", "德生","明泰" };
             for (int i = 0; i < arr.Length; i++)
             {
                 comboBox1.Items.Add(arr[i]); // 手动添加值
@@ -73,6 +73,10 @@ namespace BenDingForm
                 case "LSCard.dll":
                     comboBox1.SelectedIndex = 2;
                     break;
+                case "YB_SSSReaderMT.dll":
+                    comboBox1.SelectedIndex = 3;
+                    break;
+                   
             }
 
             var codePwd = iniFile.ReadKeyPwd();
@@ -83,8 +87,8 @@ namespace BenDingForm
 
             else
             {
-                lbl_pwd.Visible = true;
-                txtPwd.Visible = true;
+                //lbl_pwd.Visible = true;
+                //txtPwd.Visible = true;
             }
             string  mac ;
             string ip ;
@@ -204,22 +208,22 @@ namespace BenDingForm
             var macActiveX = new MacActiveX();
             var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
         
-            var paramEntity = new ReadCardInfoParam();
-            if (CheckPwd.Checked == false)
-            {
-                if (string.IsNullOrWhiteSpace(txtPwd.Text))
-                {
-                    MessageBox.Show("密码不能为空!!!");
-                }
-                else
-                {
-                    paramEntity.CardPwd = txtPwd.Text;
-                }
-            }
-            paramEntity.InsuranceType = 0;
-            // JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
-            var data = macActiveX.OutpatientMethods(txtPwd.Text, baseParam, "ReadCardInfo");
-            textBox1.Text = data;
+            //var paramEntity = new ReadCardInfoParam();
+            //if (CheckPwd.Checked == false)
+            //{
+            //    if (string.IsNullOrWhiteSpace(txtPwd.Text))
+            //    {
+            //        MessageBox.Show("密码不能为空!!!");
+            //    }
+            //    else
+            //    {
+            //        paramEntity.CardPwd = txtPwd.Text;
+            //    }
+            //}
+            //paramEntity.InsuranceType = 0;
+            //// JsonConvert.DeserializeObject<HisBaseParam>(baseParam)
+            //var data = macActiveX.OutpatientMethods(txtPwd.Text, baseParam, "ReadCardInfo");
+            //textBox1.Text = data;
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -275,8 +279,12 @@ namespace BenDingForm
                     CopyDirectory(path + "\\ds", path);
                     cardTypeName = "'LSCard.dll'";
                     break;
-              
-                
+                case 3:
+                    CopyDirectory(path + "\\mt", pathNew);
+                    CopyDirectory(path + "\\mt", path);
+                    cardTypeName = "'YB_SSSReaderMT.dll'";
+                    break;
+
 
             }
            iniFile.SetCardType(cardTypeName);
@@ -362,14 +370,14 @@ namespace BenDingForm
             if (this.CheckPwd.Checked)
             {
                 iniKeyPwd.SetKeyPwd(1);
-                lbl_pwd.Visible = false;
-                txtPwd.Visible = false;
+                //lbl_pwd.Visible = false;
+                //txtPwd.Visible = false;
             }
             else
             {
                 iniKeyPwd.SetKeyPwd(0);
-                lbl_pwd.Visible = true;
-                txtPwd.Visible = true;
+                //lbl_pwd.Visible = true;
+                //txtPwd.Visible = true;
 
             }
            
@@ -762,7 +770,7 @@ namespace BenDingForm
         {
             var macActiveX = new MacActiveX();
             var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
-            var data = macActiveX.YdMedicalInsuranceMethods(txtPwd.Text, baseParam, "YdReadCardInfo");
+            //var data = macActiveX.YdMedicalInsuranceMethods(txtPwd.Text, baseParam, "YdReadCardInfo");
             //var baseParam = "{\"Account\": \"ybx12865\", 	\"Pwd\": \"aaaaaa\", 	\"OperatorId\": \"76EDB472F6E544FD8DC8D354BB088BD7\", 	\"InsuranceType\": null, 	\"IdentityMark\": \"1001522187\", 	\"AfferentSign\": \"2\" }";
             //var paramXml = "<?xml version=\"1.0\" encoding=\"GBK\"?>";
             //paramXml += "<ROW><PI_HKLSH>" + textBox2.Text + "</PI_HKLSH><PI_JBR>医保接口</PI_JBR><PI_AAE013>测试</PI_AAE013> </ROW>";

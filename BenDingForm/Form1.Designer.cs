@@ -44,8 +44,6 @@
             this.button13 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.CheckPwd = new System.Windows.Forms.CheckBox();
-            this.lbl_pwd = new System.Windows.Forms.Label();
-            this.txtPwd = new System.Windows.Forms.TextBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
@@ -83,13 +81,13 @@
             this.textBox1.Location = new System.Drawing.Point(12, 95);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(594, 26);
+            this.textBox1.Size = new System.Drawing.Size(595, 53);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "温馨提示:医保注册与修改读卡器类型会关闭ie浏览器,请保存好工作内容后操作!!!";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(436, 125);
+            this.button2.Location = new System.Drawing.Point(121, 155);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -131,7 +129,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(517, 125);
+            this.button7.Location = new System.Drawing.Point(427, 20);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 7;
@@ -236,27 +234,9 @@
             this.CheckPwd.Visible = false;
             this.CheckPwd.CheckedChanged += new System.EventHandler(this.CheckPwd_CheckedChanged);
             // 
-            // lbl_pwd
-            // 
-            this.lbl_pwd.AutoSize = true;
-            this.lbl_pwd.Location = new System.Drawing.Point(36, 157);
-            this.lbl_pwd.Name = "lbl_pwd";
-            this.lbl_pwd.Size = new System.Drawing.Size(29, 12);
-            this.lbl_pwd.TabIndex = 19;
-            this.lbl_pwd.Text = "密码";
-            this.lbl_pwd.Visible = false;
-            // 
-            // txtPwd
-            // 
-            this.txtPwd.Location = new System.Drawing.Point(83, 154);
-            this.txtPwd.Name = "txtPwd";
-            this.txtPwd.Size = new System.Drawing.Size(100, 21);
-            this.txtPwd.TabIndex = 20;
-            this.txtPwd.Visible = false;
-            // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(210, 127);
+            this.button6.Location = new System.Drawing.Point(5, 152);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(110, 23);
             this.button6.TabIndex = 21;
@@ -470,8 +450,6 @@
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.txtPwd);
-            this.Controls.Add(this.lbl_pwd);
             this.Controls.Add(this.CheckPwd);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button13);
@@ -515,8 +493,6 @@
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.CheckBox CheckPwd;
-        private System.Windows.Forms.Label lbl_pwd;
-        private System.Windows.Forms.TextBox txtPwd;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button14;
