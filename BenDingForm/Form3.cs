@@ -311,7 +311,7 @@ namespace BenDingForm
         private void btn_Signin_Click(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            string url = "http://10.109.122.89:8080/mss/web/api/fsi/callService";
+            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
             var iniParm = new YinHaiGetBaseParam()
             {
                 msgid = "H51150200463" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
