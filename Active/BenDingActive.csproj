@@ -108,6 +108,7 @@
     <Compile Include="Model\Dto\Bend\YdUserInfoJsonDto.cs" />
     <Compile Include="Model\Dto\YiHai\comm\InpatientBaseInfoDto.cs" />
     <Compile Include="Model\Dto\YiHai\comm\QueryData.cs" />
+    <Compile Include="Model\Dto\YiHai\comm\QueryTreatmentInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\fsDownloadInDto.cs" />
     <Compile Include="Model\Dto\YiHai\Hospital\GetCancelLeaveHospitalInputDataDto.cs" />
     <Compile Include="Model\Dto\YiHai\Hospital\GetHospitalCancelSettlementInputDataDto.cs" />

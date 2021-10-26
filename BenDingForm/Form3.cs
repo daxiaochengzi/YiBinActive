@@ -55,7 +55,7 @@ namespace BenDingForm
         private void button1_Click(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            string url = "http://10.109.122.89:8080/mss/web/api/fsi/callService";
+            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
             string msg = "";
 
             var resultDataText = PostWebRequest(url, txt_Input.Text);
@@ -287,11 +287,15 @@ namespace BenDingForm
         private YinHaiGetBaseParam GetBaseParam(string infno, string sign_no)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            string url = "http://10.109.122.89:8080/mss/web/api/fsi/callService";
+            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
             var iniParam = new YinHaiGetBaseParam()
             {
-                msgid = "H51150200463" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
+                msgid = textBox2.Text + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
                 infno = infno,
+                fixmedins_code = textBox2.Text,
+                fixmedins_name = textBox3.Text,
+                mdtrtarea_admvs = textBox4.Text,
+                insuplc_admdvs = textBox4.Text,
                 sign_no = sign_no
             };
             //输入参数
@@ -314,8 +318,12 @@ namespace BenDingForm
             string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
             var iniParm = new YinHaiGetBaseParam()
             {
-                msgid = "H51150200463" + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
-                infno = "9001"
+                msgid = textBox2.Text + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
+                infno = "9001",
+                fixmedins_code = textBox2.Text,
+                fixmedins_name=textBox3.Text,
+                mdtrtarea_admvs= textBox4.Text,
+                insuplc_admdvs= textBox4.Text
             };
             //输入参数
             var inputData = new SignInInputDto();
@@ -391,7 +399,7 @@ namespace BenDingForm
             string iniMsg = "";
             var resultData = YinHaiCOM.Init(out iniMsg);
             //2304A
-            YinHaiCOM.yh_CHS_call("2304A", secureMediaData, ref msg);
+            YinHaiCOM.yh_CHS_call("2207A", secureMediaData, ref msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
                 secureMediaIni = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
@@ -775,8 +783,8 @@ namespace BenDingForm
             var paramData = GetBaseParam("2405", lab_sign_no.Text);
             var data = new GetCancelLeaveHospitalInputDataDto()
             {
-                mdtrt_id = "512000G0000000382203",
-                psn_no = "51000051200000512099025082"
+                mdtrt_id = textBox6.Text,
+                psn_no = textBox5.Text,
             };
             paramData.input = new {data = data};
             txt_Input.Text = JsonConvert.SerializeObject(paramData);
@@ -836,9 +844,9 @@ namespace BenDingForm
             //};
             var data = new GetHospitalCancelSettlementInputDataDto()
             {
-                mdtrt_id = "511500G0000000996601",
-                psn_no = "51000051150000001001290357",
-                setl_id = "511500G0000000891407"
+                mdtrt_id = textBox6.Text,
+                psn_no = textBox5.Text,
+                setl_id = textBox7.Text
             };
 
             paramData.input = new {data = data};
@@ -952,10 +960,10 @@ namespace BenDingForm
             var data = new List<PrescriptionCancelUploadInputDataDto>();
             var inputFeeData = new PrescriptionCancelUploadInputDataDto()
             {
-                feedetl_sn = "C75FBBEEF14144B6858E20AF555BD150",
-                mdtrt_id = "511500G0000000962697",
-                psn_no = "51000051150000001009172314",
-                
+                feedetl_sn = "0000",
+                mdtrt_id = textBox6.Text,
+                psn_no = textBox5.Text,
+
 
 
             };
@@ -991,6 +999,36 @@ namespace BenDingForm
             var data = new VisitInformationQuerDto()
             {
                 
+            };
+            paramData.input = new { data = data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2404", lab_sign_no.Text);
+            var data = new
+            {
+                mdtrt_id= "511500G0000000032830",
+                psn_no= "51000051150000001025862815",
+              
+            };
+            paramData.input = new { data = data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("2001", lab_sign_no.Text);
+            var data = new QueryTreatmentInputDto()
+            {
+                begntime = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss"),
+                psn_no = "51000051150000001001522187",
+                fixmedins_code = textBox2.Text,
+                insutype = "310",
+                med_type = "11",
+                endtime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+
             };
             paramData.input = new { data = data };
             txt_Input.Text = JsonConvert.SerializeObject(paramData);

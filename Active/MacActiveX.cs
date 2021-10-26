@@ -16,7 +16,7 @@ namespace BenDingActive
     {
         public  string YinHaiMethods( string baseParam)
         {
-       
+            System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());
             var baseService = new YinHaiService();
             var resultData =baseService.MedicalInsuranceExecute(baseParam);
             return JsonConvert.SerializeObject(resultData); ;
@@ -52,7 +52,6 @@ namespace BenDingActive
         /// <summary>
         /// 获取地址信息
         /// </summary>
-
         public string YinHaiAddress()
         {
             var iniFile = new IniFile("");
@@ -65,8 +64,10 @@ namespace BenDingActive
 
         public string SecurityControl(string param, string infno)
         {
+            System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());
             var yinHaiService = new YinHaiService();
-           var data= yinHaiService.SecurityControl(param, infno);
+       
+            var data= yinHaiService.SecurityControl(param, infno);
             return JsonConvert.SerializeObject(data);
         }
 
@@ -220,7 +221,7 @@ namespace BenDingActive
         public int GetVersionNumber()
         { //生成数据文件夹
             XmlHelp.CheckFolders();
-            return 86;
+            return 85;
         } /// <summary>
         /// 设置密码键盘
         /// </summary>
