@@ -637,10 +637,10 @@ namespace BenDingForm
             var paramData = GetBaseParam("2208", lab_sign_no.Text);
             var inputData = new OutpatientCancelSettlementInputDataDto()
             {
-                expContent = new {card_token = secureMediaIni.data.card_token},
-                psn_no = "51000051150000001000696264",
-                mdtrt_id = "511500G0000001033892",
-                setl_id = "511500G0000000930324"
+                expContent = "",
+                psn_no = "51000051150000001015222272",
+                mdtrt_id = "511500G0000000228527",
+                setl_id = "511500G0000000123150"
 
             };
 
@@ -896,8 +896,8 @@ namespace BenDingForm
             //};
             var data = new RightingDto()
             {
-                psn_no = "51000051150000001009172314",
-                omsgid = "H51150200463202110071927584625",
+                psn_no = "51000051150000001021048546",
+                omsgid = "H51150300518202110251046195136",
                 oinfno = "2401",
             };
 
@@ -998,7 +998,9 @@ namespace BenDingForm
             var paramData = GetBaseParam("5201", lab_sign_no.Text);
             var data = new VisitInformationQuerDto()
             {
-                
+                psn_no= textBox5.Text,
+                begntime= "2021-10-10 18:57:18.000",
+                endtime = "2021-10-28 18:57:18.000",
             };
             paramData.input = new { data = data };
             txt_Input.Text = JsonConvert.SerializeObject(paramData);
@@ -1009,8 +1011,8 @@ namespace BenDingForm
             var paramData = GetBaseParam("2404", lab_sign_no.Text);
             var data = new
             {
-                mdtrt_id= "511500G0000000032830",
-                psn_no= "51000051150000001025862815",
+                mdtrt_id= textBox6.Text,
+                psn_no= textBox5.Text,
               
             };
             paramData.input = new { data = data };
@@ -1032,6 +1034,11 @@ namespace BenDingForm
             };
             paramData.input = new { data = data };
             txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

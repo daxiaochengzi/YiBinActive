@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button26 = new System.Windows.Forms.Button();
             this.button25 = new System.Windows.Forms.Button();
             this.button24 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -36,7 +37,6 @@
             this.btn_query = new System.Windows.Forms.Button();
             this.button23 = new System.Windows.Forms.Button();
             this.button22 = new System.Windows.Forms.Button();
-            this.button21 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.button19 = new System.Windows.Forms.Button();
@@ -82,7 +82,6 @@
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.button26 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,7 +95,6 @@
             this.panel1.Controls.Add(this.btn_query);
             this.panel1.Controls.Add(this.button23);
             this.panel1.Controls.Add(this.button22);
-            this.panel1.Controls.Add(this.button21);
             this.panel1.Controls.Add(this.button14);
             this.panel1.Controls.Add(this.button20);
             this.panel1.Controls.Add(this.button19);
@@ -130,6 +128,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(835, 161);
             this.panel1.TabIndex = 8;
+            // 
+            // button26
+            // 
+            this.button26.Location = new System.Drawing.Point(646, 118);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(75, 23);
+            this.button26.TabIndex = 43;
+            this.button26.Text = "待遇查询";
+            this.button26.UseVisualStyleBackColor = true;
+            this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
             // button25
             // 
@@ -189,22 +197,12 @@
             // 
             // button22
             // 
-            this.button22.Location = new System.Drawing.Point(751, 86);
+            this.button22.Location = new System.Drawing.Point(727, 120);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(75, 23);
             this.button22.TabIndex = 36;
             this.button22.Text = "下载2";
             this.button22.UseVisualStyleBackColor = true;
-            // 
-            // button21
-            // 
-            this.button21.Location = new System.Drawing.Point(261, 3);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(75, 23);
-            this.button21.TabIndex = 35;
-            this.button21.Text = "button21";
-            this.button21.UseVisualStyleBackColor = true;
-            this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
             // button14
             // 
@@ -218,7 +216,7 @@
             // 
             // button20
             // 
-            this.button20.Location = new System.Drawing.Point(757, 55);
+            this.button20.Location = new System.Drawing.Point(727, 89);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(75, 23);
             this.button20.TabIndex = 33;
@@ -537,7 +535,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(157, 21);
             this.textBox2.TabIndex = 12;
-            this.textBox2.Text = "H51150200473";
+            this.textBox2.Text = "H51150300518";
             // 
             // label8
             // 
@@ -554,7 +552,8 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(151, 21);
             this.textBox3.TabIndex = 14;
-            this.textBox3.Text = "宜宾利民医院";
+            this.textBox3.Text = "宜宾南山医院";
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label9
             // 
@@ -571,7 +570,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(118, 21);
             this.textBox4.TabIndex = 16;
-            this.textBox4.Text = "511502";
+            this.textBox4.Text = "511599";
             // 
             // label10
             // 
@@ -609,7 +608,7 @@
             // 
             this.textBox7.Location = new System.Drawing.Point(540, 201);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(111, 21);
+            this.textBox7.Size = new System.Drawing.Size(186, 21);
             this.textBox7.TabIndex = 21;
             // 
             // label12
@@ -619,17 +618,7 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(41, 12);
             this.label12.TabIndex = 22;
-            this.label12.Text = "就诊id";
-            // 
-            // button26
-            // 
-            this.button26.Location = new System.Drawing.Point(646, 118);
-            this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(75, 23);
-            this.button26.TabIndex = 43;
-            this.button26.Text = "待遇查询";
-            this.button26.UseVisualStyleBackColor = true;
-            this.button26.Click += new System.EventHandler(this.button26_Click);
+            this.label12.Text = "结算id";
             // 
             // Form3
             // 
@@ -698,7 +687,6 @@
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button14;
-        private System.Windows.Forms.Button button21;
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button23;
         private System.Windows.Forms.Button btn_query;
