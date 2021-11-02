@@ -221,7 +221,7 @@ namespace BenDingActive
         public int GetVersionNumber()
         { //生成数据文件夹
             XmlHelp.CheckFolders();
-            return 85;
+            return 84;
         } /// <summary>
         /// 设置密码键盘
         /// </summary>
