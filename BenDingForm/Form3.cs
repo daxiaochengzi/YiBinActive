@@ -896,9 +896,9 @@ namespace BenDingForm
             //};
             var data = new RightingDto()
             {
-                psn_no = "51000051150000001021048546",
-                omsgid = "H51150300518202110251046195136",
-                oinfno = "2401",
+                psn_no = textBox5.Text,
+                omsgid = txt_omsgid.Text,
+                oinfno = textBox8.Text,
             };
 
             paramData.input = new {data = data};

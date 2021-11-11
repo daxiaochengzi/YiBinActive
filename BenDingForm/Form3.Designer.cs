@@ -82,6 +82,10 @@
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txt_omsgid = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -488,18 +492,18 @@
             // 
             // txt_Output
             // 
-            this.txt_Output.Location = new System.Drawing.Point(63, 343);
+            this.txt_Output.Location = new System.Drawing.Point(63, 360);
             this.txt_Output.Multiline = true;
             this.txt_Output.Name = "txt_Output";
-            this.txt_Output.Size = new System.Drawing.Size(835, 133);
+            this.txt_Output.Size = new System.Drawing.Size(835, 116);
             this.txt_Output.TabIndex = 7;
             // 
             // txt_Input
             // 
-            this.txt_Input.Location = new System.Drawing.Point(60, 236);
+            this.txt_Input.Location = new System.Drawing.Point(60, 260);
             this.txt_Input.Multiline = true;
             this.txt_Input.Name = "txt_Input";
-            this.txt_Input.Size = new System.Drawing.Size(838, 101);
+            this.txt_Input.Size = new System.Drawing.Size(838, 90);
             this.txt_Input.TabIndex = 6;
             // 
             // label2
@@ -514,7 +518,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 221);
+            this.label1.Location = new System.Drawing.Point(14, 246);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 9;
@@ -606,7 +610,7 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(540, 201);
+            this.textBox7.Location = new System.Drawing.Point(548, 201);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(186, 21);
             this.textBox7.TabIndex = 21;
@@ -614,17 +618,53 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(493, 210);
+            this.label12.Location = new System.Drawing.Point(501, 210);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(41, 12);
             this.label12.TabIndex = 22;
             this.label12.Text = "结算id";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(61, 234);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 12);
+            this.label13.TabIndex = 23;
+            this.label13.Text = "omsgid";
+            // 
+            // txt_omsgid
+            // 
+            this.txt_omsgid.Location = new System.Drawing.Point(108, 228);
+            this.txt_omsgid.Name = "txt_omsgid";
+            this.txt_omsgid.Size = new System.Drawing.Size(384, 21);
+            this.txt_omsgid.TabIndex = 24;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(498, 234);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(53, 12);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "交易编号";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(554, 231);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(182, 21);
+            this.textBox8.TabIndex = 26;
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(908, 506);
+            this.ClientSize = new System.Drawing.Size(908, 482);
+            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.txt_omsgid);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.textBox6);
@@ -707,5 +747,9 @@
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button26;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txt_omsgid;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox8;
     }
 }
