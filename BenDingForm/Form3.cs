@@ -55,7 +55,8 @@ namespace BenDingForm
         private void button1_Click(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
+            //string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
+            string url = CommonHelp.GetWebServiceUrl();
             string msg = "";
 
             var resultDataText = PostWebRequest(url, txt_Input.Text);
@@ -287,7 +288,8 @@ namespace BenDingForm
         private YinHaiGetBaseParam GetBaseParam(string infno, string sign_no)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
+            //string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
+            string url = CommonHelp.GetWebServiceUrl();
             var iniParam = new YinHaiGetBaseParam()
             {
                 msgid = textBox2.Text + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
@@ -315,7 +317,9 @@ namespace BenDingForm
         private void btn_Signin_Click(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
+            //string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
+
+            string url = CommonHelp.GetWebServiceUrl();
             var iniParm = new YinHaiGetBaseParam()
             {
                 msgid = textBox2.Text + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
@@ -417,7 +421,8 @@ namespace BenDingForm
         private void button3_Click_3(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            string url = "http://10.109.122.89:8080/mss/web/api/fsi/callService";
+            //string url = "http://10.109.122.89:8080/mss/web/api/fsi/callService";
+            string url = CommonHelp.GetWebServiceUrl();
             string msg = "";
             var paramData = GetBaseParam("1101", lab_sign_no.Text);
 
