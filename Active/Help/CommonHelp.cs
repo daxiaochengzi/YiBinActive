@@ -18,12 +18,10 @@ namespace BenDingActive.Help
 
             //宜宾测试
             //resultData = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-
             //宜宾正式
             //resultData = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
-
             //成都测试
-             resultData = "http://10.163.47.126:8121/mss/web/api/fsi/callService";
+             resultData = "http://10.109.255.33:8121/mss/web/api/fsi/callService";
 
 
             return resultData;
