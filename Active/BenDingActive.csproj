@@ -127,6 +127,7 @@
     <Compile Include="Model\Dto\YiHai\RightingDto.cs" />
     <Compile Include="Model\Dto\YiHai\SecureMediaDto.cs" />
     <Compile Include="Model\Dto\YiHai\SecureMediaOutputDto.cs" />
+    <Compile Include="Model\Dto\YiHai\setlinfoDataDto.cs" />
     <Compile Include="Model\Dto\YiHai\SignInInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\SignInOutputDto.cs" />
     <Compile Include="Model\Dto\YiHai\VisitInformationQuerDto.cs" />
