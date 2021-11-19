@@ -539,7 +539,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(157, 21);
             this.textBox2.TabIndex = 12;
-            this.textBox2.Text = "H51018502969";
+            this.textBox2.Text = "H51011602708";
             // 
             // label8
             // 
@@ -556,7 +556,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(151, 21);
             this.textBox3.TabIndex = 14;
-            this.textBox3.Text = "测试医院";
+            this.textBox3.Text = "成都双流贸园医仁医院有限公司";
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label9
@@ -574,7 +574,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(118, 21);
             this.textBox4.TabIndex = 16;
-            this.textBox4.Text = "510104";
+            this.textBox4.Text = "510116";
             // 
             // label10
             // 

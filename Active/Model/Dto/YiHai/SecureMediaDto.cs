@@ -26,12 +26,12 @@ namespace BenDingActive.Model.Dto.YiHai
         /// <summary>
         /// 定点医药机构编号
         /// </summary>
-        public string fixmedins_code { get; set; } = "H51018502969";
+        public string fixmedins_code { get; set; } = "H51011602708";
         /// <summary>
         /// 人员编号
         /// </summary>
         public string psn_no { get; set; } = "";
-        public string mdtrtarea_admvs { get; set; } = "510104";
+        public string mdtrtarea_admvs { get; set; } = "510116";
         public string local_type { get; set; } = "1";
         public string out_type { get; set; } = "1";
 
