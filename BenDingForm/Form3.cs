@@ -55,8 +55,7 @@ namespace BenDingForm
         private void button1_Click(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            //string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
-            string url = CommonHelp.GetWebServiceUrl();
+            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
             string msg = "";
 
             var resultDataText = PostWebRequest(url, txt_Input.Text);
@@ -288,8 +287,7 @@ namespace BenDingForm
         private YinHaiGetBaseParam GetBaseParam(string infno, string sign_no)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            //string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
-            string url = CommonHelp.GetWebServiceUrl();
+            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
             var iniParam = new YinHaiGetBaseParam()
             {
                 msgid = textBox2.Text + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
@@ -317,9 +315,7 @@ namespace BenDingForm
         private void btn_Signin_Click(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            //string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
-
-            string url = CommonHelp.GetWebServiceUrl();
+            string url = "http://10.109.103.38:8080/mss/web/api/fsi/callService";
             var iniParm = new YinHaiGetBaseParam()
             {
                 msgid = textBox2.Text + DateTime.Now.ToString("yyyyMMddHHmmss") + "9001",
@@ -421,8 +417,7 @@ namespace BenDingForm
         private void button3_Click_3(object sender, EventArgs e)
         {
             //string url = "http://10.109.120.206:8080/mss/web/api/fsi/callService";
-            //string url = "http://10.109.122.89:8080/mss/web/api/fsi/callService";
-            string url = CommonHelp.GetWebServiceUrl();
+            string url = "http://10.109.122.89:8080/mss/web/api/fsi/callService";
             string msg = "";
             var paramData = GetBaseParam("1101", lab_sign_no.Text);
 
@@ -643,9 +638,9 @@ namespace BenDingForm
             var inputData = new OutpatientCancelSettlementInputDataDto()
             {
                 expContent = "",
-                psn_no = "51000051150000001015222272",
-                mdtrt_id = "511500G0000000228527",
-                setl_id = "511500G0000000123150"
+                psn_no = textBox5.Text,
+                mdtrt_id = textBox6.Text,
+                setl_id = textBox7.Text
 
             };
 
@@ -1046,7 +1041,44 @@ namespace BenDingForm
 
         }
 
-       
+        private void button21_Click_1(object sender, EventArgs e)
+        {
+            var paramData = GetBaseParam("5203", lab_sign_no.Text);
+            var data = new GetHospitalCancelSettlementInputDataDto()
+            {
+                mdtrt_id = textBox6.Text,
+                psn_no = textBox5.Text,
+                setl_id = textBox7.Text
+            };
+
+            paramData.input = new { data = data };
+            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txt_Output.Text) == false)
+            {
+                MessageBox.Show("结算信息不能为空");
+            }
+            else
+            {
+                var outBaseData = JsonConvert.DeserializeObject<YinHaiOutBaseParam>(txt_Output.Text);
+                var setlinfoDataDto=JsonConvert.DeserializeObject<setlinfoDataoutput>(outBaseData.output.ToString());
+                textBox2.Text = setlinfoDataDto.setlinfo.fixmedins_code;
+                textBox3.Text = setlinfoDataDto.setlinfo.fixmedins_name;
+                textBox4.Text = setlinfoDataDto.setlinfo.fixmedins_poolarea;
+
+                
+            }
+           
+            
+        }
     }
 }
 
