@@ -118,6 +118,7 @@
     <Compile Include="Model\Dto\YiHai\Hospital\UploadHospitalFeeInputRowDto.cs" />
     <Compile Include="Model\Dto\YiHai\InformationUploadInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\OutpatientCancelSettlementInputdataDto.cs" />
+    <Compile Include="Model\Dto\YiHai\OutpatientFeeUploadCancleDataInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\OutpatientFeeUploadfeedetailInput.cs" />
     <Compile Include="Model\Dto\YiHai\OutpatientPreSettlementDataInputDto.cs" />
     <Compile Include="Model\Dto\YiHai\OutpatientRegisterCancelInputDataDto.cs" />

@@ -70,6 +70,18 @@ namespace BenDingActive
             var data= yinHaiService.SecurityControl(param, infno);
             return JsonConvert.SerializeObject(data);
         }
+        /// <summary>
+        /// 成都打印结算清单
+        /// </summary>
+
+        public string ControlPrint(string param)
+        {
+            System.IO.Directory.SetCurrentDirectory(CommonHelp.GetPathStr());
+            var yinHaiService = new YinHaiService();
+
+            var data = yinHaiService.ControlPrint(param);
+            return JsonConvert.SerializeObject(data);
+        }
 
         public string Signin( string baseParam)
         {

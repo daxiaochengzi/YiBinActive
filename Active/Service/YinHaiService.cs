@@ -139,6 +139,45 @@ namespace BenDingActive.Service
         }
 
         /// <summary>
+        /// 安全控件
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="infno"></param>
+        /// <returns></returns>
+        public ApiJsonResultData ControlPrint(string param)
+        {
+            var resultDataNew = new ApiJsonResultData { Success = true };
+            string msg = "";
+            string iniMsg = "";
+            var resultData = YinHaiCOM.Init(out iniMsg);
+            YinHaiCOM.yh_CHS_print( param, ref msg);
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                var msgData = JsonConvert.DeserializeObject<SecureMediaOutputDto>(msg);
+                if (msgData.code == "1")
+                {
+                    resultDataNew.Data = JsonConvert.SerializeObject(msgData.data);
+                }
+                else
+                {
+                    resultDataNew.Success = false;
+                    resultDataNew.Message = msgData.message;
+
+                }
+                Logs.LogWriteData(new LogWriteDataParam()
+                {
+                    JoinJson = param,
+                    ReturnJson = msg,
+                    OperatorId = "",
+                    
+                });
+
+            }
+
+            return resultDataNew;
+        }
+
+        /// <summary>
         /// 签到
         /// </summary>
         /// <param name="param"></param>

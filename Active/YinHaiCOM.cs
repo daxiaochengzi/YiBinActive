@@ -127,5 +127,28 @@ namespace BenDingActive
             object o1 = args[1].ToString();
             output = args[2] != null ? args[2].ToString() : null;
         }
+       /// <summary>
+       /// 交易输入
+       /// </summary>
+       /// <param name="input"></param>
+       /// <param name="output"></param>
+        public static void yh_CHS_print(string input, ref string output)
+        {
+            object[] args = new object[] {
+
+                input,
+                output
+             };
+            ParameterModifier pm = new ParameterModifier(3);
+            pm[0] = false;
+            pm[1] = true;
+            //yhObject = System.Activator.CreateInstance(yh);
+            ParameterModifier[] pmd = { pm };
+            if (yhObject == null) yhObject = System.Activator.CreateInstance(yhNew);
+            yhNew.InvokeMember("yh_CHS_print", BindingFlags.InvokeMethod, null,
+                yhObject, args, pmd, System.Globalization.CultureInfo.CurrentCulture, null);
+            object o0 = args[0].ToString();
+            output = args[1] != null ? args[1].ToString() : null;
+        }
     }
 }

@@ -487,21 +487,30 @@ namespace BenDingForm
         private void button6_Click(object sender, EventArgs e)
         {
 
-            var paramData = GetBaseParam("2202", lab_sign_no.Text);
-            var registerParam = new OutpatientRegisterCancelInputDataDto()
+            if (!string.IsNullOrWhiteSpace(textBox9.Text) == false)
             {
-                expContent = new {card_token = secureMediaIni.data.card_token},
+                MessageBox.Show("门诊号不能为空");
+                return;
+            }
+            else
+            {
+                var paramData = GetBaseParam("2202", lab_sign_no.Text);
+                var registerParam = new OutpatientRegisterCancelInputDataDto()
+                {
+                    expContent = new { card_token = secureMediaIni.data.card_token },
 
-                ipt_otp_no = "51000051150000001013871352",
-                psn_no = "51000051150000001013871352",
-                mdtrt_id = "511500G0000001040511",
+                    ipt_otp_no = textBox9.Text,
+                    psn_no = textBox5.Text,
+                    mdtrt_id = textBox6.Text,
 
 
-            };
+                };
 
-            var data = new {data = registerParam};
-            paramData.input = data;
-            txt_Input.Text = JsonConvert.SerializeObject(paramData);
+                var data = new { data = registerParam };
+                paramData.input = data;
+                txt_Input.Text = JsonConvert.SerializeObject(paramData);
+            }
+           
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -1078,6 +1087,30 @@ namespace BenDingForm
             }
            
             
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txt_RecipeCode.Text) == false)
+            {
+                MessageBox.Show("批次号不能为空!!!");
+                return;
+            }
+            else
+            {
+                var paramData = GetBaseParam("2205", lab_sign_no.Text);
+                var data = new OutpatientFeeUploadCancleDataInputDto()
+                {
+                    mdtrt_id = textBox6.Text,
+                    psn_no = textBox5.Text,
+                    chrg_bchno = txt_RecipeCode.Text
+                };
+
+                paramData.input = new { data = data };
+                txt_Input.Text = JsonConvert.SerializeObject(paramData);
+            }
+              
+
         }
     }
 }
